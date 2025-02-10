@@ -1,0 +1,78 @@
+<head>
+  <style>
+    body { margin: 0; }
+    .node-label {
+      color: white;
+      font-size: 12px;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 2px 5px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+  </style>
+  <!-- Include Three.js and the CSS2DRenderer -->
+  <script src="https://unpkg.com/three@0.130.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
+  <!-- Include 3d-force-graph -->
+  <script src="//unpkg.com/3d-force-graph"></script>
+</head>
+
+<body>
+  <div id="3d-graph"></div>
+
+  <script>
+    // Create a CSS2DRenderer for rendering HTML labels in the 3D scene.
+    const labelRenderer = new THREE.CSS2DRenderer();
+    labelRenderer.setSize(window.innerWidth, window.innerHeight);
+    labelRenderer.domElement.style.position = 'absolute';
+    labelRenderer.domElement.style.top = '0px';
+    // Ensure the labels don't capture mouse events
+    labelRenderer.domElement.style.pointerEvents = 'none';
+    document.body.appendChild(labelRenderer.domElement);
+
+    async function loadGraph() {
+      try {
+        const response = await fetch('test.json');
+        const jsonData = await response.json();
+
+        const gData = {
+          nodes: jsonData.Nodes.map(node => ({ 
+            id: node.id, 
+            name: node.name, 
+            text: node.text 
+          })),
+          links: jsonData.Nodes.flatMap(node => 
+            node.edges.map(targetId => ({ source: node.id, target: targetId }))
+          )
+        };
+
+        const Graph = new ForceGraph3D(document.getElementById('3d-graph'), {
+            extraRenderers: [labelRenderer]
+          })
+          .graphData(gData)
+          // Use nodeLabel to show tooltip info on hover
+          .nodeLabel(node => `${node.name}: ${node.text}`)
+          .nodeAutoColorBy('id')
+          // Create a permanent label using nodeThreeObject
+          .nodeThreeObject(node => {
+            const nodeEl = document.createElement('div');
+            nodeEl.textContent = node.name;  // Display the node's name
+            nodeEl.style.color = node.color;
+            nodeEl.className = 'node-label';
+            return new THREE.CSS2DObject(nodeEl);
+          })
+          // Extend the default node (which is a sphere) instead of replacing it
+          .nodeThreeObjectExtend(true)
+          // Update the CSS2DRenderer every frame to keep labels in sync
+          .onRenderFrame(() => {
+            labelRenderer.render(Graph.scene(), Graph.camera());
+          });
+
+      } catch (error) {
+        console.error('Error loading graph data:', error);
+      }
+    }
+
+    loadGraph();
+  </script>
+</body>

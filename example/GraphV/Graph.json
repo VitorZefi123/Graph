@@ -1,0 +1,77 @@
+{
+  "Nodes": 
+  [
+    {
+      "id": 1,
+      "name": "A",
+      "text": "Reckeweg Mängelbescheid",
+      "edges": [2, 3]
+    },
+    {
+      "id": 2,
+      "name": "B",
+      "text": "Dossier 3",
+      "edges": [4]
+    },
+    {
+      "id": 3,
+      "name": "C",
+      "text": "root-revet4a",
+      "edges": [4, 5, 6]
+    },
+    {
+      "id": 4,
+      "name": "D",
+      "text": "3-DE-RV4A-Glo-Mängelbescheid-Antwort",
+      "edges": [7]
+    },
+    {
+      "id": 5,
+      "name": "E",
+      "text": "phytolacca-poolofmanufacturers",
+      "edges": [7]
+    },
+    {
+      "id": 6,
+      "name": "F",
+      "text": "apis-poolofmanufacturers test",
+      "edges": [8]
+    },
+    { 
+      "id": 7,
+      "name": "G",
+      "text": "batch-analyses-4.pdf",
+      "edges": [6, 9]
+    },
+    {
+      "id": 8,
+      "name": "H",
+      "text": "32s2-manuf",
+      "edges": [10]
+    },
+    {
+      "id": 9,
+      "name": "I",
+      "text": "4b-clin-lit-apis-clarke1994-mm-de-urhr.pdf",
+      "edges": [8, 11, 12]
+    },
+    {
+      "id": 10,
+      "name": "J",
+      "text": "control-of-materials-3.pdf",
+      "edges": [9, 12]
+    },
+    {
+      "id": 11,
+      "name": "K",
+      "text": "J. C o s t e ( S t. P a u l - s u r - U b a y e )",
+      "edges": [12]
+    },
+    {
+      "id": 12,
+      "name": "L",
+      "text": ": Sil., Thuj.). — Zunge geschwollen, trocken, rissig, wund, ulceriert oder mit Bläschen bedeckt. — Klebriger, zäher, schaumiger Speichel. — Zahnfleischtaschen, wäßri- ges Aussehen des Zahnfleisches.",
+      "edges": []
+    }
+  ]
+}
