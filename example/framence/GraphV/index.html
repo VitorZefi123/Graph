@@ -25,6 +25,8 @@
 </head>
 <body>
     <div class="controls">
+        <input type="number" id="nodeIdInput" placeholder="Enter Node ID">
+        <button onclick="highlightNodeById()">Highlight Node</button>
         <button onclick="zoomIn()">Zoom In</button>
         <button onclick="zoomOut()">Zoom Out</button>
     </div>
@@ -33,6 +35,9 @@
     <script>
         let Graph;
         let camera, renderer, scene;
+        const highlightedNodes = new Set();
+        const highlightedLinks = new Set();
+        const nodeRelations = {};
  
         // Load Graph
         async function loadGraph() {
@@ -41,29 +46,49 @@
                 const jsonData = await response.json();
  
                 const gData = {
-                    nodes: jsonData.Nodes.map(node => ({
-                        id: node.id,
-                        name: node.name,
-                        text: node.text
-                    })),
-                    links: jsonData.Nodes.flatMap(node =>
-                        node.edges.map(targetId => ({ source: node.id, target: targetId }))
-                    )
-                };
+    nodes: jsonData.Nodes.map(node => {
+        if (!nodeRelations[node.id]) {
+        nodeRelations[node.id] = new Set();
+    }
+ 
+    node.edges.forEach(targetId => {
+        nodeRelations[node.id].add(targetId); // Add child node
+ 
+        // Ensure the child node also references the parent
+        if (!nodeRelations[targetId]) {
+            nodeRelations[targetId] = new Set();
+        }
+        nodeRelations[targetId].add(node.id); // Add parent node
+    });
+        return {
+            id: node.id,
+            name: node.name,
+            text: node.text,
+            edges: node.edges // Store edges in the node object
+        };
+    }),
+    links: jsonData.Nodes.flatMap(node =>
+        node.edges.map(targetId => ({ source: node.id, target: targetId }))
+    )
+};
  
                 // Initialize 3D Force Graph
                 Graph = ForceGraph3D({
                     extraRenderers: [new THREE.CSS2DRenderer()]
                 })(document.getElementById('3d-graph'))
                 .graphData(gData)
-                .nodeLabel(node => `${node.name}: ${node.text}`)
+                .nodeLabel(node => `${node.name}: ${node.text} : ${node.id}`)
                 .nodeAutoColorBy('id')
                 .onEngineTick(() => {
                     if (camera) {
                         camera.lookAt(Graph.scene().position);
                     }
+                })
+                .onNodeClick(node => {
+                highlightNode(node.id);
                 });
  
+               
                 Graph.enableNodeDrag(false);
                 // Get Camera and Renderer
                 scene = Graph.scene();
@@ -82,11 +107,12 @@
             const apparentRadius = (node.geometry.parameters.radius) * (fovScale / distanceToCamera); // Adjust radius based on distance and FOV
             return apparentRadius;
         }
+       
  
         // Function to zoom in (and update the apparent radius)
         function zoomIn() {
             if (camera) {
-                camera.position.z -= 20; // Move camera closer
+                camera.position.z -= 120; // Move camera closer
                 camera.updateProjectionMatrix();
                 renderer.render(scene, camera);
  
@@ -95,6 +121,7 @@
                     if (object.isMesh) { // Check if the object is a node
                         const node = object;
                         const apparentRadius = getApparentRadius(node);
+                        console.log(`Node ID: ${node.id}, Apparent Radius: ${apparentRadius}`);
  
                         // If apparent radius is greater than 0.02, add a label
                         if (apparentRadius > 0.02) {
@@ -110,7 +137,7 @@
         // Function to zoom out (and update the apparent radius)
         function zoomOut() {
             if (camera) {
-                camera.position.z += 20; // Move camera farther
+                camera.position.z += 120; // Move camera farther
                 camera.updateProjectionMatrix();
                 renderer.render(scene, camera);
  
@@ -119,6 +146,7 @@
                     if (object.isMesh) {
                         const node = object;
                         const apparentRadius = getApparentRadius(node);
+                        console.log(`Node ID: ${node.id}, Apparent Radius: ${apparentRadius}`);
  
                         // If apparent radius is greater than 0.02, add a label
                         if (apparentRadius > 0.02) {
@@ -150,10 +178,12 @@
                 });
  
                 const labelObject = new THREE.CSS2DObject(label);
-                node.add(labelObject); 
+                node.add(labelObject); // Add label to node
                 node.label = labelObject;
             }
         }
+ 
+       
  
         // Function to remove label from a node
         function removeLabelFromNode(node) {
@@ -163,13 +193,51 @@
             }
         }
  
-        // Function to Force Render
-        function forceRender() {
-            if (Graph) {
-                Graph.refresh();  // Refresh the graph
-                renderer.render(scene, camera);  // Force render
-            }
+ 
+        // Function to highlight a node and its connected links
+function highlightNode(nodeId) {
+    highlightedNodes.clear();
+    highlightedLinks.clear();
+ 
+    if (nodeId) {
+        highlightedNodes.add(nodeId); // Add clicked node itself
+ 
+        const { relatedNodes, relatedEdges } = getRelatedNodes(nodeId);
+        relatedNodes.forEach(n => highlightedNodes.add(n));
+        relatedEdges.forEach(l => highlightedLinks.add(l));
+    }
+ 
+    // Update graph colors
+    Graph.nodeColor(n => highlightedNodes.has(n.id) ? 'red' : 'gray')
+    .linkColor(l => highlightedNodes.has(l.source.id) && highlightedNodes.has(l.target.id) ? '#FF5733' : '#D3D3D3')  // Bright color for highlighted, light gray for non-highlighted
+    .linkWidth(l => highlightedNodes.has(l.source.id) && highlightedNodes.has(l.target.id) ? 4 : 1);  // Thicker links for highlighted, thinner links for non-highlighted
+
+}
+ 
+function highlightNodeById() {
+    debugger
+        const nodeId = parseInt(document.getElementById("nodeIdInput").value, 10);
+        if (isNaN(nodeId)) {
+            alert("Please enter a valid Node ID");
+            return;
         }
+ 
+        highlightNode(nodeId); // Call the highlightNode function with the ID
+}
+ 
+function getRelatedNodes(nodeId) {
+    let relatedNodes = new Set();
+    let relatedEdges = new Set();
+ 
+    // Get direct children (outgoing edges)
+    if (nodeRelations[nodeId]) {
+        nodeRelations[nodeId].forEach(childId => {
+            relatedNodes.add(childId);
+            relatedEdges.add({ source: nodeId, target: childId });
+        });
+    }
+    return { relatedNodes, relatedEdges };
+}
  
         loadGraph();
     </script>

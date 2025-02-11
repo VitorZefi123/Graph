@@ -25,153 +25,45 @@
 </head>
 <body>
     <div class="controls">
+        <input type="number" id="nodeIdInput" placeholder="Enter Node ID">
+        <button onclick="highlightNodeById()">Highlight Node</button>
         <button onclick="zoomIn()">Zoom In</button>
         <button onclick="zoomOut()">Zoom Out</button>
     </div>
     <div id="3d-graph"></div>
- 
-    <script>
-        let Graph;
-        let camera, renderer, scene;
- 
-        // Load Graph
-        async function loadGraph() {
-            try {
-                const response = await fetch('Reckeweg.json');
-                const jsonData = await response.json();
- 
-                const gData = {
-                    nodes: jsonData.Nodes.map(node => ({
-                        id: node.id,
-                        name: node.name,
-                        text: node.text
-                    })),
-                    links: jsonData.Nodes.flatMap(node =>
-                        node.edges.map(targetId => ({ source: node.id, target: targetId }))
-                    )
-                };
- 
-                // Initialize 3D Force Graph
-                Graph = ForceGraph3D({
-                    extraRenderers: [new THREE.CSS2DRenderer()]
-                })(document.getElementById('3d-graph'))
-                .graphData(gData)
-                .nodeLabel(node => `${node.name}: ${node.text}`)
-                .nodeAutoColorBy('id')
-                .onEngineTick(() => {
-                    if (camera) {
-                        camera.lookAt(Graph.scene().position);
-                    }
-                });
- 
-                Graph.enableNodeDrag(false);
-                // Get Camera and Renderer
-                scene = Graph.scene();
-                camera = Graph.camera();
-                renderer = Graph.renderer();
- 
-            } catch (error) {
-                console.error('Error loading graph data:', error);
-            }
-        }
- 
-        // Function to calculate the apparent radius based on the camera's position
-        function getApparentRadius(node) {
-            const distanceToCamera = camera.position.distanceTo(node.position); // Calculate distance from camera to node
-            const fovScale = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 2; // FOV scaling factor
-            const apparentRadius = (node.geometry.parameters.radius) * (fovScale / distanceToCamera); // Adjust radius based on distance and FOV
-            return apparentRadius;
-        }
- 
-        // Function to zoom in (and update the apparent radius)
-        function zoomIn() {
-            if (camera) {
-                camera.position.z -= 20; // Move camera closer
-                camera.updateProjectionMatrix();
-                renderer.render(scene, camera);
- 
-                // Traverse through each node (object) and calculate its apparent radius
-                scene.traverse(function (object) {
-                    if (object.isMesh) { // Check if the object is a node
-                        const node = object;
-                        const apparentRadius = getApparentRadius(node);
- 
-                        // If apparent radius is greater than 0.02, add a label
-                        if (apparentRadius > 0.02) {
-                            addLabelToNode(node);
-                        } else {
-                            removeLabelFromNode(node); // Hide label if radius is too small
-                        }
-                    }
-                });
-            }
-        }
- 
-        // Function to zoom out (and update the apparent radius)
-        function zoomOut() {
-            if (camera) {
-                camera.position.z += 20; // Move camera farther
-                camera.updateProjectionMatrix();
-                renderer.render(scene, camera);
- 
-                // Traverse through each node and calculate its apparent radius
-                scene.traverse(function (object) {
-                    if (object.isMesh) {
-                        const node = object;
-                        const apparentRadius = getApparentRadius(node);
- 
-                        // If apparent radius is greater than 0.02, add a label
-                        if (apparentRadius > 0.02) {
-                            addLabelToNode(node);
-                        } else {
-                            removeLabelFromNode(node); // Hide label if radius is too small
-                        }
-                    }
-                });
-            }
-        }
- 
-        // Function to add label to a node
-        function addLabelToNode(node) {
-            if (!node.label) {
-                const label = document.createElement('div');
-                label.textContent = node.__data?.name || '';  
- 
-                label.className = 'node-label';
- 
-                Object.assign(label.style, {
-                    fontSize: '10px',        // Smaller text size
-                    padding: '2px 4px',      // Small padding
-                    background: 'rgba(0, 0, 0, 0.6)', // Semi-transparent background
-                    color: '#fff',           // White text
-                    borderRadius: '4px',     // Rounded corners
-                    pointerEvents: 'none',   // Avoid interference with mouse events
-                    whiteSpace: 'nowrap',    // Prevent text from wrapping
-                });
- 
-                const labelObject = new THREE.CSS2DObject(label);
-                node.add(labelObject); 
-                node.label = labelObject;
-            }
-        }
- 
-        // Function to remove label from a node
-        function removeLabelFromNode(node) {
-            if (node.label) {
-                node.remove(node.label);
-                node.label = null;
-            }
-        }
- 
-        // Function to Force Render
-        function forceRender() {
-            if (Graph) {
-                Graph.refresh();  // Refresh the graph
-                renderer.render(scene, camera);  // Force render
-            }
-        }
- 
-        loadGraph();
+
+    <!-- Script loaded at the end to ensure DOM elements are loaded -->
+    <script type="module">
+        import Graph from './Graph/Graph.js';
+        import NodeManager from './Graph/NodeManager.js';
+        import ZoomManager from './Graph/ZoomManager.js';
+
+        const graph = new Graph('3d-graph');
+        graph.initializeGraph().then(() => {
+            // Initialize the ZoomManager and NodeManager after the graph is initialized
+            const zoomManager = new ZoomManager(graph.camera, graph.renderer, graph.scene);
+            const nodeManager = new NodeManager(graph.getGraphInstance());
+
+            // Explicitly bind functions to the window object
+            window.highlightNodeById = function() {
+                const nodeId = parseInt(document.getElementById("nodeIdInput").value, 10);
+                if (isNaN(nodeId)) {
+                    alert("Please enter a valid Node ID");
+                    return;
+                }
+                nodeManager.highlightNode(nodeId, graph.nodeRelations);
+            };
+
+            window.zoomIn = function() {
+                zoomManager.zoomIn();
+            };
+
+            window.zoomOut = function() {
+                zoomManager.zoomOut();
+            };
+        }).catch(error => {
+            console.error("Error initializing graph:", error);
+        });
     </script>
 </body>
 </html>
