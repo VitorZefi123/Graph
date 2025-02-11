@@ -11,21 +11,22 @@ class ZoomManager {
         return (node.geometry.parameters.radius) * (fovScale / distanceToCamera);
     }
 
-    zoomIn() {
+    zoomIn(event) {
         debugger;
         if (this.camera) {
-            this.camera.position.z -= 120;
+            const zoomAmount = Math.abs(event.deltaY) * 0.005;
+            this.camera.position.z -= zoomAmount;
             this.camera.updateProjectionMatrix();
-debugger;
             this.updateNodeLabels();
         }
     }
 
-    zoomOut() {
+    zoomOut(event) {
+        debugger;
         if (this.camera) {
-            this.camera.position.z += 120;
+            const zoomAmount = Math.abs(event.deltaY) * 0.005; 
+            this.camera.position.z += zoomAmount;
             this.camera.updateProjectionMatrix();
-
             this.updateNodeLabels();
         }
     }

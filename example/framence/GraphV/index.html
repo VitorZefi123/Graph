@@ -112,7 +112,7 @@
         // Function to zoom in (and update the apparent radius)
         function zoomIn() {
             if (camera) {
-                camera.position.z -= 120; // Move camera closer
+                camera.position.z -= 20; // Move camera closer
                 camera.updateProjectionMatrix();
                 renderer.render(scene, camera);
  
@@ -137,7 +137,7 @@
         // Function to zoom out (and update the apparent radius)
         function zoomOut() {
             if (camera) {
-                camera.position.z += 120; // Move camera farther
+                camera.position.z += 20; // Move camera farther
                 camera.updateProjectionMatrix();
                 renderer.render(scene, camera);
  

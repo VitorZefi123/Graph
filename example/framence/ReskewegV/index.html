@@ -1,17 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>3D Force Graph with Zoom</title>
     <style>
-        body { margin: 0; overflow: hidden; }
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
         .controls {
             position: absolute;
             top: 10px;
             left: 10px;
             z-index: 10;
         }
+
         button {
             padding: 8px 12px;
             margin: 5px;
@@ -23,6 +29,7 @@
     <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
     <script src="//unpkg.com/3d-force-graph"></script>
 </head>
+
 <body>
     <div class="controls">
         <input type="number" id="nodeIdInput" placeholder="Enter Node ID">
@@ -45,7 +52,7 @@
             const nodeManager = new NodeManager(graph.getGraphInstance());
 
             // Explicitly bind functions to the window object
-            window.highlightNodeById = function() {
+            window.highlightNodeById = function () {
                 const nodeId = parseInt(document.getElementById("nodeIdInput").value, 10);
                 if (isNaN(nodeId)) {
                     alert("Please enter a valid Node ID");
@@ -54,16 +61,30 @@
                 nodeManager.highlightNode(nodeId, graph.nodeRelations);
             };
 
-            window.zoomIn = function() {
+            window.zoomIn = function () {
                 zoomManager.zoomIn();
             };
 
-            window.zoomOut = function() {
+            window.zoomOut = function () {
                 zoomManager.zoomOut();
             };
+
+            window.addEventListener("wheel", (event) => {
+                if (event.deltaY < 0) {
+                    debugger;
+                    // Scrolling up -> Zoom in
+                    zoomManager.zoomIn(event);
+                } else {
+                    debugger;
+                    // Scrolling down -> Zoom out
+                    zoomManager.zoomOut(event);
+                }
+            });
+
         }).catch(error => {
             console.error("Error initializing graph:", error);
         });
     </script>
 </body>
+
 </html>

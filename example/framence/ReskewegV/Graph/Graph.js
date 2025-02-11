@@ -1,5 +1,4 @@
-// Import NodeManager if it's in a separate file
-import NodeManager from './NodeManager.js';  // Adjust the path if necessary
+import NodeManager from './NodeManager.js'; 
 
 
 class Graph {
@@ -22,7 +21,7 @@ class Graph {
             const jsonData = await response.json();
 
             const gData = {
-                nodes: jsonData.Nodes.map(node => this.createNode(node)), // This calls the method to create nodes
+                nodes: jsonData.Nodes.map(node => this.createNode(node)), 
                 links: jsonData.Nodes.flatMap(node =>
                     node.edges.map(targetId => ({ source: node.id, target: targetId }))
                 )
@@ -41,11 +40,9 @@ class Graph {
                 });
 
                 this.nodeManager = new NodeManager(this.graph);
-debugger;
-                // Use NodeManager's highlightNode method in the onNodeClick event
                 this.graph.onNodeClick(node => {
                     debugger;
-                    this.nodeManager.highlightNode(node.id, this.nodeRelations); // Call highlightNode from NodeManager
+                    this.nodeManager.highlightNode(node.id, this.nodeRelations);
                 });
 
             this.graph.enableNodeDrag(false);
@@ -60,16 +57,15 @@ debugger;
 
     createNode(node) {
         node.edges.forEach(targetId => {
-            // Use `this.nodeRelations` to refer to the property within the class
             if (!this.nodeRelations[node.id]) {
                 this.nodeRelations[node.id] = new Set();
             }
-            this.nodeRelations[node.id].add(targetId); // Add child node
+            this.nodeRelations[node.id].add(targetId); 
 
             if (!this.nodeRelations[targetId]) {
                 this.nodeRelations[targetId] = new Set();
             }
-            this.nodeRelations[targetId].add(node.id); // Add parent node
+            this.nodeRelations[targetId].add(node.id);
         });
 
         return {
