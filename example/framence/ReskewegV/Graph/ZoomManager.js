@@ -8,39 +8,20 @@ class ZoomManager {
     getApparentRadius(node) {
         const distanceToCamera = this.camera.position.distanceTo(node.position);
         const fovScale = Math.tan(THREE.MathUtils.degToRad(this.camera.fov / 2)) * 2;
-        return (node.geometry.parameters.radius) * (fovScale / distanceToCamera);
-    }
-
-    zoomIn(event) {
-        debugger;
-        if (this.camera) {
-            const zoomAmount = Math.abs(event.deltaY) * 0.005;
-            this.camera.position.z -= zoomAmount;
-            this.camera.updateProjectionMatrix();
-            this.updateNodeLabels();
-        }
-    }
-
-    zoomOut(event) {
-        debugger;
-        if (this.camera) {
-            const zoomAmount = Math.abs(event.deltaY) * 0.005; 
-            this.camera.position.z += zoomAmount;
-            this.camera.updateProjectionMatrix();
-            this.updateNodeLabels();
-        }
+        const apparentRadius = (node.geometry.parameters.radius) * (fovScale / distanceToCamera);  
+        return apparentRadius;
     }
 
     updateNodeLabels() {
         this.scene.traverse(object => {
             if (object.isMesh) {
-                const node = object;
-                const apparentRadius = this.getApparentRadius(node);
+                debugger;
+                const apparentRadius = this.getApparentRadius(object);
 
                 if (apparentRadius > 0.02) {
-                    this.addLabelToNode(node);
+                    this.addLabelToNode(object);
                 } else {
-                    this.removeLabelFromNode(node);
+                    this.removeLabelFromNode(object);
                 }
             }
         });

@@ -42,7 +42,7 @@ class Graph {
                 this.nodeManager = new NodeManager(this.graph);
                 this.graph.onNodeClick(node => {
                     debugger;
-                    this.nodeManager.highlightNode(node.id, this.nodeRelations);
+                    this.nodeManager.highlightNodes([node.id], this.nodeRelations);
                 });
 
             this.graph.enableNodeDrag(false);

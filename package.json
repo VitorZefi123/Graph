@@ -48,6 +48,7 @@
   "dependencies": {
     "accessor-fn": "1",
     "kapsule": "^1.16",
+    "lodash": "^4.17.21",
     "three": ">=0.118 <1",
     "three-forcegraph": "1",
     "three-render-objects": "^1.35"

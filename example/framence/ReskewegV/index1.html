@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Force Graph with Zoom</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 10;
+        }
+
+        button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+    </style>
+    <script src="https://unpkg.com/three@0.130.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
+    <script src="//unpkg.com/3d-force-graph"></script>
+</head>
+
+<body>
+    <div class="controls">
+        <input type="text" id="nodeIdInput" placeholder="Enter Node IDs (e.g. 1234,456,784)">
+        <button onclick="highlightNodeById()">Search</button>       
+    </div>
+    <div id="3d-graph"></div>
+
+    <!-- Script loaded at the end to ensure DOM elements are loaded -->
+    <script type="module">
+        import Graph from './Graph/Graph.js';
+        import NodeManager from './Graph/NodeManager.js';
+        import ZoomManager from './Graph/ZoomManager.js';
+
+        const graph = new Graph('3d-graph');
+        graph.initializeGraph().then(() => {
+            // Initialize the ZoomManager and NodeManager after the graph is initialized
+            const zoomManager = new ZoomManager(graph.camera, graph.renderer, graph.scene);
+            const nodeManager = new NodeManager(graph.getGraphInstance());
+
+            // Explicitly bind functions to the window object
+            window.highlightNodeById = function () {
+            const input = document.getElementById("nodeIdInput").value.trim();
+
+    if (!input) {
+        alert("Please enter valid Node IDs");
+        return;
+    }
+
+    // Convert input string "1234,456,784" into an array of numbers
+    const nodeIds = input.split(",").map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id));
+
+    if (nodeIds.length === 0) {
+        alert("Please enter valid Node IDs");
+        return;
+    }
+
+    nodeManager.highlightNodes(nodeIds, graph.nodeRelations);
+};
+
+            window.addEventListener("wheel", (event) => {      
+                debugger;       
+                    zoomManager.updateNodeLabels();      
+            });
+
+        }).catch(error => {
+            console.error("Error initializing graph:", error);
+        });
+    </script>
+</body>
+
+</html>

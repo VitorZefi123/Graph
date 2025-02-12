@@ -6,21 +6,24 @@ class NodeManager {
         this.nodeRelations = {}; 
     }
 
-    highlightNode(nodeId, nodeRelations) {
+    highlightNodes(nodes, nodeRelations) {
         debugger;
         this.nodeRelations = nodeRelations;
         this.highlightedNodes.clear();
         this.highlightedLinks.clear();
-
-        if (nodeId) {
-            this.highlightedNodes.add(nodeId);
-            const { relatedNodes, relatedEdges } = this.getRelatedNodes(nodeId);
-            relatedNodes.forEach(n => this.highlightedNodes.add(n));
-            relatedEdges.forEach(l => this.highlightedLinks.add(l));
+    
+        if (nodes && nodes.length > 0) {
+            nodes.forEach(nodeId => {
+                this.highlightedNodes.add(nodeId);
+                const { relatedNodes, relatedEdges } = this.getRelatedNodes(nodeId);
+                relatedNodes.forEach(n => this.highlightedNodes.add(n));
+                relatedEdges.forEach(l => this.highlightedLinks.add(l));
+            });
         }
-
+    
         this.updateGraphColors();
     }
+    
 
     updateGraphColors() {
         this.graph.nodeColor(n => this.highlightedNodes.has(n.id) ? 'red' : 'gray')

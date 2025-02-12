@@ -1,90 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Force Graph with Zoom</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-        }
-
-        button {
-            padding: 8px 12px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-    </style>
-    <script src="https://unpkg.com/three@0.130.0/build/three.min.js"></script>
-    <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
-    <script src="//unpkg.com/3d-force-graph"></script>
+    <title>Sentence Parser</title>
+    <!-- Custom CSS -->
 </head>
-
 <body>
-    <div class="controls">
-        <input type="number" id="nodeIdInput" placeholder="Enter Node ID">
-        <button onclick="highlightNodeById()">Highlight Node</button>
-        <button onclick="zoomIn()">Zoom In</button>
-        <button onclick="zoomOut()">Zoom Out</button>
+    <div class="container mt-5">
+        <div class="card p-4 shadow">
+            <h2 class="text-center">Sentence Parser</h2>
+            
+            <input type="text" id="sentenceInput" class="form-control mt-3" placeholder="Enter a sentence...">
+            <button class="btn btn-primary mt-3 w-100" onclick="parseSentence()">Parse</button>
+            
+            <h4 class="mt-4">Parsed Output:</h4>
+            <p id="parsedResult" class="alert alert-info"></p>
+        </div>
     </div>
-    <div id="3d-graph"></div>
 
-    <!-- Script loaded at the end to ensure DOM elements are loaded -->
+    <!-- Custom JS -->
     <script type="module">
-        import Graph from './Graph/Graph.js';
-        import NodeManager from './Graph/NodeManager.js';
-        import ZoomManager from './Graph/ZoomManager.js';
+        // Import SentenceParser class
+        import SentenceParser from './Graph/SentenceParser.js';
 
-        const graph = new Graph('3d-graph');
-        graph.initializeGraph().then(() => {
-            // Initialize the ZoomManager and NodeManager after the graph is initialized
-            const zoomManager = new ZoomManager(graph.camera, graph.renderer, graph.scene);
-            const nodeManager = new NodeManager(graph.getGraphInstance());
+        // Function to parse sentence when button is clicked
+        window.parseSentence = function () {
+            debugger;
+            const inputText = document.getElementById("sentenceInput").value.trim();
+            
+            if (!inputText) {
+                document.getElementById("parsedResult").innerHTML = "<span class='text-danger'>Please enter a sentence.</span>";
+                return;
+            }
 
-            // Explicitly bind functions to the window object
-            window.highlightNodeById = function () {
-                const nodeId = parseInt(document.getElementById("nodeIdInput").value, 10);
-                if (isNaN(nodeId)) {
-                    alert("Please enter a valid Node ID");
-                    return;
-                }
-                nodeManager.highlightNode(nodeId, graph.nodeRelations);
-            };
+            // Create an instance of SentenceParser
+            const sentenceParser = new SentenceParser(inputText);
 
-            window.zoomIn = function () {
-                zoomManager.zoomIn();
-            };
+            // Parse the sentence
+            const parsedOutput = sentenceParser.parseSentence();
 
-            window.zoomOut = function () {
-                zoomManager.zoomOut();
-            };
-
-            window.addEventListener("wheel", (event) => {
-                if (event.deltaY < 0) {
-                    debugger;
-                    // Scrolling up -> Zoom in
-                    zoomManager.zoomIn(event);
-                } else {
-                    debugger;
-                    // Scrolling down -> Zoom out
-                    zoomManager.zoomOut(event);
-                }
-            });
-
-        }).catch(error => {
-            console.error("Error initializing graph:", error);
-        });
+            // Display the parsed result
+            document.getElementById("parsedResult").innerText = parsedOutput.join(" | ");
+        }
     </script>
 </body>
-
 </html>
