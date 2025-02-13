@@ -13,6 +13,11 @@
             
             <input type="text" id="sentenceInput" class="form-control mt-3" placeholder="Enter a sentence...">
             <button class="btn btn-primary mt-3 w-100" onclick="parseSentence()">Parse</button>
+
+            <label for="sql-input">Enter SQL-like Condition:</label>
+    <input type="text" id="sql-input" class="input-box" placeholder="e.g. greater than 10 meters OR lower than 50 meters AND equals 100 meters">
+    <button onclick="parseInput()">Parse Condition</button>
+    <div id="output" class="output"></div>
             
             <h4 class="mt-4">Parsed Output:</h4>
             <p id="parsedResult" class="alert alert-info"></p>
@@ -23,6 +28,7 @@
     <script type="module">
         // Import SentenceParser class
         import SentenceParser from './Graph/SentenceParser.js';
+        import SqlConditon from './Graph/SqlConditon.js';
 
         // Function to parse sentence when button is clicked
         window.parseSentence = function () {
@@ -43,6 +49,30 @@
             // Display the parsed result
             document.getElementById("parsedResult").innerText = parsedOutput.join(" | ");
         }
+
+
+        window.parseInput= function () {
+            debugger;
+            const userInput = document.getElementById('sql-input').value;
+            
+            // Check if the input is empty
+            if (!userInput.trim()) {
+                document.getElementById('output').innerHTML = 'Please enter a condition to parse.';
+                return;
+            }
+            debugger;
+            // Create an instance of SqlCondition with the user input
+            const sqlCondition = new SqlConditon(userInput);
+            
+            // Parse the condition
+            const parsedResult = sqlCondition.parseSqlCondition();
+            
+            // Display the parsed result
+            document.getElementById('output').innerHTML = parsedResult;
+        }
+
+        // Function to format the parsed result for display
+ 
     </script>
 </body>
 </html>
