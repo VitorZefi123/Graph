@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sentence Parser</title>
     <!-- Custom CSS -->
+
+    <style>
+        .input-box {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
 </head>
 <body>
     <div class="container mt-5">
         <div class="card p-4 shadow">
-            <h2 class="text-center">Sentence Parser</h2>
-            
-            <input type="text" id="sentenceInput" class="form-control mt-3" placeholder="Enter a sentence...">
-            <button class="btn btn-primary mt-3 w-100" onclick="parseSentence()">Parse</button>
+
 
             <label for="sql-input">Enter SQL-like Condition:</label>
-    <input type="text" id="sql-input" class="input-box" placeholder="e.g. greater than 10 meters OR lower than 50 meters AND equals 100 meters">
-    <button onclick="parseInput()">Parse Condition</button>
+            <input type="text" id="sql-input" class="input-box" placeholder="e.g. greater than 10 meters OR lower than 50 meters AND equals 100 meters">
+            <button onclick="parsesInput()">Parse Condition</button>
+            
     <div id="output" class="output"></div>
             
             <h4 class="mt-4">Parsed Output:</h4>
@@ -28,30 +39,9 @@
     <script type="module">
         // Import SentenceParser class
         import SentenceParser from './Graph/SentenceParser.js';
-        import SqlConditon from './Graph/SqlConditon.js';
+        import SqlCondition from './Graph/SqlCondition.js';
 
-        // Function to parse sentence when button is clicked
-        window.parseSentence = function () {
-            debugger;
-            const inputText = document.getElementById("sentenceInput").value.trim();
-            
-            if (!inputText) {
-                document.getElementById("parsedResult").innerHTML = "<span class='text-danger'>Please enter a sentence.</span>";
-                return;
-            }
-
-            // Create an instance of SentenceParser
-            const sentenceParser = new SentenceParser(inputText);
-
-            // Parse the sentence
-            const parsedOutput = sentenceParser.parseSentence();
-
-            // Display the parsed result
-            document.getElementById("parsedResult").innerText = parsedOutput.join(" | ");
-        }
-
-
-        window.parseInput= function () {
+        window.parsesInput= function () {
             debugger;
             const userInput = document.getElementById('sql-input').value;
             
@@ -61,14 +51,12 @@
                 return;
             }
             debugger;
-            // Create an instance of SqlCondition with the user input
-            const sqlCondition = new SqlConditon(userInput);
-            
-            // Parse the condition
-            const parsedResult = sqlCondition.parseSqlCondition();
-            
-            // Display the parsed result
-            document.getElementById('output').innerHTML = parsedResult;
+            const parsedResult = SqlCondition.parseSqlCondition(userInput);
+
+// Convert object to a readable JSON string and display it
+document.getElementById('output').innerHTML = `<pre>${JSON.stringify(parsedResult, null, 2)}</pre>`;
+
+
         }
 
         // Function to format the parsed result for display

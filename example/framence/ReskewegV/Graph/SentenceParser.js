@@ -1,5 +1,6 @@
 import Comparison from './Comparison.js';
 import AreaUnit from './AreaUnit.js';
+import Columns from './Columns.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -17,13 +18,20 @@ class SentenceParser {
     }
  
      getValueFromType(sentence) {
-        debugger;
         const result = {
+            columnName: null,
             comparisonOperator: null,
             value: null,
             unit: null
         };
    debugger;
+
+   for (const column of Columns.getAllColumns()) {
+    if (typeof column === "string" && sentence.toLowerCase().includes(column.toLowerCase())) {
+        result.columnName = column;
+        break; // Stop early if found
+    }
+}
         // Check if the sentence contains any comparison term
         for (const [term, operator] of Object.entries(Comparison.termToOperatorMap)) {
             if (sentence.toLowerCase().includes(term)) {
@@ -47,6 +55,7 @@ class SentenceParser {
         }
    
         return [
+            `Column Name: ${result.columnName || 'N/A'}`,
             `Comparison Operator: ${result.comparisonOperator || 'N/A'}`,
             `Value: ${result.value || 'N/A'}`,
             `Unit: ${result.unit || 'N/A'}`
