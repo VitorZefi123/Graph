@@ -21,12 +21,12 @@ class NodeManager {
             });
         }
     
-        this.updateGraphColors();
+        this.updateGraphColors(nodes);
     }
     
 
-    updateGraphColors() {
-        this.graph.nodeColor(n => this.highlightedNodes.has(n.id) ? 'red' : 'gray')
+    updateGraphColors(nodes) {
+        this.graph.nodeColor(n => this.highlightedNodes.has(n.id) ? nodes.includes(n.id) ? "blue" : "red" : 'gray')
             .linkColor(l => this.highlightedNodes.has(l.source.id) && this.highlightedNodes.has(l.target.id) ? '#FF5733' : '#D3D3D3')
             .linkWidth(l => this.highlightedNodes.has(l.source.id) && this.highlightedNodes.has(l.target.id) ? 4 : 1);
     }

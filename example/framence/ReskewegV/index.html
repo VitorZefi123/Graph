@@ -18,6 +18,9 @@
             border: 1px solid #ccc;
         }
     </style>
+       <script src="https://unpkg.com/three@0.130.0/build/three.min.js"></script>
+       <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
+       <script src="//unpkg.com/3d-force-graph"></script>
 </head>
 <body>
     <div class="container mt-5">
@@ -29,19 +32,22 @@
             <button onclick="parsesInput()">Parse Condition</button>
             
     <div id="output" class="output"></div>
-            
-            <h4 class="mt-4">Parsed Output:</h4>
             <p id="parsedResult" class="alert alert-info"></p>
         </div>
     </div>
+    <div id="3d-graph"></div>
 
     <!-- Custom JS -->
     <script type="module">
         // Import SentenceParser class
         import SentenceParser from './Graph/SentenceParser.js';
         import SqlCondition from './Graph/SqlCondition.js';
+        import GraphQuery from './Graph/GraphQuery.js';
+
+        const graphQuery = new GraphQuery('3d-graph');
 
         window.parsesInput= function () {
+            const graphQuery = new GraphQuery('3d-graph');
             debugger;
             const userInput = document.getElementById('sql-input').value;
             
@@ -52,10 +58,7 @@
             }
             debugger;
             const parsedResult = SqlCondition.parseSqlCondition(userInput);
-
-// Convert object to a readable JSON string and display it
-document.getElementById('output').innerHTML = `<pre>${JSON.stringify(parsedResult, null, 2)}</pre>`;
-
+graphQuery.initializeGraph(parsedResult);
 
         }
 

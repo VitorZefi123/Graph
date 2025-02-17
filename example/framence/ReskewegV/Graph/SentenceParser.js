@@ -1,6 +1,7 @@
 import Comparison from './Comparison.js';
 import AreaUnit from './AreaUnit.js';
 import Columns from './Columns.js';
+import Category from './Category.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -47,11 +48,40 @@ class SentenceParser {
                 break; // Stop early if found
             }
         }
-   
-        // Extract numeric value
-        const valueMatch = sentence.match(/[-+]?[0-9]*\.?[0-9]+/);
-        if (valueMatch) {
-            result.value = parseFloat(valueMatch[0]);
+
+        // Category Code
+
+        /*       for (const dinKey in Category.getCategoryMapping()) {
+            const category = Category.getCategoryMapping()[dinKey];
+      
+            // Iterate through each subcategory in the DIN
+            for (const key in category) {
+              const value = category[key];
+      
+              // Check if the sentence includes this category or subcategory
+              if (sentence.toLowerCase().includes(value.toLowerCase())) {
+                result.value = dinKey + "-" + key;
+                break; // Stop if the category and subcategory are found
+              }
+            }
+      
+            // If a match was found, break out of the outer loop
+            if (result.value) {
+              break;
+            }
+          }
+   */
+        const dateRegex = /\b(?:\d{4}-\d{2}-\d{2}|\d{2}[\/.-]\d{2}[\/.-]\d{4})\b/;
+        const numberRegex = /[-+]?[0-9]*\.?[0-9]+/;
+        debugger;
+    
+        const dateMatch = sentence.match(dateRegex);
+        const numberMatch = sentence.match(numberRegex);
+    
+        if (dateMatch) {
+            result.value = dateMatch[0];
+        } else if (numberMatch) {
+            result.value = parseFloat(numberMatch[0]);
         }
    
         return [

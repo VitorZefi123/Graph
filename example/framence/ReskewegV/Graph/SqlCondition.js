@@ -12,7 +12,7 @@ class SqlCondition {
         console.log("Parsing Condition:", sentence);
         
         // First, split by OR
-        let orParts = sentence.split(/\s+OR\s+/i).map(part => part.trim());
+        let orParts = sentence.split(/\s+OR\s+/).map(part => part.trim());
 
         if (orParts.length > 1) {
             // Recursively parse left and right side of OR
@@ -24,7 +24,7 @@ class SqlCondition {
         }
 
         // If no OR, split by AND
-        let andParts = sentence.split(/\s+AND\s+/i).map(part => part.trim());
+        let andParts = sentence.split(/\s+AND\s+/).map(part => part.trim());
 
         if (andParts.length > 1) {
             // Recursively parse left and right side of AND
