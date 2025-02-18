@@ -27,17 +27,19 @@ class SentenceParser {
         };
    debugger;
 
+
+
    for (const column of Columns.getAllColumns()) {
     if (typeof column === "string" && sentence.toLowerCase().includes(column.toLowerCase())) {
         result.columnName = column;
-        break; // Stop early if found
+        break; 
     }
 }
         // Check if the sentence contains any comparison term
         for (const [term, operator] of Object.entries(Comparison.termToOperatorMap)) {
             if (sentence.toLowerCase().includes(term)) {
                 result.comparisonOperator = operator;
-                break; // Stop early if found
+                break; 
             }
         }
    
@@ -45,45 +47,13 @@ class SentenceParser {
         for (const [unit, unitName] of Object.entries(AreaUnit.unitToNameMap)) {
             if (sentence.toLowerCase().includes(unit)) {
                 result.unit = unitName;
-                break; // Stop early if found
+                break; 
             }
         }
 
-        // Category Code
-
-        /*       for (const dinKey in Category.getCategoryMapping()) {
-            const category = Category.getCategoryMapping()[dinKey];
-      
-            // Iterate through each subcategory in the DIN
-            for (const key in category) {
-              const value = category[key];
-      
-              // Check if the sentence includes this category or subcategory
-              if (sentence.toLowerCase().includes(value.toLowerCase())) {
-                result.value = dinKey + "-" + key;
-                break; // Stop if the category and subcategory are found
-              }
-            }
-      
-            // If a match was found, break out of the outer loop
-            if (result.value) {
-              break;
-            }
-          }
-   */
-        const dateRegex = /\b(?:\d{4}-\d{2}-\d{2}|\d{2}[\/.-]\d{2}[\/.-]\d{4})\b/;
-        const numberRegex = /[-+]?[0-9]*\.?[0-9]+/;
-        debugger;
     
-        const dateMatch = sentence.match(dateRegex);
-        const numberMatch = sentence.match(numberRegex);
-    
-        if (dateMatch) {
-            result.value = dateMatch[0];
-        } else if (numberMatch) {
-            result.value = parseFloat(numberMatch[0]);
-        }
-   
+        this.findCategoryOrValue(sentence, result);
+  
         return [
             `Column Name: ${result.columnName || 'N/A'}`,
             `Comparison Operator: ${result.comparisonOperator || 'N/A'}`,
@@ -91,6 +61,41 @@ class SentenceParser {
             `Unit: ${result.unit || 'N/A'}`
         ];
        }
+
+        findCategoryOrValue(sentence, result) {
+    
+        const dateRegex = /\b(?:\d{4}-\d{2}-\d{2}|\d{2}[\/.-]\d{2}[\/.-]\d{4})\b/;
+        const numberRegex = /[-+]?[0-9]*\.?[0-9]+/;  
+        const categoryMatch = this.findCategory(sentence);
+        const dateMatch = sentence.match(dateRegex);
+        const numberMatch = sentence.match(numberRegex);
+
+        if (categoryMatch) {
+            result.value = categoryMatch;
+        }
+        else if (dateMatch) {
+            result.value = dateMatch[0];
+        }
+        else if (numberMatch) {
+            result.value = parseFloat(numberMatch[0]);
+        }
+    }
+
+    findCategory(sentence) {
+        for (const dinKey in Category.getCategoryMapping()) {
+            const category = Category.getCategoryMapping()[dinKey];
+
+            for (const key in category) {
+                const value = category[key];
+
+                if (sentence.toLowerCase().includes(value.toLowerCase())) {
+                    return `${dinKey}-${key}`;
+                }
+            }
+        }
+        return null;
+    }
+    
 }
  
 export default SentenceParser;

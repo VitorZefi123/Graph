@@ -1,12 +1,12 @@
 class Category {
     static DIN277 = {
         NF2: "NF2",
-        VF: "VF" // Just a simplified label for VF
+        VF: "VF" 
       };
     
       static DIN123 = {
         NF3: "NF3",
-        VH: "VH" // Example for another DIN category
+        VH: "VH" 
       };
     
       static getCategoryMapping() {
