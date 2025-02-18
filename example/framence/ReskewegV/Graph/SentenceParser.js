@@ -11,7 +11,6 @@ class SentenceParser {
  
     // Method to process the sentence
     parseSentence() {
-        // Debugging
         console.log("Parsing sentence:", this.sentence);
  
         // Call getValueFromType to process the sentence
@@ -26,8 +25,6 @@ class SentenceParser {
             unit: null
         };
    debugger;
-
-
 
    for (const column of Columns.getAllColumns()) {
     if (typeof column === "string" && sentence.toLowerCase().includes(column.toLowerCase())) {
@@ -50,7 +47,6 @@ class SentenceParser {
                 break; 
             }
         }
-
     
         this.findCategoryOrValue(sentence, result);
   
@@ -70,13 +66,13 @@ class SentenceParser {
         const dateMatch = sentence.match(dateRegex);
         const numberMatch = sentence.match(numberRegex);
 
-        if (categoryMatch) {
+        if (result.columnName == Columns.CATEGORY ) {
             result.value = categoryMatch;
         }
-        else if (dateMatch) {
+        else if (result.columnName == Columns.DATE) {
             result.value = dateMatch[0];
         }
-        else if (numberMatch) {
+        else if (result.columnName == Columns.ROOM_SIZE) {
             result.value = parseFloat(numberMatch[0]);
         }
     }
