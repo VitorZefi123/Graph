@@ -67,7 +67,8 @@ class SentenceParser {
         const numberMatch = sentence.match(numberRegex);
 
         if (result.columnName == Columns.CATEGORY ) {
-            result.value = categoryMatch;
+            result.value = categoryMatch.dinKey;
+            result.unit = categoryMatch.key
         }
         else if (result.columnName == Columns.DATE) {
             result.value = dateMatch[0];
@@ -85,7 +86,7 @@ class SentenceParser {
                 const value = category[key];
 
                 if (sentence.toLowerCase().includes(value.toLowerCase())) {
-                    return `${dinKey}-${key}`;
+                    return { dinKey, key }; // Return as an object
                 }
             }
         }
