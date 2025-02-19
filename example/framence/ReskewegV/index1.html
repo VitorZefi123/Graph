@@ -24,6 +24,32 @@
             cursor: pointer;
             font-size: 14px;
         }
+
+        /* Loader styles */
+        #loading-indicator {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+            z-index: 9999;
+        }
+
+        /* Interaction blocker */
+        #blocker {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 9998;
+            display: none;
+        }
     </style>
     <script src="https://unpkg.com/three@0.130.0/build/three.min.js"></script>
     <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
@@ -33,11 +59,15 @@
 <body>
     <div class="controls">
         <input type="text" id="nodeIdInput" placeholder="Enter Node IDs (e.g. 1234,456,784)">
-        <button onclick="highlightNodeById()">Search</button>       
+        <button onclick="highlightNodeById()">Search</button>
     </div>
+
     <div id="3d-graph"></div>
 
-    <!-- Script loaded at the end to ensure DOM elements are loaded -->
+    <!-- Loader and Blocker -->
+    <div id="blocker"></div>
+    <div id="loading-indicator">Loading...</div>
+
     <script type="module">
         import Graph from './Graph/Graph.js';
         import NodeManager from './Graph/NodeManager.js';
@@ -45,35 +75,55 @@
 
         const graph = new Graph('3d-graph');
         graph.initializeGraph().then(() => {
-            // Initialize the ZoomManager and NodeManager after the graph is initialized
             const zoomManager = new ZoomManager(graph.camera, graph.renderer, graph.scene);
             const nodeManager = new NodeManager(graph.getGraphInstance());
 
-            // Explicitly bind functions to the window object
+            // Get loader and blocker elements
+            const loader = document.getElementById("loading-indicator");
+            const blocker = document.getElementById("blocker");
+
             window.highlightNodeById = function () {
-            const input = document.getElementById("nodeIdInput").value.trim();
+                const input = document.getElementById("nodeIdInput").value.trim();
 
-    if (!input) {
-        alert("Please enter valid Node IDs");
-        return;
-    }
+                if (!input) {
+                    alert("Please enter valid Node IDs");
+                    return;
+                }
 
-    // Convert input string "1234,456,784" into an array of numbers
-    const nodeIds = input.split(",").map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id));
+                const nodeIds = input.split(",").map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id));
 
-    if (nodeIds.length === 0) {
-        alert("Please enter valid Node IDs");
-        return;
-    }
+                if (nodeIds.length === 0) {
+                    alert("Please enter valid Node IDs");
+                    return;
+                }
 
-    nodeManager.highlightNodes(nodeIds, graph.nodeRelations);
-};
+                // Show loader and block interactions
+                loader.style.display = 'block';
+                blocker.style.display = 'block';
 
-/*    window.addEventListener("wheel", (event) => {      
-                debugger;       
-                    zoomManager.updateNodeLabels();      
+                setTimeout(() => {
+                    nodeManager.highlightNodes(nodeIds, graph.nodeRelations);
+
+                    // Hide loader and unblock interactions
+                    loader.style.display = 'none';
+                    blocker.style.display = 'none';
+                }, 100);
+            };
+
+            window.addEventListener("wheel", (event) => {      
+                // Show loader and block interactions
+                loader.style.display = 'block';
+                blocker.style.display = 'block';
+
+                setTimeout(() => {
+                    zoomManager.updateNodeLabels();
+
+                    // Hide loader and unblock interactions
+                    loader.style.display = 'none';
+                    blocker.style.display = 'none';
+                }, 100);
             });
-*/
+
         }).catch(error => {
             console.error("Error initializing graph:", error);
         });
