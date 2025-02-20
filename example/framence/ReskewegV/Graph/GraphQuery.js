@@ -24,6 +24,7 @@ class GraphQuery {
     }
 
     buildGraphData(conditionTree) {
+        debugger;
         let nodes = [];
         let links = [];
         let nodeId = 0;
@@ -47,7 +48,7 @@ class GraphQuery {
                 let rhsNodeId = traverseTree(tree.rhs, logicOpNodeId);
     
                 if (lhsNodeId !== null) 
-                    links.push({ source: logicOpNodeId, target: lhsNodeId, weight: 0.5 }); // Example weight
+                    links.push({ source: logicOpNodeId, target: lhsNodeId, weight: 0.5 }); 
 
                 if (rhsNodeId !== null) 
                     links.push({ source: logicOpNodeId, target: rhsNodeId, weight: 0.5 });
@@ -55,6 +56,7 @@ class GraphQuery {
     
                 return logicOpNodeId;
             } else if (Array.isArray(tree)) {
+                debugger;
                 // Create individual condition nodes
                 let lastNodeId = null;
                 for (let item of tree) {
@@ -64,7 +66,7 @@ class GraphQuery {
                     let weight = this.handleWeight(key, value);
 
                     if (lastNodeId !== null) {
-                        links.push({ source: lastNodeId, target: nodeId, weight: weight }); // Default weight
+                        links.push({ source: lastNodeId, target: nodeId, weight: weight });
                     }
                     lastNodeId = nodeId;
                 }
@@ -73,12 +75,15 @@ class GraphQuery {
             return null;
         };
     
-        traverseTree(conditionTree);
+        for(let conditation of conditionTree){
+            debugger;
+            traverseTree(conditation.parsedCondition);
+        }
+       
         return { nodes, links };
     }
 
      handleWeight(key) {
-        // Check if the key is 'Unit', 'Value', 'Column Name', or 'Comparison Operator'
         if (key === "Unit") {
             return 1; 
         } else if (key === "Value") {
@@ -87,9 +92,7 @@ class GraphQuery {
             return 0.5; 
         }
     }
-    
-    
-    
+        
 }
 
 export default GraphQuery;

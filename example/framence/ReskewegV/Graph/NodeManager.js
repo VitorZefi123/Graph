@@ -22,6 +22,29 @@ class NodeManager {
         }
     
         this.updateGraphColors(nodes);
+
+        const graphData = this.graph.graphData();
+
+        for( const nodeId of nodes) {
+        const node = graphData.nodes.find(n => n.id === nodeId);
+
+        debugger;
+
+        if (node) {
+            this.graph.cameraPosition(
+                { x: node.x, y: node.y, z: node.z + 250 }, 
+                { x: node.x, y: node.y, z: node.z }, 
+                1000 
+            );
+        } else {
+            console.warn(`Node with ID ${nodeId} not found`);
+        }
+    }
+
+       
+        console.log(graphData);
+
+    
     }
     
 

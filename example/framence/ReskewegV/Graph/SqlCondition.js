@@ -37,7 +37,9 @@ class SqlCondition {
 
         // If no AND/OR, it's a simple condition, parse it
         const parser = new SentenceParser(sentence);
-        return parser.parseSentence();
+        const test = parser.parseSentence();
+        debugger;
+        return test;
     }
 }
 

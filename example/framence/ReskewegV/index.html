@@ -55,21 +55,34 @@
         window.parsesInput= function () {
             const graphQuery = new GraphQuery('3d-graph');
             debugger;
-            const userInput = document.getElementById('sql-input').value;
+            const sentence = document.getElementById('sql-input').value;
             
             // Check if the input is empty
-            if (!userInput.trim()) {
+            if (!sentence.trim()) {
                 document.getElementById('output').innerHTML = 'Please enter a condition to parse.';
                 return;
             }
             debugger;
-            const parsedResult = SqlCondition.parseSqlCondition(userInput);
-            graphQuery.initializeGraph(parsedResult);
+            const sentences = [
+    "list all rooms greater than 20 sqm",
+    "list all rooms lower than 120 sqm",
+    "list all rooms greater than 250 sqm"
+];
+
+const parsedResults = sentences.map(sentence => ({
+    sentence: sentence,
+    parsedCondition: SqlCondition.parseSqlCondition(sentence)
+}));
+
+const response = {
+    results: parsedResults
+};
+
+debugger;
+            graphQuery.initializeGraph(parsedResults);
 
         }
 
-        // Function to format the parsed result for display
- 
     </script>
 </body>
 </html>
