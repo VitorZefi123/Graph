@@ -14,7 +14,19 @@ class GraphQuery {
             })(document.getElementById(this.containerId))
                 .graphData(graphData)
                 .nodeAutoColorBy('type')
-                .nodeLabel(node => node.label)
+                .nodeThreeObject(node => {
+                    const nodeLabel = document.createElement('div');
+                    nodeLabel.textContent = node.label;
+                    nodeLabel.style.color = 'white'; // Adjust text color
+                    nodeLabel.style.background = 'rgba(0, 0, 0, 0.7)'; // Optional: background
+                    nodeLabel.style.padding = '2px 5px';
+                    nodeLabel.style.fontSize = '12px';
+                    nodeLabel.style.borderRadius = '5px';
+                    
+                    const labelObject = new THREE.CSS2DObject(nodeLabel);
+                    labelObject.position.set(0, 10, 0); // Adjust position
+                    return labelObject;
+                })
                 .linkColor(() => 'gray')
                 .linkWidth(link => link.weight*2 || 1)
                 .linkLabel(link => `Weight: ${link.weight}`); // Show weight on hover

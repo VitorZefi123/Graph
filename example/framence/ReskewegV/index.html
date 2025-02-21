@@ -33,9 +33,8 @@
         </a>
 
         <div class="card p-4 shadow">
-            <label for="sql-input">Enter SQL-like Condition:</label>
-            <input type="text" id="sql-input" class="input-box" placeholder="e.g. greater than 10 meters OR lower than 50 meters AND equals 100 meters">
-            <button onclick="parsesInput()">Parse Condition</button>
+            <label for="sql-input">Parsed Sentences Condition:</label>
+            <button onclick="parsesInput()">Parse Sentences</button>
             
     <div id="output" class="output"></div>
             <p id="parsedResult" class="alert alert-info"></p>
@@ -50,23 +49,43 @@
         import SqlCondition from './Graph/SqlCondition.js';
         import GraphQuery from './Graph/GraphQuery.js';
 
-        const graphQuery = new GraphQuery('3d-graph');
-
         window.parsesInput= function () {
             const graphQuery = new GraphQuery('3d-graph');
             debugger;
+            /*
             const sentence = document.getElementById('sql-input').value;
             
             // Check if the input is empty
             if (!sentence.trim()) {
                 document.getElementById('output').innerHTML = 'Please enter a condition to parse.';
                 return;
-            }
+            }  
             debugger;
-            const sentences = [
-    "list all rooms greater than 20 sqm",
-    "list all rooms lower than 120 sqm",
-    "list all rooms greater than 250 sqm"
+*/
+const sentences = [
+"list all rooms greater than 20 sqm",
+"list all rooms lower than 120 sqm",
+"list all rooms greater than 250 sqm",
+"list all rooms whose net area is less than 20 sqm",
+"list all rooms whose net area is less than 10 sqm",
+"list all rooms whose net area is larger than 20 sqm",
+"list all rooms whose net area is larger than 50 sqm",
+"list all rooms whose net area is larger than 70 sqm",
+"list all rooms whose net area is larger than 150 sqm",
+"list all rooms whose net area is larger than 1000 sqm",
+"list all rooms with a net area of less than 5 sqm",
+"list all rooms reserved on date 2024-10-17",
+"list all rooms reserved on date 15/11/2024",
+"list all rooms reserved on date 20.12.2024",
+"list all category rooms for NUF2 - Office work",                       
+"list all rooms for NUF4 - Storage, distribution and sales",
+"list all category rooms for -- not defined",
+"list all rooms for VF - Transport area",
+"list all category rooms for NF - Usable area",
+"list all rooms for NF7 - Other uses",
+"list all rooms for TF - Technical functional area",
+"list all rooms whose net area is less than 100 sqm AND reserved on date 20-12-2024",
+"list all rooms whose net area is greater than 10 sqm AND lower than 50 sqm OR reserved on date 10-10-2024"
 ];
 
 const parsedResults = sentences.map(sentence => ({
