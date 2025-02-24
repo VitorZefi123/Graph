@@ -32,6 +32,7 @@ static  ComparisonTerm = {
     UNDER: 'under',
     LESS_THAN: 'less than',
     LESS_OR_EQUAL: 'less or equal',
+    LOWER_OR_EQUAL: 'lower or equal',
     EQUAL: 'equal',
     SAME: 'same',
     IDENTICAL: 'identical',
@@ -48,6 +49,7 @@ static  ComparisonTerm = {
  // Mapping from ComparisonTerm to ComparisonOperator
  static termToOperatorMap = {
     [Comparison.ComparisonTerm.GREATER_OR_EQUAL]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,
+    [Comparison.ComparisonTerm.LOWER_OR_EQUAL]: Comparison.ComparisonOperator.SMALLER_OR_EQUAL,
     [Comparison.ComparisonTerm.LARGER_OR_EQUAL]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,
     [Comparison.ComparisonTerm.EQUAL_OR_GREATER]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,
     [Comparison.ComparisonTerm.AT_LEAST]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,

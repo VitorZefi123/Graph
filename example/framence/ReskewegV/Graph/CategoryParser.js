@@ -9,6 +9,7 @@ class CategoryParser {
 
     parse() {
         const result = [];
+        debugger;
 
         if (this.#columnName !== undefined && this.#columnName !== null && this.#columnName !== '') {
             result.push(`Column Name: ${this.#columnName}`);
@@ -18,8 +19,8 @@ class CategoryParser {
             result.push(`Category: ${this.#categoryMatch.dinKey}`);
         }
 
-        if (this.#categoryMatch && this.#categoryMatch.key !== undefined && this.#categoryMatch.key !== null && this.#categoryMatch.key !== '') {
-            result.push(`Subcategory: ${this.#categoryMatch.key}`);
+        if (this.#categoryMatch && this.#categoryMatch.category !== undefined && this.#categoryMatch.category !== null && this.#categoryMatch.key !== '') {
+            result.push(`Subcategory: ${this.#categoryMatch.category}`);
         }
 
         if (result.length === 0) {

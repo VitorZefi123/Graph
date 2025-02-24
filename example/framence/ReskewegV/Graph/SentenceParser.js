@@ -49,7 +49,7 @@ class SentenceParser {
     
         // Check if the sentence contains any unit
         for (const [unit, unitName] of Object.entries(AreaUnit.unitToNameMap)) {
-            if (sentence.toLowerCase().includes(unit)) {
+            if (sentence.toLowerCase().includes(unit.toLowerCase())) {
                 unitUsed = unitName; 
                 break;  
             }
@@ -70,19 +70,20 @@ class SentenceParser {
     }
     
     findCategory(sentence) {
+        debugger;
         for (const dinKey in Category.getCategoryMapping()) {
-            const category = Category.getCategoryMapping()[dinKey];
-
-            for (const key in category) {
-                const value = category[key];
-
-                if (sentence.toLowerCase().includes(value.toLowerCase())) {
-                    return { dinKey, key }; 
-                }
+          const category = Category.getCategoryMapping()[dinKey];
+    
+          for (const key in category) {
+            const value = category[key];
+    
+            if (sentence.toLowerCase().includes(key.toLowerCase())) {
+              return { dinKey, category: value };  
             }
+          }
         }
         return null;
-    }
+      }
     
 }
  
