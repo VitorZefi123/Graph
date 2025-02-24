@@ -11,12 +11,23 @@
             overflow: hidden;
         }
 
-        .controls {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 10;
-        }
+        .controls, .controls1 {
+    position: absolute;
+    left: 10px;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.controls {
+    top: 10px;
+}
+
+.controls1 {
+    top: 60px; /* Adjust the spacing so it doesn’t overlap */
+}
 
         button {
             padding: 8px 12px;
@@ -35,6 +46,11 @@
         <input type="text" id="nodeIdInput" placeholder="Enter Node IDs (e.g. 1234,456,784)">
         <button onclick="highlightNodeById()">Search</button>       
     </div>
+    <div class="controls1">
+        <input type="text" id="nodeIdInput1" placeholder="Enter Path">
+        <button onclick="findPathBetweenNodes()">Search</button>
+    </div>
+
     <div id="3d-graph"></div>
 
     <!-- Script loaded at the end to ensure DOM elements are loaded -->
@@ -42,6 +58,7 @@
         import GraphProperties from './Graph/GraphProperties.js';
         import NodeManager from './Graph/NodeManager.js';
         import ZoomManager from './Graph/ZoomManager.js';
+        import PathBetweenNodes from './Graph/PathBetweenNodes.js';
 
         const graphProperties = new GraphProperties('3d-graph');
         graphProperties.initializeGraph().then(() => {
@@ -68,6 +85,24 @@
 
     nodeManager.highlightNodes(nodeIds, graphProperties.nodeRelations);
 };
+
+window.findPathBetweenNodes = function () {
+                const input = document.getElementById("nodeIdInput1").value.trim();
+                if (!input) {
+                    alert("Please enter valid Node IDs");
+                    return;
+                }
+                const nodeIds = input.split(",").map(id => parseInt(id.trim(), 10)).filter(id => !isNaN(id));
+                if (nodeIds.length !== 2) {
+                    alert("Please enter exactly two node IDs");
+                    return;
+                }
+                setTimeout(() => {
+                    const pathNodes = new PathBetweenNodes(graphProperties);
+                    const nodesUsed = pathNodes.highlightPath(nodeIds[0], nodeIds[1]);
+                    debugger;
+                }, 40);
+            };
 
             window.addEventListener("wheel", (event) => {      
                 debugger;       
