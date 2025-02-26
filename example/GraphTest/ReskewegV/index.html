@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sentence Parser</title>
+    <!-- Custom CSS -->
+
+    <style>
+        .input-box {
+            width: 100%;
+            height: 40px;
+            font-size: 16px;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+    </style>
+       <script src="https://unpkg.com/three@0.130.0/build/three.min.js"></script>
+       <script src="https://unpkg.com/three@0.130.0/examples/js/renderers/CSS2DRenderer.js"></script>
+       <script src="//unpkg.com/3d-force-graph"></script>
+</head>
+<body>
+    <div class="container mt-5">
+
+        <a href="index1.html" style="display: inline-block; margin-bottom: 20px;">
+            <button>Go to Another Page</button>
+        </a>
+        <a href="index3.html" style="display: inline-block; margin-bottom: 20px;">
+            <button>Go to node visualization</button>
+        </a>
+
+        <div class="card p-4 shadow">
+            <label for="sql-input">Parsed Sentences Condition:</label>
+            <button onclick="parsesInput()">Parse Sentences</button>
+            
+    <div id="output" class="output"></div>
+            <p id="parsedResult" class="alert alert-info"></p>
+        </div>
+    </div>
+    <div id="3d-graph"></div>
+
+    <!-- Custom JS -->
+    <script type="module">
+        // Import SentenceParser class
+        import SentenceParser from './Graph/SentenceParser.js';
+        import SqlCondition from './Graph/SqlCondition.js';
+        import GraphQuery from './Graph/GraphQuery.js';
+        import Tables from './Graph/Tables.js';
+
+        window.parsesInput= function () {
+            const graphQuery = new GraphQuery('3d-graph');
+            debugger;
+            /*
+            const sentence = document.getElementById('sql-input').value;
+            
+            // Check if the input is empty
+            if (!sentence.trim()) {
+                document.getElementById('output').innerHTML = 'Please enter a condition to parse.';
+                return;
+            }  
+            debugger;
+*/
+const sentences = [
+
+"list all rooms lower or equal to 120 sqm  OR greater than 210 sqm",
+"list all rooms lower or equal to 1520 sqm AND date 10-10-2025",
+
+];
+
+const parsedResults = sentences.map(sentence => ({
+    sentence: sentence,
+    parsedCondition: new Tables().extractFromQuery(sentence)
+}));
+
+const response = {
+    results: parsedResults
+};
+
+debugger;
+            graphQuery.initializeGraph(parsedResults);
+
+        }
+
+    </script>
+</body>
+</html>

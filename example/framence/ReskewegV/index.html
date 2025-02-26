@@ -48,6 +48,7 @@
         import SentenceParser from './Graph/SentenceParser.js';
         import SqlCondition from './Graph/SqlCondition.js';
         import GraphQuery from './Graph/GraphQuery.js';
+        import Tables from './Graph/Tables.js';
 
         window.parsesInput= function () {
             const graphQuery = new GraphQuery('3d-graph');
@@ -63,46 +64,13 @@
             debugger;
 */
 const sentences = [
-
-"list all rooms greater than 20 sqm",
 "list all rooms lower than 120 sqm",
-"list all rooms greater than 250 sqm",
-"list all rooms greater or equal to 1120 sqmm",
-"list all rooms lower or equal to than 1820 sqmm",
-"list all rooms at least  2508 in²",
-"list all rooms fewer than 1120 sqm/P",
-"list all rooms not same to than 1820 sqin",
-"list all rooms at least  28508 sqyd",
-"list all rooms fewer than 1120 sq.yd",
-"list all rooms not same to than 1820 m²/AP",
-"list all rooms at least  28508 sqm/AP",
-"list all rooms reserved on date greater than 2024-10-17",
-"list all rooms reserved on date lower or equal to 15/11/2024",
-"list all rooms reserved on date 20.12.2024",
-"list all category rooms for NUF2 - Office work",                       
-"list all rooms for NUF4 - Storage, distribution and sales",
-"list all rooms for VF - Transport area",
-"list all category rooms for NF - Usable area",
-"list all rooms for NF7 - Other uses",
-"list all rooms for TF - Technical functional area",
-"list all rooms whose net area is less than 100 sqm AND reserved on date 20-12-2024",
-"list all rooms whose net area is greater than 10 sqm AND lower than 50 sqm OR reserved on date 10-10-2024",
-"list all rooms for NF2.7",
-"list all rooms for Supervision Rooms",
-"list all category rooms for Aufsichtsräume",
-"list all rooms for NF2.6 ",
-"list all rooms for Service Rooms",
-"list all rooms for NF3.6",
-"list all rooms for Räume für Tierhaltung",
-"list all category rooms for Animal Housing Rooms",
-"list all rooms for NF3.7 ",
-"list all rooms for Plant Cultivation Rooms",
 
 ];
 
 const parsedResults = sentences.map(sentence => ({
     sentence: sentence,
-    parsedCondition: SqlCondition.parseSqlCondition(sentence)
+    table: new Tables().extractFromQuery(sentence)
 }));
 
 const response = {
