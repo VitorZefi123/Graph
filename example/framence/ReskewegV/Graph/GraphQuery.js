@@ -51,21 +51,21 @@ class GraphQuery {
             if (!tree) return;
     
             if (tree.lhs && tree.rhs) {
-                let logicOpNodeId = createNode(tree.logicOp, "operator");      
-                // Link this node to its parent if parentId exists
-                if (parentId !== null) {
-                    links.push({ source: parentId, target: logicOpNodeId, weight: 0.5 });
-                }
-        
+                // Create logic operator node (e.g., AND)
+                let logicOpNodeId = createNode(tree.logicOp, "operator");
+    
+                debugger;
+                // Traverse LHS and RHS and link them
                 let lhsNodeId = traverseTree(tree.lhs, logicOpNodeId);
                 let rhsNodeId = traverseTree(tree.rhs, logicOpNodeId);
-        
+    
                 if (lhsNodeId !== null) 
-                    links.push({ source: logicOpNodeId, target: lhsNodeId, weight: 0.5 });
-        
+                    links.push({ source: logicOpNodeId, target: lhsNodeId, weight: 0.5 }); 
+
                 if (rhsNodeId !== null) 
                     links.push({ source: logicOpNodeId, target: rhsNodeId, weight: 0.5 });
-        
+
+    
                 return logicOpNodeId;
             } else if (Array.isArray(tree)) {
                 debugger;

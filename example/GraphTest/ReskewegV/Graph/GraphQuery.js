@@ -1,14 +1,17 @@
+import ConditionCache from './ConditionCache.js';
+
 class GraphQuery {
     constructor(containerId) {
         this.containerId = containerId;
+        this.conditionCache = new ConditionCache();
     }
-
+ 
     async initializeGraph(parsedConditions) {
         try {
             const graphData = this.buildTableGraphe(parsedConditions);
            debugger;
-        
-
+       
+ 
             this.graph = ForceGraph3D({
                 extraRenderers: [new THREE.CSS2DRenderer()]
             })(document.getElementById(this.containerId))
@@ -17,104 +20,110 @@ class GraphQuery {
                 .nodeThreeObject(node => {
                     const nodeLabel = document.createElement('div');
                     nodeLabel.textContent = node.label;
-                    nodeLabel.style.color = 'white'; // Adjust text color
-                    nodeLabel.style.background = 'rgba(0, 0, 0, 0.7)'; // Optional: background
+                    nodeLabel.style.color = 'white'; 
+                    nodeLabel.style.background = 'rgba(0, 0, 0, 0.7)';
                     nodeLabel.style.padding = '2px 5px';
                     nodeLabel.style.fontSize = '12px';
                     nodeLabel.style.borderRadius = '5px';
-                    
+                   
                     const labelObject = new THREE.CSS2DObject(nodeLabel);
-                    labelObject.position.set(0, 10, 0); // Adjust position
+                    labelObject.position.set(0, 10, 0); 
                     return labelObject;
                 })
                 .linkColor(() => 'gray')
                 .linkWidth(link => link.weight*2 || 1)
-                .linkLabel(link => `Weight: ${link.weight}`); // Show weight on hover
+                .linkLabel(link => `Weight: ${link.weight}`); 
         } catch (error) {
             console.error('Error initializing graph:', error);
         }
     }
-
+ 
     buildTableGraphe(fullCondition) {
-        debugger;
         let nodes = [];
         let links = [];        
         let nodeId = 0;
-    
-        for(let condition of fullCondition){       
-         nodeId = this.buildGraphData(condition.parsedCondition.sqlConditions, nodes, links, nodeId);
-        }
-         return { nodes, links };
+        
+        this.traverseTree(fullCondition, nodes, links, nodeId);
+        
+        return { nodes, links };
     }
-
-    buildGraphData(conditionTree, nodes, links, nodeId) {
-        let result = this.traverseTree(conditionTree, nodes, links, nodeId);
-        return result.nodeId;
-    }
-    
-    
-     traverseTree(tree, nodes, links, nodeId, parentId = null) {
-        if (!tree) return { nodeId, lastNodeId: null };
-    
+   
+    traverseTree(tree, nodes, links, nodeId, parentId = null) {
+        if (!tree) return nodeId;
+   
         if (tree.lhs && tree.rhs) {
-            let { nodeId: newNodeId, createdNodeId: logicOpNodeId } = 
-                this.createNode(tree.logicOp, "operator", nodes, nodeId);
-            
+            let logicOpNodeId = this.createNode(tree.logicOp, "operator", nodes, nodeId++);
+   
             if (parentId !== null) {
                 links.push({ source: parentId, target: logicOpNodeId, weight: 0.5 });
             }
-    
-            let left = this.traverseTree(tree.lhs, nodes, links, newNodeId, logicOpNodeId);
-            let right = this.traverseTree(tree.rhs, nodes, links, left.nodeId, logicOpNodeId);
-    
-            if (left.lastNodeId !== null) 
-                links.push({ source: logicOpNodeId, target: left.lastNodeId, weight: 0.5 });
-    
-            if (right.lastNodeId !== null) 
-                links.push({ source: logicOpNodeId, target: right.lastNodeId, weight: 0.5 });
-    
-            return { nodeId: right.nodeId, lastNodeId: logicOpNodeId };
-        } 
-        
+   
+            let leftNodeId = nodeId;
+            nodeId = this.traverseTree(tree.lhs, nodes, links, nodeId, logicOpNodeId);
+   
+            let rightNodeId = nodeId;
+            nodeId = this.traverseTree(tree.rhs, nodes, links, nodeId, logicOpNodeId);
+   
+            links.push({ source: logicOpNodeId, target: leftNodeId, weight: 0.5 });
+            links.push({ source: logicOpNodeId, target: rightNodeId, weight: 0.5 });
+   
+            return nodeId;
+        }
+       
         else if (Array.isArray(tree)) {
-            let lastNodeId = null;
-            let currentId = nodeId;
-            
-            for (let item of tree) {
-                let [key, value] = item.split(": ");
-                let { nodeId: updatedId, createdNodeId } = this.createNode(value, key.toLowerCase(), nodes, currentId);
-                
-                let weight = this.handleWeight(key, value);
-                if (lastNodeId !== null) {
-                    links.push({ source: lastNodeId, target: createdNodeId, weight: weight });
-                }
-                lastNodeId = createdNodeId;
-                currentId = updatedId;
+            tree = this.extractAndCacheKeys(tree);
+            return this.processArrayNodes(tree, nodes, links, nodeId);
+        }
+        return nodeId;
+    }
+   
+    processArrayNodes(tree, nodes, links, nodeId) {
+        let lastNodeId = null;
+        debugger;
+    
+        for (let item of tree) {
+            let [key, value] = item.split(": ");
+            let createdNodeId = this.createNode(value, key.toLowerCase(), nodes, nodeId++);
+    
+            let weight = this.handleWeight(key, value);
+            if (lastNodeId !== null) {
+                links.push({ source: lastNodeId, target: createdNodeId, weight: weight });
             }
-            return { nodeId: currentId, lastNodeId };
+            lastNodeId = createdNodeId;
         }
     
-        return { nodeId, lastNodeId: null };
+        return nodeId;
     }
 
+    extractAndCacheKeys(tree) {
+        debugger;
+        let keys = tree.map(item => item.split(": ")[0]); 
+        let cachedTree = this.conditionCache.getCondition(keys);
+        if (cachedTree) {
+            return cachedTree; 
+        }
+
+        this.conditionCache.saveCondition(keys, tree);
+        return tree;
+    }
 
     createNode(label, type, nodes, nodeId) {
-        let node = { id: nodeId++, label, type };
+        let node = { id: nodeId, label, type };
         nodes.push(node);
-        return { nodeId, createdNodeId: node.id };
+        return node.id;
     }
-    
-
+   
+ 
      handleWeight(key) {
         if (key === "Unit") {
-            return 1; 
+            return 1;
         } else if (key === "Value") {
-            return 0.7; 
+            return 0.7;
         } else {
-            return 0.5; 
+            return 0.5;
         }
     }
-        
+       
 }
-
+ 
 export default GraphQuery;

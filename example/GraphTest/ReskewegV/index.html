@@ -34,55 +34,40 @@
 
         <div class="card p-4 shadow">
             <label for="sql-input">Parsed Sentences Condition:</label>
-            <button onclick="parsesInput()">Parse Sentences</button>
             
-    <div id="output" class="output"></div>
+            <!-- Input field with increased width -->
+            <input type="text" id="sql-input" class="form-control" style="width: 100%; max-width: 800px;" placeholder="Enter SQL Condition" />
+            
+            <!-- Button with increased width -->
+            <button class="btn btn-primary mt-2" onclick="parsesInput()">Parse Sentences</button>
+            
+            <div id="output" class="output mt-3"></div>
             <p id="parsedResult" class="alert alert-info"></p>
         </div>
+        
     </div>
     <div id="3d-graph"></div>
 
-    <!-- Custom JS -->
     <script type="module">
-        // Import SentenceParser class
         import SentenceParser from './Graph/SentenceParser.js';
         import SqlCondition from './Graph/SqlCondition.js';
         import GraphQuery from './Graph/GraphQuery.js';
         import Tables from './Graph/Tables.js';
+        const graphQuery = new GraphQuery('3d-graph');
 
-        window.parsesInput= function () {
-            const graphQuery = new GraphQuery('3d-graph');
-            debugger;
-            /*
-            const sentence = document.getElementById('sql-input').value;
-            
-            // Check if the input is empty
-            if (!sentence.trim()) {
-                document.getElementById('output').innerHTML = 'Please enter a condition to parse.';
-                return;
-            }  
-            debugger;
-*/
-const sentences = [
+        window.parsesInput = function () {
+        const sentence = document.getElementById('sql-input').value.trim();
 
-"list all rooms lower or equal to 120 sqm  OR greater than 210 sqm",
-"list all rooms lower or equal to 1520 sqm AND date 10-10-2025",
-
-];
-
-const parsedResults = sentences.map(sentence => ({
-    sentence: sentence,
-    parsedCondition: new Tables().extractFromQuery(sentence)
-}));
-
-const response = {
-    results: parsedResults
-};
-
-debugger;
-            graphQuery.initializeGraph(parsedResults);
-
+        if (!sentence) {
+            document.getElementById('output').innerHTML = '<span class="text-danger">Please enter a condition to parse.</span>';
+            return;
         }
+
+        const extractedQuery = new Tables().extractFromQuery(sentence);
+        debugger;
+
+        graphQuery.initializeGraph(extractedQuery.sqlConditions);
+    };
 
     </script>
 </body>
