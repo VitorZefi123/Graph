@@ -65,7 +65,7 @@ class SentenceParser {
             return parser.parse();
         }
         else if (columnName == Columns.CATEGORY || categoryMatch, this.tableName) {
-            const parser = new CategoryParser(Columns.CATEGORY, categoryMatch);
+            const parser = new CategoryParser(Columns.CATEGORY, categoryMatch, this.tableName);
             return parser.parse();
         }  
     }
