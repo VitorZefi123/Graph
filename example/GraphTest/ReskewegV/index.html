@@ -49,11 +49,11 @@
     <div id="3d-graph"></div>
 
     <script type="module">
-        import SentenceParser from './Graph/SentenceParser.js';
-        import SqlCondition from './Graph/SqlCondition.js';
-        import GraphQuery from './Graph/GraphQuery.js';
-        import Tables from './Graph/Tables.js';
-        import ConditionCache from './Graph/ConditionCache.js';
+        import SentenceParser from './Graph/GraphQuery/SentenceParser.js';
+        import SqlCondition from './Graph/GraphQuery/SqlCondition.js';
+        import GraphQuery from './Graph/GraphQuery/GraphQuery.js';
+        import Tables from './Graph/GraphQuery/Tables.js';
+        import ConditionCache from './Graph/GraphQuery/ConditionCache.js';
         const graphQuery = new GraphQuery('3d-graph');
 
         window.parsesInput = function () {

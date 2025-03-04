@@ -1,10 +1,12 @@
-import Comparison from './Comparison.js';
-import AreaUnit from './AreaUnit.js';
+import Comparison from './ColumnValues/Comparison.js';
+import AreaUnit from './ColumnValues/AreaUnit.js';
 import Columns from './Columns.js';
-import Category from './Category.js';
-import SizeParser from './SizeParser.js';
-import CategoryParser from './CategoryParser.js';
-import DateParser from './DateParser.js';
+import Category from './ColumnValues/Category.js';
+import SizeParser from './ColumnParser/SizeParser.js';
+import CategoryParser from './ColumnParser/CategoryParser.js';
+import DateParser from './ColumnParser/DateParser.js';
+import FloorParser from './ColumnParser/FloorParser.js';
+import RentabilityParser from './ColumnParser/RentabilityParser.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -56,6 +58,15 @@ class SentenceParser {
             }
         }
 
+        if (columnName == Columns.RENTABILITY) {
+            const parser = new RentabilityParser(Columns.RENTABILITY, this.tableName, sentence);
+            return parser.parse();
+        }
+        if (columnName == Columns.FLOOR) {
+            const parser = new FloorParser(Columns.FLOOR, this.tableName, sentence);
+            return parser.parse();
+        }
+
         if (columnName == Columns.DATE || dateMatch) {
             const parser = new DateParser(Columns.DATE, dateMatch, comparisonOperator, this.tableName);
             return parser.parse();
@@ -64,7 +75,7 @@ class SentenceParser {
             const parser = new SizeParser(Columns.ROOM_SIZE, parseFloat(numberMatch[0]), unitUsed, comparisonOperator, this.tableName);
             return parser.parse();
         }
-        else if (columnName == Columns.CATEGORY || categoryMatch, this.tableName) {
+        else if (columnName == Columns.CATEGORY && categoryMatch) {
             const parser = new CategoryParser(Columns.CATEGORY, categoryMatch, this.tableName);
             return parser.parse();
         }  
