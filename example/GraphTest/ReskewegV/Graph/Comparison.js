@@ -11,6 +11,12 @@ class Comparison {
 };
 
 static  ComparisonTerm = {
+    GREATEROP: '>',
+    GREATER_OR_EQUALOP: '>=',
+    SMALLEROP: '<',
+    SMALLER_OR_EQUALOP: '<=',
+    EQUALOP: '==',
+    NOT_EQUALOP: '!=',
     GREATER: 'greater',
     LARGER: 'larger',
     BIGGER: 'bigger',
@@ -48,6 +54,12 @@ static  ComparisonTerm = {
 
  // Mapping from ComparisonTerm to ComparisonOperator
  static termToOperatorMap = {
+    [Comparison.ComparisonTerm.GREATER_OR_EQUALOP]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,
+    [Comparison.ComparisonTerm.SMALLER_OR_EQUALOP]: Comparison.ComparisonOperator.SMALLER_OR_EQUAL,
+    [Comparison.ComparisonTerm.GREATEROP]: Comparison.ComparisonOperator.GREATER,
+    [Comparison.ComparisonTerm.SMALLEROP]: Comparison.ComparisonOperator.SMALLER,
+    [Comparison.ComparisonTerm.NOT_EQUALOP]: Comparison.ComparisonOperator.NOT_EQUAL,
+    [Comparison.ComparisonTerm.EQUALOP]: Comparison.ComparisonOperator.EQUAL,
     [Comparison.ComparisonTerm.GREATER_OR_EQUAL]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,
     [Comparison.ComparisonTerm.LOWER_OR_EQUAL]: Comparison.ComparisonOperator.SMALLER_OR_EQUAL,
     [Comparison.ComparisonTerm.LARGER_OR_EQUAL]: Comparison.ComparisonOperator.GREATER_OR_EQUAL,

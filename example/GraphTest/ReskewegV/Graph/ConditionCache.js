@@ -29,7 +29,21 @@ class ConditionCache {
     }
 
     getAllConditions() {
-        return this.cache; 
+        return this.cache.values(); 
+    }
+
+    generateSentences() {
+        const sentences = [];
+        
+        for (const queryArray of this.getAllConditions()) {
+            const sentence = queryArray
+                .map(item => item.split(": ")[1])
+                .join(" ");
+            
+            sentences.push(sentence);
+        }
+
+        return sentences;
     }
 }
 

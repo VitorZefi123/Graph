@@ -53,6 +53,7 @@
         import SqlCondition from './Graph/SqlCondition.js';
         import GraphQuery from './Graph/GraphQuery.js';
         import Tables from './Graph/Tables.js';
+        import ConditionCache from './Graph/ConditionCache.js';
         const graphQuery = new GraphQuery('3d-graph');
 
         window.parsesInput = function () {
@@ -62,11 +63,20 @@
             document.getElementById('output').innerHTML = '<span class="text-danger">Please enter a condition to parse.</span>';
             return;
         }
-
-        const extractedQuery = new Tables().extractFromQuery(sentence);
+debugger;
+        const cachedSentences = graphQuery.conditionCache.generateSentences();
         debugger;
 
-        graphQuery.initializeGraph(extractedQuery.sqlConditions);
+  const extractedQueries = cachedSentences.map(sentenceUsed => 
+    new Tables().extractFromQuery(sentenceUsed)
+);
+
+const newSentence = new Tables().extractFromQuery(sentence);
+extractedQueries.push(newSentence);
+
+debugger;
+
+        graphQuery.initializeGraph(extractedQueries);
     };
 
     </script>
