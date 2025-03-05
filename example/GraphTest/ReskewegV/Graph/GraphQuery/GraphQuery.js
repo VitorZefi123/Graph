@@ -47,8 +47,6 @@ class GraphQuery {
                const keysUSed = this.findDuplicateKeys();
                const graphDifference = new GraphDifference(this.graph,keysUSed.keyOrigin, keysUSed.keyCopy);
                graphDifference.highlightDuplicates();
-               debugger;
-               const tts = "tes";
 
 
         } catch (error) {
