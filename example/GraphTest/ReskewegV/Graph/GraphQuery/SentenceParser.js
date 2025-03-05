@@ -2,17 +2,7 @@ import Comparison from './ColumnValues/Comparison.js';
 import AreaUnit from './ColumnValues/AreaUnit.js';
 import Columns from './Columns.js';
 import Category from './ColumnValues/Category.js';
-import SizeParser from './ColumnParser/SizeParser.js';
-import CategoryParser from './ColumnParser/CategoryParser.js';
-import DateParser from './ColumnParser/DateParser.js';
-import FloorParser from './ColumnParser/FloorParser.js';
-import RentabilityParser from './ColumnParser/RentabilityParser.js';
-import ServiceTypeParser from './ColumnParser/ServiceTypeParser.js';
-import FurnitureNameParser from './ColumnParser/FurnitureNameParser.js';
-import AccountStatusParser from './ColumnParser/AccountStatusParser.js';
-import SystemLocationParser from './ColumnParser/SystemLocationParser.js';
-import SystemMaintainedParser from './ColumnParser/SystemMaintainedParser.js';
-import TableNames from './TableNames.js';
+import ParserFactory from './ParserFactory.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -61,51 +51,9 @@ class SentenceParser {
                 break;  
             }
         }
-
-        if ( this.tableName == TableNames.SYSTEMS && columnName == Columns.MAINTAINED_BY ) {
-            debugger;
-            const parser = new SystemMaintainedParser(Columns.MAINTAINED_BY, this.tableName, sentence);
-            return parser.parse();
-        }
-        if ( this.tableName == TableNames.SYSTEMS && columnName == Columns.SYSTEM_LOCATION ) {
-            debugger;
-            const parser = new SystemLocationParser(Columns.SYSTEM_LOCATION, this.tableName, sentence);
-            return parser.parse();
-        }
-        if ( this.tableName == TableNames.USER_ACCOUNT ) {
-            const parser = new AccountStatusParser(Columns.STATUS, this.tableName, sentence);
-            return parser.parse();
-        }
-
-        if (columnName == Columns.NAME && this.tableName == TableNames.FURNITURE ) {
-            const parser = new FurnitureNameParser(Columns.NAME, this.tableName, sentence);
-            return parser.parse();
-        }
-        if (columnName == Columns.SERVICE_TYPE) {
-            const parser = new ServiceTypeParser(Columns.SERVICE_TYPE, this.tableName, sentence);
-            return parser.parse();
-        }
-        if (columnName == Columns.RENTABILITY) {
-            const parser = new RentabilityParser(Columns.RENTABILITY, this.tableName, sentence);
-            return parser.parse();
-        }
-        if (columnName == Columns.FLOOR) {
-            const parser = new FloorParser(Columns.FLOOR, this.tableName, sentence);
-            return parser.parse();
-        }
-
-        if (columnName == Columns.DATE || dateMatch) {
-            const parser = new DateParser(Columns.DATE, dateMatch, comparisonOperator, this.tableName);
-            return parser.parse();
-        }
-        else if (columnName == Columns.ROOM_SIZE || unitUsed) {
-            const parser = new SizeParser(Columns.ROOM_SIZE, parseFloat(numberMatch[0]), unitUsed, comparisonOperator, this.tableName);
-            return parser.parse();
-        }
-        else if (columnName == Columns.CATEGORY || categoryMatch) {
-            const parser = new CategoryParser(Columns.CATEGORY, categoryMatch, this.tableName);
-            return parser.parse();
-        }  
+        
+        const parserFactory = new ParserFactory(this.tableName, columnName, this.sentence, dateMatch, categoryMatch, unitUsed, numberMatch, comparisonOperator);
+        return parserFactory.createParser();
     }
     
     findCategory(sentence) {
