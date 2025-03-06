@@ -19,6 +19,11 @@ import NoticePeriodParser from './ColumnParser/NoticePeriodParser.js';
 import RoomCleaningGroupParser from './ColumnParser/RoomCleaningGroupParser.js';
 import RoomReservationParser from './ColumnParser/RoomReservationParser.js';
 import LevelNameParser from './ColumnParser/LevelNameParser.js';
+import UserFunctionParser from './ColumnParser/UserFunctionParser.js';
+import AssetRequirementParser from './ColumnParser/AssetRequirementParser.js';
+import ContractTerminationParser from './ColumnParser/ContractTerminationParser.js';
+import ContractStartParser from './ColumnParser/ContractStartParser.js';
+import ContractBillingParser from './ColumnParser/ContractBillingParser.js';
 import TableNames from './TableNames.js';
 
 class ParserFactory {
@@ -34,6 +39,35 @@ class ParserFactory {
     }
 
     createParser() {
+
+        if (this.tableName == TableNames.CONTRACT && (this.columnName == Columns.END_ON || this.columnName == Columns.TERMINATION)) {
+            debugger;
+            const parser = new ContractTerminationParser(this.columnName, this.tableName, this.sentence);
+            return parser.parse();
+        }
+
+        if (this.tableName == TableNames.CONTRACT && this.columnName == Columns.START_ON) {
+            debugger;
+            const parser = new ContractStartParser(Columns.START_ON, this.tableName, this.sentence);
+            return parser.parse();
+        }
+
+        if (this.tableName == TableNames.CONTRACT && this.columnName == Columns.BILLING_PERIOD) {
+            debugger;
+            const parser = new ContractBillingParser(Columns.BILLING_PERIOD, this.tableName, this.sentence);
+            return parser.parse();
+        }
+
+        if (this.tableName == TableNames.ASSET && this.columnName == Columns.REQUIREMENT) {
+            debugger;
+            const parser = new AssetRequirementParser(Columns.REQUIREMENT, this.tableName, this.sentence);
+            return parser.parse();
+        }
+
+        if (this.tableName == TableNames.USER && this.columnName == Columns.FUNCTION) {
+            const parser = new UserFunctionParser(Columns.FUNCTION, this.tableName, this.sentence);
+            return parser.parse();
+        }
 
         if (this.tableName == TableNames.ROOM && this.columnName == Columns.RESERVED) {
             const parser = new RoomReservationParser(Columns.RESERVED, this.tableName, this.sentence);

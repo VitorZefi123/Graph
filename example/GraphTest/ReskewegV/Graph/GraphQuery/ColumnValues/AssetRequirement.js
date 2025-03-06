@@ -1,4 +1,4 @@
-class SystemRequirement {
+class AssetRequirement {
     static INSPECTION = "inspection";
     static REPORTING = "reporting";
     static NOTIFICATION = "notification";
@@ -14,4 +14,4 @@ class SystemRequirement {
     }
 }
 
-export default SystemRequirement;
+export default AssetRequirement;

@@ -8,6 +8,9 @@ class TableNames {
     static EMPLOYEE = 'employee';
     static LEVEL = 'level';
     static LEASES = 'leases';
+    static USER = 'user';
+    static ASSET = 'asset';
+    static CONTRACT ='contract';
     
     // Optionally, you can add methods for future use
     static getTableNames() {
@@ -21,6 +24,9 @@ class TableNames {
             TableNames.EMPLOYEE,
             TableNames.LEVEL,
             TableNames.LEASES,
+            TableNames.USER,
+            TableNames.ASSET,
+            TableNames.CONTRACT,
         ];
     }
 }
