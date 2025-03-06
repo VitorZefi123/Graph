@@ -14,6 +14,8 @@ import EmployeeCompanyParser from './ColumnParser/EmployeeCompanyParser.js';
 import EmployeeFunctionParser from './ColumnParser/EmployeeFunctionParser.js'; 
 import EmployeeNameParser from './ColumnParser/EmployeeNameParser.js';
 import LevelContentParser from './ColumnParser/LevelContentParser.js';
+import LeasesEndParser from './ColumnParser/LeasesEndParser.js';
+import NoticePeriodParser from './ColumnParser/NoticePeriodParser.js';
 import LevelNameParser from './ColumnParser/LevelNameParser.js';
 import TableNames from './TableNames.js';
 
@@ -30,6 +32,16 @@ class ParserFactory {
     }
 
     createParser() {
+
+        if (this.tableName == TableNames.LEASES && this.columnName == Columns.NOTICE_PERIOD) {
+            const parser = new NoticePeriodParser(Columns.NOTICE_PERIOD, this.tableName, this.sentence, this.comparisonOperator);
+            return parser.parse();
+        }
+        
+        if (this.tableName == TableNames.LEASES && this.columnName == Columns.END_ON) {
+            const parser = new LeasesEndParser(Columns.END_ON, this.tableName, this.sentence);
+            return parser.parse();
+        }
         if (this.tableName == TableNames.LEVEL && this.columnName == Columns.CONTENT) {
             const parser = new LevelContentParser(Columns.CONTENT, this.tableName, this.sentence);
             return parser.parse();

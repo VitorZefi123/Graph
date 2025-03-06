@@ -15,12 +15,14 @@ class Columns {
     static REQUIREMENT = 'require';
     static COMPANY = 'company';
     static FUNCTION = 'function';
+    static END_ON = 'end on';
+    static NOTICE_PERIOD = 'notice period';
 
     static getAllColumns() {
         return [this.ROOM_SIZE, this.CATEGORY, this.PRICE, this.LOCATION,
              this.DATE,this.RENTABILITY,
              this.NAME, this.FLOOR, this.SERVICE_TYPE,this.CONTENT, this.LABEL, this.STATUS, this.SYSTEM_LOCATION,
-             this.MAINTAINED_BY, this.REQUIREMENT, this.COMPANY, this.FUNCTION]
+             this.MAINTAINED_BY, this.REQUIREMENT, this.COMPANY, this.FUNCTION, this.END_ON, this.NOTICE_PERIOD]
             .filter(column => typeof column === "string"); 
     }
 }
