@@ -16,6 +16,8 @@ import EmployeeNameParser from './ColumnParser/EmployeeNameParser.js';
 import LevelContentParser from './ColumnParser/LevelContentParser.js';
 import LeasesEndParser from './ColumnParser/LeasesEndParser.js';
 import NoticePeriodParser from './ColumnParser/NoticePeriodParser.js';
+import RoomCleaningGroupParser from './ColumnParser/RoomCleaningGroupParser.js';
+import RoomReservationParser from './ColumnParser/RoomReservationParser.js';
 import LevelNameParser from './ColumnParser/LevelNameParser.js';
 import TableNames from './TableNames.js';
 
@@ -32,6 +34,16 @@ class ParserFactory {
     }
 
     createParser() {
+
+        if (this.tableName == TableNames.ROOM && this.columnName == Columns.RESERVED) {
+            const parser = new RoomReservationParser(Columns.RESERVED, this.tableName, this.sentence);
+            return parser.parse();
+        }
+
+        if (this.tableName == TableNames.ROOM && this.columnName == Columns.CLEANING_GROUP) {
+            const parser = new RoomCleaningGroupParser(Columns.CLEANING_GROUP, this.tableName, this.sentence);
+            return parser.parse();
+        }
 
         if (this.tableName == TableNames.LEASES && this.columnName == Columns.NOTICE_PERIOD) {
             const parser = new NoticePeriodParser(Columns.NOTICE_PERIOD, this.tableName, this.sentence, this.comparisonOperator);
