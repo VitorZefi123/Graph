@@ -24,6 +24,8 @@ import AssetRequirementParser from './ColumnParser/AssetRequirementParser.js';
 import ContractTerminationParser from './ColumnParser/ContractTerminationParser.js';
 import ContractStartParser from './ColumnParser/ContractStartParser.js';
 import ContractBillingParser from './ColumnParser/ContractBillingParser.js';
+import UserAccountParser from './ColumnParser/UserAccountParser.js';
+import ContractTypeParser from './ColumnParser/ContractTypeParser.js';
 import TableNames from './TableNames.js';
 
 class ParserFactory {
@@ -39,6 +41,18 @@ class ParserFactory {
     }
 
     createParser() {
+
+        if (this.tableName.includes(TableNames.EMPLOYEE) && this.columnName == Columns.ACCOUNT) {
+            debugger;
+            const parser = new UserAccountParser(this.columnName, TableNames.EMPLOYEE, this.sentence);
+            return parser.parse();
+        }
+
+        if (this.tableName == TableNames.RENTAL && this.columnName == Columns.TURNOVER) {
+            debugger;
+            const parser = new ContractTypeParser(this.columnName, this.tableName, this.sentence);
+            return parser.parse();
+        }
 
         if (this.tableName == TableNames.CONTRACT && (this.columnName == Columns.END_ON || this.columnName == Columns.TERMINATION)) {
             debugger;

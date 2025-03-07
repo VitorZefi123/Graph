@@ -22,13 +22,16 @@ class Columns {
     static BILLING_PERIOD = 'billing period';
     static START_ON = 'start on';
     static TERMINATION = 'termination';
+    static CONTRACT = 'contract';
+    static TURNOVER = 'turnover';
+    static ACCOUNT = 'account';
 
     static getAllColumns() {
         return [this.ROOM_SIZE, this.CATEGORY, this.PRICE, this.LOCATION,
              this.RENTABILITY,this.START_ON, this.TERMINATION,
              this.NAME, this.FLOOR, this.SERVICE_TYPE,this.CONTENT, this.LABEL, this.STATUS, this.SYSTEM_LOCATION,
              this.MAINTAINED_BY, this.REQUIREMENT, this.COMPANY, this.FUNCTION, this.END_ON, this.NOTICE_PERIOD,
-             this.CLEANING_GROUP, this.RESERVED, this.BILLING_PERIOD, this.DATE,]
+             this.CLEANING_GROUP, this.RESERVED, this.BILLING_PERIOD, this.DATE,this.CONTRACT, this.TURNOVER, this.ACCOUNT]
             .filter(column => typeof column === "string"); 
     }
 }
