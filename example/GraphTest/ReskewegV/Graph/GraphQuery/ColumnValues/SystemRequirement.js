@@ -3,6 +3,7 @@ class SystemRequirement {
     static REPORTING = "reporting";
     static NOTIFICATION = "notification";
     static SCANNING = "scanning";
+    static TRAFFIC_SAFETY = 'traffic safety';
 
     static getAllCaptions() {
         return [
@@ -10,6 +11,7 @@ class SystemRequirement {
             this.REPORTING,
             this.NOTIFICATION,
             this.SCANNING,
+            this.TRAFFIC_SAFETY,
         ];
     }
 }
