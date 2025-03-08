@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "+72hHPpSIls=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\VitorZefi\\Desktop\\Graph\\example\\graphtest\\reskewegv\\testcsharp\\pdfuploadserver\\PdfUploadServer.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\VitorZefi\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\VitorZefi\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.2\\microsoft.aspnetcore.openapi.9.0.2.nupkg.sha512",
+    "C:\\Users\\VitorZefi\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\VitorZefi\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512",
+    "C:\\Users\\VitorZefi\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
+  "logs": []
+}

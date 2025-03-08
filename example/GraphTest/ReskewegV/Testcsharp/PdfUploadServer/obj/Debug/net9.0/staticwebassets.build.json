@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "3HtqW9bSGBsaWgMLkSJxQU57P6ykYxPLHpKJVW0qt38=",
+  "Source": "PdfUploadServer",
+  "BasePath": "_content/PdfUploadServer",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}
