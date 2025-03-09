@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GraphServer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+815acdf6944fc698b9d7a7720b6d75bc1b2e771e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+35f01748dbcb062aca0af2fd07e7cd9876496b9d")]
 [assembly: System.Reflection.AssemblyProductAttribute("GraphServer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GraphServer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
