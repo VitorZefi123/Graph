@@ -3,6 +3,8 @@ import AreaUnit from './ColumnValues/AreaUnit.js';
 import Columns from './Columns.js';
 import Category from './ColumnValues/Category.js';
 import ParserFactory from './ParserFactory.js';
+import TableNames from './TableNames.js';
+import ContractQuestionHandler from './Entites/ContractEntity/ContractQuestionHandler.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -27,6 +29,11 @@ class SentenceParser {
         const dateMatch = sentence.match(dateRegex);
         const numberMatch = sentence.match(numberRegex);
         debugger;
+
+        if(this.tableName == TableNames.CONTRACT) {
+          const contractQuestionHandler = new ContractQuestionHandler(this.sentence, this.tableName);
+          return contractQuestionHandler.parseSentence();
+        }
     
         // Loop through columns to find a matching columnName
         for (const column of Columns.getAllColumns()) {

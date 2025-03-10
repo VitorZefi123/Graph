@@ -1,12 +1,13 @@
 {
     "version": "0.2.0",
     "configurations": [
+    
         {
             "name": "Launch ASP.NET Core",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/example/graphtest/server/graphserver/bin/Debug/net9.0/GraphServer.dll",
+            "program": "${workspaceFolder}/GraphDevelopment/graphproject/server/graphserver/bin/Debug/net9.0/GraphServer.dll",
             "args": [],
             "cwd": "${workspaceFolder}",
             "stopAtEntry": false,
