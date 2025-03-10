@@ -10,8 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ReskewegV", "ReskewegV", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testcsharp", "Testcsharp", "{1E6AD0C7-C0D7-F9E2-3CA0-D2CC81C6B9C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PdfUploadServer", "example\GraphTest\ReskewegV\Testcsharp\PdfUploadServer\PdfUploadServer.csproj", "{DA1E8A7D-28AC-5DD1-F263-32D370F49314}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
