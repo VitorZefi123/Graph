@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company List</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h2 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #f4f4f4; margin: 5px 0; padding: 10px; border-radius: 5px; }
+        .loading { font-style: italic; color: #999; }
+    </style>
+</head>
+<body>
+    <h2>Company List</h2>
+    <ul id="companyList" class="loading">Loading...</ul>
+
+    <script type="module">
+        // Importing CompanyProcessor from the JavaScript module
+        import CompanyProcessor from "./Graph/ProcessorLayer/CompanyProcessor.js";
+
+        // Function to display companies in the frontend
+        async function fetchAndDisplayCompanies() {
+            const companyListElement = document.getElementById("companyList");
+
+            try {
+                const companies = await CompanyProcessor.getCompanies(); // Calling CompanyProcessor
+                if (!companies || companies.length === 0) {
+                    companyListElement.innerHTML = "<li>No companies found.</li>";
+                    return;
+                }
+
+                // Populate the list with company names
+                companyListElement.innerHTML = companies.map(company => 
+                    `<li><strong>${company.name}</strong> - ${company.industry || "Unknown Industry"}</li>`
+                ).join(""); // Insert the company data into the HTML
+
+            } catch (error) {
+                companyListElement.innerHTML = "<li>Error loading companies.</li>";
+            }
+        }
+
+        // Call the function to display companies on page load
+        fetchAndDisplayCompanies();
+    </script>
+</body>
+</html>

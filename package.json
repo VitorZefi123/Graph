@@ -47,6 +47,7 @@
   ],
   "dependencies": {
     "accessor-fn": "1",
+    "axios": "^1.8.2",
     "kapsule": "^1.16",
     "lodash": "^4.17.21",
     "three": ">=0.118 <1",
