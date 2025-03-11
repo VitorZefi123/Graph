@@ -17,8 +17,10 @@ class ContractColumns {
         CONTRACT_TYPE_FULL: 'contract type',
         CONTRACT_TYPE_SHORT: 'contract typ',
         CONTRACT_TYPE_TYPOS: 'contrct type',
+        CONTRACT_TYPE_SHORTLY: 'type',
 
         END_DATE_FULL: 'end date',
+        TERMINATION_DATE: 'termination',
         END_DATE_SHORT: 'end dt',
         END_DATE_TYPOS: 'ed date',
 
@@ -26,14 +28,14 @@ class ContractColumns {
         CONTRACTOR_TYPOS: 'contrctor',
 
         NOTIFICATION_PERIOD_FULL: 'notification',
-        NOTIFICATION_PERIOD_SHORT: 'notif',
+        NOTIFICATION_PERIOD_SHORT: 'notice',
 
         PARENT_CONTRACT_FULL: 'parent contract',
-        PARENT_CONTRACT_SHORT: 'prnt contract',
+        PARENT_CONTRACT_SHORT: 'parent',
 
         JURISDICTION_FULL: 'law or jurisdiction',
         JURISDICTION_SHORT: 'jurisdiction',
-        LAW_SHORT: 'law',
+        LAW_SHORT: 'law ',
     };
 
     // Mapping from variations to standard column names
@@ -45,8 +47,10 @@ class ContractColumns {
         [ContractColumns.ColumnNames.CONTRACT_TYPE_FULL]: ContractColumns.Columns.CONTRACT_TYPE,
         [ContractColumns.ColumnNames.CONTRACT_TYPE_SHORT]: ContractColumns.Columns.CONTRACT_TYPE,
         [ContractColumns.ColumnNames.CONTRACT_TYPE_TYPOS]: ContractColumns.Columns.CONTRACT_TYPE,
+        [ContractColumns.ColumnNames.CONTRACT_TYPE_SHORTLY]: ContractColumns.Columns.CONTRACT_TYPE,
 
         [ContractColumns.ColumnNames.END_DATE_FULL]: ContractColumns.Columns.END_DATE,
+        [ContractColumns.ColumnNames.TERMINATION_DATE]: ContractColumns.Columns.END_DATE,
         [ContractColumns.ColumnNames.END_DATE_SHORT]: ContractColumns.Columns.END_DATE,
         [ContractColumns.ColumnNames.END_DATE_TYPOS]: ContractColumns.Columns.END_DATE,
 
@@ -61,6 +65,7 @@ class ContractColumns {
 
         [ContractColumns.ColumnNames.JURISDICTION_FULL]: ContractColumns.Columns.JURISDICTION,
         [ContractColumns.ColumnNames.JURISDICTION_SHORT]: ContractColumns.Columns.JURISDICTION,
+        [ContractColumns.ColumnNames.LAW_SHORT]: ContractColumns.Columns.JURISDICTION,
     };
 }
 export default ContractColumns;

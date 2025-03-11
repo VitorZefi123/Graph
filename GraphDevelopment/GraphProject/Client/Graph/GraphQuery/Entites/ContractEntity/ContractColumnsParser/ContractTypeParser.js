@@ -1,3 +1,5 @@
+import ContractTypeValues from '../ContractColumnValues/ContractTypeValues.js';
+
 class ContractTypeParser {
     #columnName;
     #sentence;
@@ -6,25 +8,31 @@ class ContractTypeParser {
     constructor(columnName, tableName, sentence) {
         this.#columnName = columnName;
         this.#tableName = tableName;
-        this.#sentence = sentence;
+        this.#sentence = sentence.toLowerCase();
     }
 
     parse() {
         const result = [];
+        let contractType = null;
 
-        let isApproved = this.#sentence.toLowerCase().includes("approved");
-       
+        // Find the contract type in the sentence
+        for (const [contractTypeCalled, contractTypeUsed] of Object.entries(ContractTypeValues.typeToNameMap)) {
+            if (this.#sentence.toLowerCase().includes(contractTypeCalled.toLowerCase())) {
+                contractType = contractTypeUsed; 
+                break;  
+            }
+        }
 
         if (this.#tableName) {
             result.push(`Table Name: ${this.#tableName}`);
         }
- 
-        if (isApproved) {
-        result.push(`Approved: Approved`);    
-        }
 
         if (this.#columnName) {
             result.push(`Column Name: ${this.#columnName}`);
+        }
+        
+        if (contractType) {
+            result.push(`Contract Type Identified: ${contractType}`);
         }
 
         if (result.length === 0) {

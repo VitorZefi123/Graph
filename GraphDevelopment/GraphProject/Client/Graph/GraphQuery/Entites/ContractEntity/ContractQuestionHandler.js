@@ -1,6 +1,11 @@
 import ContractColumns from './ContractColumns.js';
 import ContractTerminationParser from './ContractColumnsParser/ContractTerminationParser.js';
 import ContractStartParser from './ContractColumnsParser/ContractStartParser.js';
+import ContractTypeParser from './ContractColumnsParser/ContractTypeParser.js';
+import CompanyContractorParser from './ContractColumnsParser/CompanyContractorParser.js';
+import ContractNoticePeriodParser from './ContractColumnsParser/ContractNoticePeriodParser.js';
+import ParentContractParser from './ContractColumnsParser/ParentContractParser.js';
+import LawJurisdictionParser from './ContractColumnsParser/LawJurisdictionParser.js';
 
 class ContractQuestionHandler {
     constructor(sentence, tableName) {
@@ -28,10 +33,34 @@ class ContractQuestionHandler {
             const contractTerminationDate = new ContractTerminationParser(columnName, this.tableName, this.sentence)
             return contractTerminationDate.parse();
         }
+
         if(columnName == ContractColumns.Columns.START_DATE){
             const contractStartDate = new ContractStartParser(columnName, this.tableName, this.sentence)
             return contractStartDate.parse();
         }
+
+        if(columnName == ContractColumns.Columns.CONTRACT_TYPE){
+            const contractType = new ContractTypeParser(columnName, this.tableName, this.sentence)
+            return contractType.parse();
+        }
+
+        if(columnName == ContractColumns.Columns.CONTRACTOR){
+            const companyContractor = new CompanyContractorParser(columnName, this.tableName, this.sentence)
+            return companyContractor.parse();
+        }
+        if(columnName == ContractColumns.Columns.NOTIFICATION_PERIOD){
+            const contractNoticePeriodParser = new ContractNoticePeriodParser(columnName, this.tableName, this.sentence)
+            return contractNoticePeriodParser.parse();
+        }
+        if(columnName == ContractColumns.Columns.PARENT_CONTRACT){
+            const parentContractParser = new ParentContractParser(columnName, this.tableName, this.sentence)
+            return parentContractParser.parse();
+        }
+        if(columnName == ContractColumns.Columns.JURISDICTION){
+            const lawJurisdictionParser = new LawJurisdictionParser(columnName, this.tableName, this.sentence)
+            return lawJurisdictionParser.parse();
+        }
+
 
     }
 }
