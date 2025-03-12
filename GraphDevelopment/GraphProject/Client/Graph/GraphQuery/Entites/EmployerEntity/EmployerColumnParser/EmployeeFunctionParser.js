@@ -1,7 +1,7 @@
-class ContractNoticePeriodParser {
+class EmployeeFunctionParser {
     #columnName;
-    #tableName;
     #sentence;
+    #tableName;
 
     constructor(columnName, tableName, sentence) {
         this.#columnName = columnName;
@@ -10,15 +10,14 @@ class ContractNoticePeriodParser {
     }
 
     parse() {
-        debugger;
         const result = [];
-        let noticePeriod = '';
+        let userFunction = '';
 
-        const noticePattern = /(\d+)/;
-        const match = noticePattern.exec(this.#sentence);
-        
+        // Extract text inside double quotes
+        const functionPattern = /"(.*?)"/;
+        const match = functionPattern.exec(this.#sentence);
         if (match) {
-            noticePeriod = match[1]; 
+            userFunction = match[1].trim();
         }
 
         if (this.#tableName) {
@@ -29,8 +28,8 @@ class ContractNoticePeriodParser {
             result.push(`Column Name: ${this.#columnName}`);
         }
 
-        if (noticePeriod) {
-            result.push(`Notice Period: ${noticePeriod} months`);
+        if (userFunction) {
+            result.push(`User Function: "${userFunction}"`);
         }
 
         if (result.length === 0) {
@@ -41,4 +40,4 @@ class ContractNoticePeriodParser {
     }
 }
 
-export default ContractNoticePeriodParser;
+export default EmployeeFunctionParser;

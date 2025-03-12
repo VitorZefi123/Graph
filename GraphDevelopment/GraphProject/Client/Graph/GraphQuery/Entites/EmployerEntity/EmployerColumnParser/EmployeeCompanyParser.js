@@ -1,7 +1,7 @@
-class ContractNoticePeriodParser {
+class EmployeeCompanyParser {
     #columnName;
-    #tableName;
     #sentence;
+    #tableName;
 
     constructor(columnName, tableName, sentence) {
         this.#columnName = columnName;
@@ -10,15 +10,15 @@ class ContractNoticePeriodParser {
     }
 
     parse() {
-        debugger;
         const result = [];
-        let noticePeriod = '';
+        let companyName = '';
 
-        const noticePattern = /(\d+)/;
-        const match = noticePattern.exec(this.#sentence);
-        
+        // Regex pattern to extract text inside square brackets []
+        const companyPattern = /\[(.*?)\]/;
+
+        const match = companyPattern.exec(this.#sentence);
         if (match) {
-            noticePeriod = match[1]; 
+            companyName = match[1].trim();
         }
 
         if (this.#tableName) {
@@ -29,8 +29,8 @@ class ContractNoticePeriodParser {
             result.push(`Column Name: ${this.#columnName}`);
         }
 
-        if (noticePeriod) {
-            result.push(`Notice Period: ${noticePeriod} months`);
+        if (companyName) {
+            result.push(`Employee Company: [${companyName}]`);
         }
 
         if (result.length === 0) {
@@ -41,4 +41,4 @@ class ContractNoticePeriodParser {
     }
 }
 
-export default ContractNoticePeriodParser;
+export default EmployeeCompanyParser;
