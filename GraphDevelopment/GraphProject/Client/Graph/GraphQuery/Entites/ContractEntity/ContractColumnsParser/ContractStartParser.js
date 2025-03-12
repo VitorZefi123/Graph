@@ -1,3 +1,4 @@
+import DateDifferentTypeMapping from '../ContractColumnValues/DateDifferentTypeMapping.js';
 class ContractStartParser {
     #columnName;
     #sentence;
@@ -12,9 +13,17 @@ class ContractStartParser {
     parse() {
         const result = [];
         let startDate = null;
+        let mappedDateType = null;
 
         const datePattern = /\b(\d{1,2}[\/.-]\d{1,2}[\/.-]\d{4})\b/;
         const match = this.#sentence.match(datePattern);
+
+         for (const [dateTypeCalled, dateTypeMapped] of Object.entries(DateDifferentTypeMapping.typeToNameMap)) {
+             if (this.#sentence.toLowerCase().includes(dateTypeCalled.toLowerCase())) {
+                 mappedDateType = dateTypeMapped;
+                 break;
+             }
+         }
 
         if (match) {
             startDate = match[1];
@@ -30,6 +39,10 @@ class ContractStartParser {
         
         if (startDate) {
             result.push(`Contract Start Date: ${startDate}`);
+        }
+
+        if(mappedDateType){
+            result.push(`Contract Date diff: ${mappedDateType}`)
         }
 
         if (result.length === 0) {
