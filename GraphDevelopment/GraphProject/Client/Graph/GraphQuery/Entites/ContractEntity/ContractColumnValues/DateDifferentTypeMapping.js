@@ -8,6 +8,9 @@ class DateDifferentTypeMapping {
         THIS_WEEK: 'this week',
         THIS_MONTH: 'this month',
         THIS_YEAR: 'this year',
+        NEXT_QUARTER: 'next quarter',
+        THIS_QUARTER:'this quarter',
+        LAST_QUARTER:'last quarter',
     };
 
     static TypeNames = {
@@ -19,6 +22,9 @@ class DateDifferentTypeMapping {
         THIS_WEEK_SHORT: 'this week',
         THIS_MONTH_SHORT: 'this month',
         THIS_YEAR_SHORT: 'this year',
+        NEXT_QUARTER_SHORT: 'next quarter',
+        THIS_QUARTER_SHORT:'this quarter',
+        LAST_QUARTER_SHORT:'last quarter',
 
     };
 
@@ -31,6 +37,9 @@ class DateDifferentTypeMapping {
         [DateDifferentTypeMapping.TypeNames.THIS_WEEK_SHORT]: DateDifferentTypeMapping.Types.THIS_WEEK,
         [DateDifferentTypeMapping.TypeNames.THIS_MONTH_SHORT]: DateDifferentTypeMapping.Types.THIS_MONTH,
         [DateDifferentTypeMapping.TypeNames.THIS_YEAR_SHORT]: DateDifferentTypeMapping.Types.THIS_YEAR,
+        [DateDifferentTypeMapping.TypeNames.NEXT_QUARTER_SHORT]: DateDifferentTypeMapping.Types.NEXT_QUARTER,
+        [DateDifferentTypeMapping.TypeNames.THIS_QUARTER_SHORT]: DateDifferentTypeMapping.Types.THIS_QUARTER,
+        [DateDifferentTypeMapping.TypeNames.LAST_QUARTER_SHORT]: DateDifferentTypeMapping.Types.LAST_QUARTER,
 
     };
 }
