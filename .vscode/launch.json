@@ -1,33 +1,24 @@
 {
     "version": "0.2.0",
     "configurations": [
-    
-        {
-            "name": "Launch ASP.NET Core",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/GraphDevelopment/graphproject/server/graphserver/bin/Debug/net9.0/GraphServer.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}",
-            "stopAtEntry": false,
-            "serverReadyAction": {
-                "action": "openExternally",
-                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
-            },
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development",
-                "ASPNETCORE_URLS": "http://localhost:5022;https://localhost:7001"
-            },
-            "sourceFileMap": {
-                "/Users": "${workspaceFolder}"
-            }
+      {
+        "name": "Python: FastAPI",
+        "type": "debugpy",
+        "request": "launch",
+        "program": "${workspaceFolder}/GraphDevelopment/GraphProject/Server/backend_project/PythonServer/app.py",   // Path to your FastAPI app (adjust as necessary)
+        "args": [
+          "uvicorn",
+          "app:app",  // This is the format for uvicorn (module:app object)
+          "--host", "0.0.0.0",
+          "--port", "8000",
+          "--reload",
+          "--debug"
+        ],
+        "env": {
+          "PYTHONPATH": "${workspaceFolder}"
         },
-        {
-            "name": "Attach to ASP.NET Core",
-            "type": "coreclr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
-        }
+        "console": "integratedTerminal"
+      }
     ]
-}
+  }
+  
