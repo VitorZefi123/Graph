@@ -31,7 +31,7 @@ class SentenceParser {
         debugger;
 
         if(this.tableName.includes(TableNames.CONTRACT)) {
-          const contractQuestionHandler = new ContractQuestionHandler(this.sentence, this.tableName);
+          const contractQuestionHandler = new ContractQuestionHandler(this.sentence, TableNames.CONTRACT);
           return contractQuestionHandler.parseSentence();
         }
     

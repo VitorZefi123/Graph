@@ -37,6 +37,7 @@
     "url": "https://github.com/vasturiano/3d-force-graph/issues"
   },
   "scripts": {
+    "start": "echo 'Server running on http://0.0.0.0:80'",
     "build": "rimraf dist && rollup -c",
     "dev": "rollup -w -c rollup.config.dev.js",
     "prepare": "npm run build"
