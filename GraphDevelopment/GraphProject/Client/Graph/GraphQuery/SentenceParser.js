@@ -30,8 +30,8 @@ class SentenceParser {
         const numberMatch = sentence.match(numberRegex);
         debugger;
 
-        if(this.tableName.includes(TableNames.CONTRACT)) {
-          const contractQuestionHandler = new ContractQuestionHandler(this.sentence, TableNames.CONTRACT);
+        if(this.tableName.includes(TableNames.Tables.CONTRACT)) {
+          const contractQuestionHandler = new ContractQuestionHandler(this.sentence, TableNames.Tables.CONTRACT);
           return contractQuestionHandler.parseSentence();
         }
     

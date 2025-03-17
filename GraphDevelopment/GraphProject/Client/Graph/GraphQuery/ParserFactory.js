@@ -44,124 +44,124 @@ class ParserFactory {
 
     createParser() {
         
-        if (this.tableName.includes(TableNames.SYSTEMS) && this.columnName == Columns.TRADE) {
+        if (this.tableName.includes(TableNames.Tables.SYSTEMS) && this.columnName == Columns.TRADE) {
             debugger;
             const parser = new SystemTradeParser(this.columnName, this.tableName, this.sentence);
             return parser.parse();
         }
         
-        if (this.tableName.includes(TableNames.SYSTEMS) && this.columnName == Columns.CODE) {
+        if (this.tableName.includes(TableNames.Tables.SYSTEMS) && this.columnName == Columns.CODE) {
             debugger;
             const parser = new SystemComponentCodeParser(this.columnName, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName.includes(TableNames.EMPLOYEE) && this.columnName == Columns.ACCOUNT) {
+        if (this.tableName.includes(TableNames.Tables.EMPLOYEE) && this.columnName == Columns.ACCOUNT) {
             debugger;
-            const parser = new UserAccountParser(this.columnName, TableNames.EMPLOYEE, this.sentence);
+            const parser = new UserAccountParser(this.columnName, TableNames.Tables.EMPLOYEE, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.RENTAL && this.columnName == Columns.TURNOVER) {
+        if (this.tableName == TableNames.Tables.RENTAL && this.columnName == Columns.TURNOVER) {
             debugger;
             const parser = new ContractTypeParser(this.columnName, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.CONTRACT && (this.columnName == Columns.END_ON || this.columnName == Columns.TERMINATION)) {
+        if (this.tableName == TableNames.Tables.CONTRACT && (this.columnName == Columns.END_ON || this.columnName == Columns.TERMINATION)) {
             debugger;
             const parser = new ContractTerminationParser(this.columnName, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.CONTRACT && this.columnName == Columns.START_ON) {
+        if (this.tableName == TableNames.Tables.CONTRACT && this.columnName == Columns.START_ON) {
             debugger;
             const parser = new ContractStartParser(Columns.START_ON, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.CONTRACT && this.columnName == Columns.BILLING_PERIOD) {
+        if (this.tableName == TableNames.Tables.CONTRACT && this.columnName == Columns.BILLING_PERIOD) {
             debugger;
             const parser = new ContractBillingParser(Columns.BILLING_PERIOD, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.ASSET && this.columnName == Columns.REQUIREMENT) {
+        if (this.tableName == TableNames.Tables.ASSET && this.columnName == Columns.REQUIREMENT) {
             debugger;
             const parser = new AssetRequirementParser(Columns.REQUIREMENT, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.USER && this.columnName == Columns.FUNCTION) {
+        if (this.tableName == TableNames.Tables.USER && this.columnName == Columns.FUNCTION) {
             const parser = new UserFunctionParser(Columns.FUNCTION, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.ROOM && this.columnName == Columns.RESERVED) {
+        if (this.tableName == TableNames.Tables.ROOM && this.columnName == Columns.RESERVED) {
             const parser = new RoomReservationParser(Columns.RESERVED, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.ROOM && this.columnName == Columns.CLEANING_GROUP) {
+        if (this.tableName == TableNames.Tables.ROOM && this.columnName == Columns.CLEANING_GROUP) {
             const parser = new RoomCleaningGroupParser(Columns.CLEANING_GROUP, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.LEASES && this.columnName == Columns.NOTICE_PERIOD) {
+        if (this.tableName == TableNames.Tables.LEASES && this.columnName == Columns.NOTICE_PERIOD) {
             const parser = new NoticePeriodParser(Columns.NOTICE_PERIOD, this.tableName, this.sentence, this.comparisonOperator);
             return parser.parse();
         }
         
-        if (this.tableName == TableNames.LEASES && this.columnName == Columns.END_ON) {
+        if (this.tableName == TableNames.Tables.LEASES && this.columnName == Columns.END_ON) {
             const parser = new LeasesEndParser(Columns.END_ON, this.tableName, this.sentence);
             return parser.parse();
         }
-        if (this.tableName == TableNames.LEVEL && this.columnName == Columns.CONTENT) {
+        if (this.tableName == TableNames.Tables.LEVEL && this.columnName == Columns.CONTENT) {
             const parser = new LevelContentParser(Columns.CONTENT, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.LEVEL && this.columnName == Columns.NAME) {
+        if (this.tableName == TableNames.Tables.LEVEL && this.columnName == Columns.NAME) {
             const parser = new LevelNameParser(Columns.NAME, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.EMPLOYEE && this.columnName == Columns.FUNCTION) {
+        if (this.tableName == TableNames.Tables.EMPLOYEE && this.columnName == Columns.FUNCTION) {
             const parser = new EmployeeFunctionParser(Columns.FUNCTION, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.EMPLOYEE && this.columnName == Columns.COMPANY) {
+        if (this.tableName == TableNames.Tables.EMPLOYEE && this.columnName == Columns.COMPANY) {
             const parser = new EmployeeCompanyParser(Columns.COMPANY, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.EMPLOYEE && this.columnName == Columns.NAME) {
+        if (this.tableName == TableNames.Tables.EMPLOYEE && this.columnName == Columns.NAME) {
             const parser = new EmployeeNameParser(Columns.NAME, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.SYSTEMS && this.columnName == Columns.REQUIREMENT) {
+        if (this.tableName == TableNames.Tables.SYSTEMS && this.columnName == Columns.REQUIREMENT) {
             const parser = new SystemRequirementParser(Columns.REQUIREMENT, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.SYSTEMS && this.columnName == Columns.MAINTAINED_BY) {
+        if (this.tableName == TableNames.Tables.SYSTEMS && this.columnName == Columns.MAINTAINED_BY) {
             const parser = new SystemMaintainedParser(Columns.MAINTAINED_BY, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.SYSTEMS && this.columnName == Columns.SYSTEM_LOCATION) {
+        if (this.tableName == TableNames.Tables.SYSTEMS && this.columnName == Columns.SYSTEM_LOCATION) {
             const parser = new SystemLocationParser(Columns.SYSTEM_LOCATION, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.tableName == TableNames.USER_ACCOUNT) {
+        if (this.tableName == TableNames.Tables.USER_ACCOUNT) {
             const parser = new AccountStatusParser(Columns.STATUS, this.tableName, this.sentence);
             return parser.parse();
         }
 
-        if (this.columnName == Columns.NAME && this.tableName == TableNames.FURNITURE) {
+        if (this.columnName == Columns.NAME && this.tableName == TableNames.Tables.FURNITURE) {
             const parser = new FurnitureNameParser(Columns.NAME, this.tableName, this.sentence);
             return parser.parse();
         }

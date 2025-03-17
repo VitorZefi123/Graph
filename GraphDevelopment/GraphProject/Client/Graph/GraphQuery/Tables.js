@@ -4,9 +4,14 @@ import TableNames from './TableNames.js';
 class Tables {
 
     extractFromQuery(query) {
-        const allowedTables = TableNames.getTableNames();
+        let foundTables = [];
 
-        const foundTables = allowedTables.filter(table => query.toLowerCase().includes(table.toLowerCase()));
+        // Check if the query contains any allowed table
+        for (const [tableShort, tableMapped] of Object.entries(TableNames.tableToNameMap)) {
+            if (query.toLowerCase().includes(tableShort.toLowerCase())) {
+                foundTables.push(tableMapped);
+            }
+        }
 
         if (foundTables.length === 0) {
             return { error: "No valid tables found in the sentence." };
