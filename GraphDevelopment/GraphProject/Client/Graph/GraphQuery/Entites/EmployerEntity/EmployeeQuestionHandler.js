@@ -2,6 +2,7 @@ import EmployeeColumns from './EmployeColumns.js';
 import EmployeeNameParser from './EmployerColumnParser/EmployeeNameParser.js';
 import EmployeeFunctionParser from './EmployerColumnParser/EmployeeFunctionParser.js';
 import EmployeeCompanyParser from './EmployerColumnParser/EmployeeCompanyParser.js';
+import EmployeeAccountParser from './EmployerColumnParser/EmployeeAccountParser.js';
 
 class EmployeeQuestionHandler {
     constructor(sentence, tableName) {
@@ -35,6 +36,11 @@ class EmployeeQuestionHandler {
         if (columnName === EmployeeColumns.Columns.COMPANY) {
             const employeeCompanyParser = new EmployeeCompanyParser(columnName, this.tableName, this.sentence)
             return employeeCompanyParser.parse();
+        }
+
+        if (columnName === EmployeeColumns.Columns.ACCOUNT) {
+            const accountEmployerParser = new EmployeeAccountParser(columnName, this.tableName, this.sentence)
+            return accountEmployerParser.parse();
         }
     }
 }

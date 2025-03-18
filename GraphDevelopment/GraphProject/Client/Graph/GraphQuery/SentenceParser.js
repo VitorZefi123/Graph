@@ -6,6 +6,7 @@ import ParserFactory from './ParserFactory.js';
 import TableNames from './TableNames.js';
 import ContractQuestionHandler from './Entites/ContractEntity/ContractQuestionHandler.js';
 import SystemQuestionHandler from './Entites/SystemEntity/SystemQuestionHandler.js';
+import EmployeeQuestionHandler from './Entites/EmployerEntity/EmployeeQuestionHandler.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -39,6 +40,11 @@ class SentenceParser {
         if(this.tableName.includes(TableNames.Tables.SYSTEMS)) {
             const systemQuestionHandler = new SystemQuestionHandler(this.sentence, TableNames.Tables.SYSTEMS);
             return systemQuestionHandler.parseSentence();
+          }
+
+        if(this.tableName.includes(TableNames.Tables.EMPLOYEE)) {
+            const employeeQuestionHandler = new EmployeeQuestionHandler(this.sentence, TableNames.Tables.EMPLOYEE);
+            return employeeQuestionHandler.parseSentence();
           }
     
         // Loop through columns to find a matching columnName
