@@ -1,4 +1,4 @@
-import SystemRequirement from '../ColumnValues/SystemRequirement.js';
+import SystemTypeMapping from '../SystemColumnValues/SystemTypeMapping.js';
 
 class SystemRequirementParser {
     #columnName;
@@ -15,10 +15,10 @@ class SystemRequirementParser {
         const result = [];
         let systemRequirement = null;
 
-        for (const caption of SystemRequirement.getAllCaptions()) {
-            if (typeof caption === "string" && this.#sentence.toLowerCase().includes(caption.toLowerCase())) {
-                systemRequirement = caption;
-                break;
+        for (const [typeCalled, typeNameMapped] of Object.entries(SystemTypeMapping.typeToNameMap)) {
+            if (this.#sentence.toLowerCase().includes(typeCalled.toLowerCase())) {
+                systemRequirement = typeNameMapped;
+              break;
             }
         }
 
