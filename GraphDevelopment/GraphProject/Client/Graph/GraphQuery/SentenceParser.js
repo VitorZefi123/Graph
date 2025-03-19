@@ -7,6 +7,7 @@ import TableNames from './TableNames.js';
 import ContractQuestionHandler from './Entites/ContractEntity/ContractQuestionHandler.js';
 import SystemQuestionHandler from './Entites/SystemEntity/SystemQuestionHandler.js';
 import EmployeeQuestionHandler from './Entites/EmployerEntity/EmployeeQuestionHandler.js';
+import RoomQuestionHandler from './Entites/RoomEntity/RoomQuestionHandler.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -31,6 +32,12 @@ class SentenceParser {
         const dateMatch = sentence.match(dateRegex);
         const numberMatch = sentence.match(numberRegex);
         debugger;
+
+        if(this.tableName.includes(TableNames.Tables.ROOM)) {
+            const roomQuestionHandler = new RoomQuestionHandler(this.sentence, TableNames.Tables.ROOM);
+            return roomQuestionHandler.parseSentence();
+          }
+  
 
         if(this.tableName.includes(TableNames.Tables.CONTRACT)) {
           const contractQuestionHandler = new ContractQuestionHandler(this.sentence, TableNames.Tables.CONTRACT);
