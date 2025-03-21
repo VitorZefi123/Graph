@@ -29,6 +29,7 @@ class TableNames {
         ASSET_SHORT: 'asset',
         CONTRACT_SHORT: 'contract',
         RENTAL_SHORT: 'rental',
+        
     };
 
     // Mapping from variations to standard table names
