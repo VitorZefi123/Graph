@@ -6,6 +6,7 @@ import RoomQuestionHandler from './Entites/RoomEntity/RoomQuestionHandler.js';
 import LeasesQuestionHandler from './Entites/LeasesEntity/LeasesQuestionHandler.js';
 import LevelQuestionHandler from './Entites/LevelEntity/LevelQuestionHandler.js';
 import AssetQuestionHandler from './Entites/AssetEntity/AssetQuestionHandler.js';
+import ParkingQuestionHandler from './Entites/ParkingEntity/ParkingQuestionHandler.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -23,39 +24,68 @@ class SentenceParser {
  
         debugger;
 
-        if(this.tableName.includes(TableNames.Tables.ROOM)) {
-            const roomQuestionHandler = new RoomQuestionHandler(sentence, TableNames.Tables.ROOM);
-            return roomQuestionHandler.parseSentence();
+        if (this.tableName.includes(TableNames.Tables.ROOM)) {
+          const roomQuestionHandler = new RoomQuestionHandler(sentence, TableNames.Tables.ROOM);
+          const result = roomQuestionHandler.parseSentence();
+          if (result) {
+              return result;
           }
+      }
 
         if(this.tableName.includes(TableNames.Tables.CONTRACT)) {
           const contractQuestionHandler = new ContractQuestionHandler(sentence, TableNames.Tables.CONTRACT);
-          return contractQuestionHandler.parseSentence();
+          const result = contractQuestionHandler.parseSentence();
+          if (result) {
+            return result;
+          }
         }
 
         if(this.tableName.includes(TableNames.Tables.SYSTEMS)) {
             const systemQuestionHandler = new SystemQuestionHandler(sentence, TableNames.Tables.SYSTEMS);
-            return systemQuestionHandler.parseSentence();
+            const result = systemQuestionHandler.parseSentence();
+            if (result) {
+              return result;
+            }
           }
 
         if(this.tableName.includes(TableNames.Tables.EMPLOYEE)) {
             const employeeQuestionHandler = new EmployeeQuestionHandler(sentence, TableNames.Tables.EMPLOYEE);
-            return employeeQuestionHandler.parseSentence();
+            const result = employeeQuestionHandler.parseSentence();
+            if (result) {
+              return result;
+            }
           }
     
           if(this.tableName.includes(TableNames.Tables.LEASES)) {
             const leasesQuestionHandler = new LeasesQuestionHandler(sentence, TableNames.Tables.LEASES);
-            return leasesQuestionHandler.parseSentence();
+            const result = leasesQuestionHandler.parseSentence();
+            if(result){
+              return result;
+            } 
           }
 
           if(this.tableName.includes(TableNames.Tables.LEVEL)) {
             const levelQuestionHandler = new LevelQuestionHandler(sentence, TableNames.Tables.LEVEL);
-            return levelQuestionHandler.parseSentence();
+            const result = levelQuestionHandler.parseSentence();
+            if(result){
+              return result;
+            }
           }
 debugger;
           if(this.tableName.includes(TableNames.Tables.ASSET)) {
             const assetQuestionHandler = new AssetQuestionHandler(sentence, TableNames.Tables.ASSET);
-            return assetQuestionHandler.parseSentence();
+            const result = assetQuestionHandler.parseSentence();
+            if (result){
+              return result;
+            }
+          }
+
+          if(this.tableName.includes(TableNames.Tables.PARKING)) {
+            const parkingQuestionHandler = new ParkingQuestionHandler(sentence, TableNames.Tables.PARKING);
+            const result = parkingQuestionHandler.parseSentence();
+            if (result){
+              return result;
+            }
           }
         
         }
