@@ -22,11 +22,11 @@ class ContractNoticePeriodParser {
         }
 
         if (this.#tableName) {
-            result.push(`Table Name: ${this.#tableName}`);
+            result.push(`Table Name ${this.#tableName}: ${this.#tableName}`);
         }
 
         if (this.#columnName) {
-            result.push(`Column Name: ${this.#columnName}`);
+            result.push(`Column Name ${this.#columnName}: ${this.#columnName}`);
         }
 
         if (noticePeriod) {

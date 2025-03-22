@@ -20,9 +20,9 @@ class EmployeeAccountParser {
         }
 
         if (this.#tableName) {
-            result.push(`Table Name: ${this.#tableName}`);
+            result.push(`Table Name ${this.#tableName}: ${this.#tableName}`);
         }
-
+      
         if (this.#columnName) {
             result.push(`Account Value: ${prefix} ${this.#columnName}`);
         }

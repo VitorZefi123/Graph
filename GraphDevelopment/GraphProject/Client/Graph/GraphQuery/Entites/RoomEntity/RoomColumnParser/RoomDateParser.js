@@ -14,12 +14,12 @@ class RoomDateParser {
     parse() {
         const result = [];
         
-        if (this.#tableName !== undefined && this.#tableName !== null && this.#tableName !== '') {
-            result.push(`Table Name: ${this.#tableName}`);
+        if (this.#tableName) {
+            result.push(`Table Name ${this.#tableName}: ${this.#tableName}`);
         }
 
-        if (this.#columnName !== undefined && this.#columnName !== null && this.#columnName !== '') {
-            result.push(`Column Name: ${this.#columnName}`);
+        if (this.#columnName) {
+            result.push(`Column Name ${this.#columnName}: ${this.#columnName}`);
         }
 
         if (this.#comparisonOperator !== undefined && this.#comparisonOperator !== null && this.#comparisonOperator !== '') {
