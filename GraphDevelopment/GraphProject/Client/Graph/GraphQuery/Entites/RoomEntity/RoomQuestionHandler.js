@@ -29,13 +29,6 @@ class RoomQuestionHandler {
         const dateMatch = sentence.match(dateRegex);
         const numberMatch = sentence.match(numberRegex);
 
-        for (const [columnCalled, columnNameMapped] of Object.entries(RoomColumns.columnToNameMap)) {
-            if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                columnName = columnNameMapped;
-                break;
-            }
-        }
-
         for (const [term, operator] of Object.entries(Comparison.termToOperatorMap)) {
             if (sentence.toLowerCase().includes(term)) {
                 comparisonOperator = operator;  
@@ -51,31 +44,48 @@ class RoomQuestionHandler {
         }
         
 
+        for (const [columnCalled, columnNameMapped] of Object.entries(RoomColumns.columnToNameMap)) {
+            if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
+                columnName = columnNameMapped;
+                break;
+            }
+        }
+
+        const responseVector = []; 
+        const columnNames = []; 
+    
+        for (const [columnCalled, columnNameMapped] of Object.entries(RoomColumns.columnToNameMap)) {
+            if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
+                columnNames.push(columnNameMapped);
+            }
+        }
+
+        if (columnNames.length === 0 && !dateMatch && !categoryMatch && !unitUsed) {
+            return null;
+        }
+    
         if (dateMatch) {
             const parser = new RoomDateParser(RoomColumns.Columns.RESERVED, dateMatch, comparisonOperator, this.tableName);
-            return parser.parse();
+            responseVector.push(...parser.parse());
         }
-
-        if (columnName == RoomColumns.Columns.NET_AREA || unitUsed) {
-            const parser = new RoomSizeParser(RoomColumns.Columns.NET_AREA , parseFloat(numberMatch[0]), unitUsed, comparisonOperator, this.tableName);
-            return parser.parse();
+    
+        if (columnNames.includes(RoomColumns.Columns.NET_AREA) || unitUsed) {
+            const parser = new RoomSizeParser(RoomColumns.Columns.NET_AREA, parseFloat(numberMatch[0]), unitUsed, comparisonOperator, this.tableName);
+            responseVector.push(...parser.parse());
         }
-
-        if (columnName == RoomColumns.Columns.CATEGORY || categoryMatch) {
+    
+        if (columnNames.includes(RoomColumns.Columns.CATEGORY) || categoryMatch) {
             const parser = new RoomCategoryParser(RoomColumns.Columns.CATEGORY, categoryMatch, this.tableName);
-            return parser.parse();
+            responseVector.push(...parser.parse());
         }
-
-        if (columnName === RoomColumns.Columns.CLEANING_GROUP) {
-            const roomCleaningGroupParser = new RoomCleaningGroupParser(columnName, this.tableName, this.sentence);
-            return roomCleaningGroupParser.parse();
+    
+        if (columnNames.includes(RoomColumns.Columns.CLEANING_GROUP)) {
+            const parser = new RoomCleaningGroupParser(RoomColumns.Columns.CLEANING_GROUP, this.tableName, this.sentence);
+            responseVector.push(...parser.parse());
         }
-
-
-        if (columnName === RoomColumns.Columns.RESERVED) {
-            const roomReservedParser = new RoomReservationParser(columnName, this.tableName, this.sentence);
-            return roomReservedParser.parse();
-        }
+      
+        return responseVector; 
+    
     }
 
         

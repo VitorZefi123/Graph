@@ -13,24 +13,32 @@ class LevelQuestionHandler {
     }
 
     getValueFromType(sentence) {
-        let columnName = null;
+        const responseVector = []; 
+        const columnNames = []; 
+    
         for (const [columnCalled, columnNameMapped] of Object.entries(LevelColumns.columnToNameMap)) {
             if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                columnName = columnNameMapped;
-                break;
+                columnNames.push(columnNameMapped);
             }
         }
 
-        if (columnName === LevelColumns.Columns.NAME) {
-            const levelNameParser = new LevelNameParser(columnName, this.tableName, this.sentence);
-            return levelNameParser.parse();
+        if (columnNames.length === 0) {
+            return null;
         }
-
-        if (columnName === LevelColumns.Columns.CONTENT) {
-            const levelContentParser = new LevelContentParser(columnName, this.tableName, this.sentence);
-            return levelContentParser.parse();
+    
+        if (columnNames.includes(LevelColumns.Columns.NAME)) {
+            const levelNameParser = new LevelNameParser(LevelColumns.Columns.NAME, this.tableName, this.sentence);
+            responseVector.push(...levelNameParser.parse());
         }
+    
+        if (columnNames.includes(LevelColumns.Columns.CONTENT)) {
+            const levelContentParser = new LevelContentParser(LevelColumns.Columns.CONTENT, this.tableName, this.sentence);
+            responseVector.push(...levelContentParser.parse());
+        }
+    
+        return responseVector; 
     }
+    
 }
 
 export default LevelQuestionHandler;

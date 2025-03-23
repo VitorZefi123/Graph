@@ -59,7 +59,7 @@ class SentenceParser {
           if(this.tableName.includes(TableNames.Tables.LEASES)) {
             const leasesQuestionHandler = new LeasesQuestionHandler(sentence, TableNames.Tables.LEASES);
             const result = leasesQuestionHandler.parseSentence();
-            if(result){
+            if(result) {
               return result;
             } 
           }

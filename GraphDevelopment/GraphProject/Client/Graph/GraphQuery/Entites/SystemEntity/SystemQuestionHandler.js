@@ -11,47 +11,54 @@ class SystemQuestionHandler {
         this.sentence = sentence;
     }
 
-    // Method to process the sentence
     parseSentence() {
         return this.getValueFromType(this.sentence);
     }
 
     getValueFromType(sentence) {
-        let columnName = null;
-
-        // Check if the sentence contains any unit
+        const columnNames = [];
+        const responseVector = [];
+    
         for (const [columnCalled, columnNameMapped] of Object.entries(SystemColumns.columnToNameMap)) {
             if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                columnName = columnNameMapped;
-                break;
+                columnNames.push(columnNameMapped);
             }
         }
 
-        if (columnName === SystemColumns.Columns.TRADE) {
-            const tradeParser = new SystemTradeParser(columnName, this.tableName, this.sentence);
-            return tradeParser.parse();
+        if (columnNames.length === 0) {
+            return null;
         }
 
-        if (columnName === SystemColumns.Columns.CODE) {
-            const codeParser = new SystemComponentCodeParser(columnName, this.tableName, this.sentence);
-            return codeParser.parse();
+        debugger;
+    
+        if  (columnNames.includes(SystemColumns.Columns.TRADE)){
+            const tradeParser = new SystemTradeParser(SystemColumns.Columns.TRADE, this.tableName, this.sentence);
+            responseVector.push(...tradeParser.parse());
         }
-
-        if (columnName === SystemColumns.Columns.REQUIREMENT) {
-            const requirementParser = new SystemRequirementParser(columnName, this.tableName, this.sentence);
-            return requirementParser.parse();
+    
+        if (columnNames.includes(SystemColumns.Columns.CODE)) {
+            const codeParser = new SystemComponentCodeParser(SystemColumns.Columns.CODE, this.tableName, this.sentence);
+            responseVector.push(...codeParser.parse());
         }
-
-        if (columnName === SystemColumns.Columns.MAINTAINED_BY) {
-            const maintainedByParser = new SystemMaintainedParser(columnName, this.tableName, this.sentence);
-            return maintainedByParser.parse();
+    
+        if (columnNames.includes(SystemColumns.Columns.REQUIREMENT)) {
+            const requirementParser = new SystemRequirementParser(SystemColumns.Columns.REQUIREMENT, this.tableName, this.sentence);
+            responseVector.push(...requirementParser.parse());
         }
-
-        if (columnName === SystemColumns.Columns.SYSTEM_LOCATION) {
-            const systemLocationParser = new SystemLocationParser(columnName, this.tableName, this.sentence);
-            return systemLocationParser.parse();
+    
+        if (columnNames.includes(SystemColumns.Columns.MAINTAINED_BY)) {
+            const maintainedByParser = new SystemMaintainedParser(SystemColumns.Columns.MAINTAINED_BY, this.tableName, this.sentence);
+            responseVector.push(...maintainedByParser.parse());
         }
+    
+        if (columnNames.includes(SystemColumns.Columns.SYSTEM_LOCATION)) {
+            const systemLocationParser = new SystemLocationParser(SystemColumns.Columns.SYSTEM_LOCATION, this.tableName, this.sentence);
+            responseVector.push(...systemLocationParser.parse());
+        }
+    
+        return responseVector; 
     }
+    
 }
 
 export default SystemQuestionHandler;

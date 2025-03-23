@@ -13,24 +13,32 @@ class LeasesQuestionHandler {
     }
 
     getValueFromType(sentence) {
-        let columnName = null;
+        const responseVector = []; 
+        const columnNames = []; 
+    
         for (const [columnCalled, columnNameMapped] of Object.entries(LeasesColumn.columnToNameMap)) {
             if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                columnName = columnNameMapped;
-                break;
+                columnNames.push(columnNameMapped);
             }
         }
 
-        if (columnName === LeasesColumn.Columns.END_ON) {
-            const leaseEndOnParser = new LeasesEndParser(columnName, this.tableName, this.sentence);
-            return leaseEndOnParser.parse();
+        if (columnNames.length === 0) {
+            return null;
         }
-
-        if (columnName === LeasesColumn.Columns.NOTICE_PERIOD) {
-            const leaseNoticePeriodParser = new LeasesNoticePeriodParser(columnName, this.tableName, this.sentence);
-            return leaseNoticePeriodParser.parse();
+    
+        if (columnNames.includes(LeasesColumn.Columns.END_ON)) {
+            const leaseEndOnParser = new LeasesEndParser(LeasesColumn.Columns.END_ON, this.tableName, this.sentence);
+            responseVector.push(...leaseEndOnParser.parse());
         }
+    
+        if (columnNames.includes(LeasesColumn.Columns.NOTICE_PERIOD)) {
+            const leaseNoticePeriodParser = new LeasesNoticePeriodParser(LeasesColumn.Columns.NOTICE_PERIOD, this.tableName, this.sentence);
+            responseVector.push(...leaseNoticePeriodParser.parse());
+        }
+    
+        return responseVector; 
     }
+    
 }
 
 export default LeasesQuestionHandler;

@@ -13,56 +13,62 @@ class ContractQuestionHandler {
         this.sentence = sentence;
     }
 
-    // Method to process the sentence
     parseSentence() {
         return this.getValueFromType(this.sentence);
     }
 
     getValueFromType(sentence) {
-        let columnName = null;
-
-              // Check if the sentence contains any unit
-              for (const [columnCalled, columnNameMapped] of Object.entries(ContractColumns.columnToNameMap)) {
-                if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                    columnName = columnNameMapped; 
-                    break;  
-                }
+        const responseVector = []; 
+        const columnNames = [];
+    
+        for (const [columnCalled, columnNameMapped] of Object.entries(ContractColumns.columnToNameMap)) {
+            if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
+                columnNames.push(columnNameMapped);
             }
-
-        if(columnName == ContractColumns.Columns.END_DATE){
-            const contractTerminationDate = new ContractTerminationParser(columnName, this.tableName, this.sentence)
-            return contractTerminationDate.parse();
         }
-
-        if(columnName == ContractColumns.Columns.START_DATE){
-            const contractStartDate = new ContractStartParser(columnName, this.tableName, this.sentence)
-            return contractStartDate.parse();
+    
+        if (columnNames.length === 0) {
+            return null;
         }
-
-        if(columnName == ContractColumns.Columns.CONTRACT_TYPE){
-            const contractType = new ContractTypeParser(columnName, this.tableName, this.sentence)
-            return contractType.parse();
+    
+        if (columnNames.includes(ContractColumns.Columns.END_DATE)) {
+            const contractTerminationDate = new ContractTerminationParser(ContractColumns.Columns.END_DATE, this.tableName, this.sentence);
+            responseVector.push(...contractTerminationDate.parse());
         }
-
-        if(columnName == ContractColumns.Columns.CONTRACTOR){
-            const companyContractor = new CompanyContractorParser(columnName, this.tableName, this.sentence)
-            return companyContractor.parse();
+    
+        if (columnNames.includes(ContractColumns.Columns.START_DATE)) {
+            const contractStartDate = new ContractStartParser(ContractColumns.Columns.START_DATE, this.tableName, this.sentence);
+            responseVector.push(...contractStartDate.parse());
         }
-        if(columnName == ContractColumns.Columns.NOTIFICATION_PERIOD){
-            const contractNoticePeriodParser = new ContractNoticePeriodParser(columnName, this.tableName, this.sentence)
-            return contractNoticePeriodParser.parse();
+    
+        if (columnNames.includes(ContractColumns.Columns.CONTRACT_TYPE)) {
+            const contractType = new ContractTypeParser(ContractColumns.Columns.CONTRACT_TYPE, this.tableName, this.sentence);
+            responseVector.push(...contractType.parse());
         }
-        if(columnName == ContractColumns.Columns.PARENT_CONTRACT){
-            const parentContractParser = new ParentContractParser(columnName, this.tableName, this.sentence)
-            return parentContractParser.parse();
+    
+        if (columnNames.includes(ContractColumns.Columns.CONTRACTOR)) {
+            const companyContractor = new CompanyContractorParser(ContractColumns.Columns.CONTRACTOR, this.tableName, this.sentence);
+            responseVector.push(...companyContractor.parse());
         }
-        if(columnName == ContractColumns.Columns.JURISDICTION){
-            const lawJurisdictionParser = new LawJurisdictionParser(columnName, this.tableName, this.sentence)
-            return lawJurisdictionParser.parse();
+    
+        if (columnNames.includes(ContractColumns.Columns.NOTIFICATION_PERIOD)) {
+            const contractNoticePeriodParser = new ContractNoticePeriodParser(ContractColumns.Columns.NOTIFICATION_PERIOD, this.tableName, this.sentence);
+            responseVector.push(...contractNoticePeriodParser.parse());
         }
-
-
+    
+        if (columnNames.includes(ContractColumns.Columns.PARENT_CONTRACT)) {
+            const parentContractParser = new ParentContractParser(ContractColumns.Columns.PARENT_CONTRACT, this.tableName, this.sentence);
+            responseVector.push(...parentContractParser.parse());
+        }
+    
+        if (columnNames.includes(ContractColumns.Columns.JURISDICTION)) {
+            const lawJurisdictionParser = new LawJurisdictionParser(ContractColumns.Columns.JURISDICTION, this.tableName, this.sentence);
+            responseVector.push(...lawJurisdictionParser.parse());
+        }
+    
+        return responseVector; 
     }
+    
 }
 
 export default ContractQuestionHandler;

@@ -15,34 +15,42 @@ class EmployeeQuestionHandler {
     }
 
     getValueFromType(sentence) {
-        let columnName = null;
+        const responseVector = []; 
+        const columnNames = []; 
+    
         for (const [columnCalled, columnNameMapped] of Object.entries(EmployeeColumns.columnToNameMap)) {
             if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                columnName = columnNameMapped;
-                break;
+                columnNames.push(columnNameMapped);
             }
         }
 
-        if (columnName === EmployeeColumns.Columns.NAME) {
-            const employeeNameParser = new EmployeeNameParser(columnName, this.tableName, this.sentence)
-            return employeeNameParser.parse();
+        if (columnNames.length === 0) {
+            return null;
         }
-
-        if (columnName === EmployeeColumns.Columns.FUNCTION) {
-            const employeeFunctionParser = new EmployeeFunctionParser(columnName, this.tableName, this.sentence)
-            return employeeFunctionParser.parse();
+    
+        if (columnNames.includes(EmployeeColumns.Columns.NAME)) {
+            const employeeNameParser = new EmployeeNameParser(EmployeeColumns.Columns.NAME, this.tableName, this.sentence);
+            responseVector.push(...employeeNameParser.parse());
         }
-
-        if (columnName === EmployeeColumns.Columns.COMPANY) {
-            const employeeCompanyParser = new EmployeeCompanyParser(columnName, this.tableName, this.sentence)
-            return employeeCompanyParser.parse();
+    
+        if (columnNames.includes(EmployeeColumns.Columns.FUNCTION)) {
+            const employeeFunctionParser = new EmployeeFunctionParser(EmployeeColumns.Columns.FUNCTION, this.tableName, this.sentence);
+            responseVector.push(...employeeFunctionParser.parse());
         }
-
-        if (columnName === EmployeeColumns.Columns.ACCOUNT) {
-            const accountEmployerParser = new EmployeeAccountParser(columnName, this.tableName, this.sentence)
-            return accountEmployerParser.parse();
+    
+        if (columnNames.includes(EmployeeColumns.Columns.COMPANY)) {
+            const employeeCompanyParser = new EmployeeCompanyParser(EmployeeColumns.Columns.COMPANY, this.tableName, this.sentence);
+            responseVector.push(...employeeCompanyParser.parse());
         }
+    
+        if (columnNames.includes(EmployeeColumns.Columns.ACCOUNT)) {
+            const accountEmployerParser = new EmployeeAccountParser(EmployeeColumns.Columns.ACCOUNT, this.tableName, this.sentence);
+            responseVector.push(...accountEmployerParser.parse());
+        }
+    
+        return responseVector; 
     }
+    
 }
 
 export default EmployeeQuestionHandler;

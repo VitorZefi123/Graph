@@ -7,26 +7,30 @@ class ParkingQuestionHandler {
         this.sentence = sentence;
     }
 
-    // Method to process the sentence
     parseSentence() {
         return this.getValueFromType(this.sentence);
     }
 
     getValueFromType(sentence) {
-        let columnName = null;
-
-        // Check if the sentence contains any unit
+        const responseVector = [];
+        const columnNames = []; 
+    
         for (const [columnCalled, columnNameMapped] of Object.entries(ParkingColumn.columnToNameMap)) {
             if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
-                columnName = columnNameMapped;
-                break;
+                columnNames.push(columnNameMapped);
             }
         }
 
-        if (columnName === ParkingColumn.Columns.BOOK) {
-            const parkingBookingParser = new ParkingBookingParser(columnName, this.tableName, this.sentence);
-            return parkingBookingParser.parse();
+        if (columnNames.length === 0) {
+            return null;
         }
+    
+        if (columnNames.includes(ParkingColumn.Columns.BOOK)) {
+            const parkingBookingParser = new ParkingBookingParser(ParkingColumn.Columns.BOOK, this.tableName, this.sentence);
+            responseVector.push(...parkingBookingParser.parse());
+        }
+    
+        return responseVector; 
     }
 }
 
