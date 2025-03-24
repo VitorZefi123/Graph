@@ -6,6 +6,8 @@ import RoomSizeParser from './RoomColumnParser/RoomSizeParser.js';
 import RoomCategoryParser from './RoomColumnParser/RoomCategoryParser.js';
 import AreaUnit from './RoomValues/AreaUnit.js';
 import Category from './RoomValues/Category.js';
+import RoomRentabilityParser from './RoomColumnParser/RoomRentabilityParser.js';
+import ServiceTypeParser from './RoomColumnParser/ServiceTypeParser.js';
 import Comparison from './RoomValues/Comparison.js';
 
 class RoomQuestionHandler {
@@ -83,9 +85,18 @@ class RoomQuestionHandler {
             const parser = new RoomCleaningGroupParser(RoomColumns.Columns.CLEANING_GROUP, this.tableName, this.sentence);
             responseVector.push(...parser.parse());
         }
+
+        if (columnNames.includes(RoomColumns.Columns.RENTABILITY)) {
+            const parser = new RoomRentabilityParser(RoomColumns.Columns.RENTABILITY, this.tableName, this.sentence);
+            responseVector.push(...parser.parse());
+        }
+
+        if (columnNames.includes(RoomColumns.Columns.SERVICE_TYPE)) {
+            const parser = new ServiceTypeParser(RoomColumns.Columns.SERVICE_TYPE, this.tableName, this.sentence);
+            responseVector.push(...parser.parse());
+        }
       
-        return responseVector; 
-    
+        return responseVector;    
     }
 
         

@@ -13,7 +13,8 @@ class TableNames {
         ASSET: 'asset',
         CONTRACT: 'contract',
         RENTAL: 'rental',
-        PARKING: 'parking'
+        PARKING: 'parking',
+        DRAWING: 'drawing'
     };
 
     static TableShortNames = {
@@ -31,6 +32,7 @@ class TableNames {
         CONTRACT_SHORT: 'contract',
         RENTAL_SHORT: 'rental',
         PARKING_SHORT: 'parking',
+        DRAWING_SHORT: 'draw'
         
     };
 
@@ -50,6 +52,7 @@ class TableNames {
         [TableNames.TableShortNames.CONTRACT_SHORT]: TableNames.Tables.CONTRACT,
         [TableNames.TableShortNames.RENTAL_SHORT]: TableNames.Tables.RENTAL,
         [TableNames.TableShortNames.PARKING_SHORT]: TableNames.Tables.PARKING,
+        [TableNames.TableShortNames.DRAWING_SHORT]: TableNames.Tables.DRAWING,
     };
 
     static getTableNames() {

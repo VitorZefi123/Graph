@@ -7,6 +7,8 @@ import LeasesQuestionHandler from './Entites/LeasesEntity/LeasesQuestionHandler.
 import LevelQuestionHandler from './Entites/LevelEntity/LevelQuestionHandler.js';
 import AssetQuestionHandler from './Entites/AssetEntity/AssetQuestionHandler.js';
 import ParkingQuestionHandler from './Entites/ParkingEntity/ParkingQuestionHandler.js';
+import DrawingQuestionHandler from './Entites/DrawingEntity/DrawingQuestionHandler.js'; 
+import FurnitureQuestionHandler from './Entites/FurnitureEntity/FurnitureQuestionHandler.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -87,7 +89,23 @@ debugger;
               return result;
             }
           }
-        
+
+          if(this.tableName.includes(TableNames.Tables.DRAWING)) {
+            const drawingQuestionHandler = new DrawingQuestionHandler(sentence, TableNames.Tables.DRAWING);
+            const result = drawingQuestionHandler.parseSentence();
+            if (result){
+              return result;
+            }
+          }
+          
+          if(this.tableName.includes(TableNames.Tables.FURNITURE)) {
+            const furnitureQuestionHandler = new FurnitureQuestionHandler(sentence, TableNames.Tables.FURNITURE);
+            const result = furnitureQuestionHandler.parseSentence();
+            if (result){
+              return result;
+            }
+          }
+
         }
 }
  
