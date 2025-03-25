@@ -1,7 +1,7 @@
-import AssetColumns from './AssetColumns.js';
-import AssetRequirementParser from './AssetColumnParser/AssetRequirementParser.js';
+import BuildingColumns from './BuildingColumns.js';
+import BuildingAccordingParser from './BuildingColumnParser/BuildingAccordingParser.js';
 
-class AssetQuestionHandler {
+class BuildingQuestionHandler {
     constructor(sentence, tableName) {
         this.tableName = tableName;
         this.sentence = sentence;
@@ -16,7 +16,7 @@ class AssetQuestionHandler {
         const columnNames = [];
     
         // Collect matching column names
-        for (const [columnCalled, columnNameMapped] of Object.entries(AssetColumns.columnToNameMap)) {
+        for (const [columnCalled, columnNameMapped] of Object.entries(BuildingColumns.columnToNameMap)) {
             if (sentence.toLowerCase().includes(columnCalled.toLowerCase())) {
                 columnNames.push(columnNameMapped);
             }
@@ -27,9 +27,9 @@ class AssetQuestionHandler {
         }
     
         // Check and parse for REQUIRED column
-        if (columnNames.includes(AssetColumns.Columns.REQUIRED)) {
-            const assetRequiredParser = new AssetRequirementParser(AssetColumns.Columns.REQUIRED, this.tableName, this.sentence);
-            responseVector.push(...assetRequiredParser.parse());
+        if (columnNames.includes(BuildingColumns.Columns.EVALUATION)) {
+            const buildingAccordingParser = new BuildingAccordingParser(BuildingColumns.Columns.EVALUATION, this.tableName, this.sentence);
+            responseVector.push(...buildingAccordingParser.parse());
         }
     
         return responseVector;
@@ -37,4 +37,4 @@ class AssetQuestionHandler {
     
 }
 
-export default AssetQuestionHandler;
+export default BuildingQuestionHandler;

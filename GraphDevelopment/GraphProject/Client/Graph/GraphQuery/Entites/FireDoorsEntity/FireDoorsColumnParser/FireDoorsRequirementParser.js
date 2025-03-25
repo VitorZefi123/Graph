@@ -1,6 +1,6 @@
-import AssetRequirement from '../AssetValues/AssetRequirement.js';
+import FireDoorsRequirment from '../FireDoorsValues/FireDoorsRequirment.js';
 
-class AssetRequirementParser {
+class FireDoorsRequirementParser {
     #columnName;
     #sentence;
     #tableName;
@@ -13,12 +13,12 @@ class AssetRequirementParser {
 
     parse() {
         const result = [];
-        let assetRequirement = null;
+        let fireDoorsRequirement = null;
         let requirementStatus = this.#sentence.includes("not") ? "not do" : "do";
 
-        for (const [assetCalled, assetUsed] of Object.entries(AssetRequirement.typeToNameMap)) {
-            if (this.#sentence.toLowerCase().includes(assetCalled.toLowerCase())) {
-                assetRequirement = assetUsed; 
+        for (const [fireDoorsCalled, fireDoorsUsed] of Object.entries(FireDoorsRequirment.typeToNameMap)) {
+            if (this.#sentence.toLowerCase().includes(fireDoorsCalled.toLowerCase())) {
+                fireDoorsRequirement = fireDoorsUsed; 
                 break;  
             }
         }
@@ -26,7 +26,7 @@ class AssetRequirementParser {
         if (this.#tableName) {
             result.push(`Table Name ${this.#tableName}: ${this.#tableName}`);
         }
-        if (assetRequirement) {
+        if (fireDoorsRequirement) {
             result.push(`Requirement Status: ${requirementStatus}`);
         }
 
@@ -34,12 +34,12 @@ class AssetRequirementParser {
             result.push(`Column Name ${this.#columnName}: ${this.#columnName}`);
         }
 
-        if (assetRequirement) {
-            result.push(`Asset Requirement: ${assetRequirement}`);
+        if (fireDoorsRequirement) {
+            result.push(`Fire Doors Requirement: ${fireDoorsRequirement}`);
         }
 
         return result;
     }
 }
 
-export default AssetRequirementParser;
+export default FireDoorsRequirementParser;

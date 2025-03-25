@@ -9,6 +9,9 @@ import AssetQuestionHandler from './Entites/AssetEntity/AssetQuestionHandler.js'
 import ParkingQuestionHandler from './Entites/ParkingEntity/ParkingQuestionHandler.js';
 import DrawingQuestionHandler from './Entites/DrawingEntity/DrawingQuestionHandler.js'; 
 import FurnitureQuestionHandler from './Entites/FurnitureEntity/FurnitureQuestionHandler.js';
+import FireDoorsQuestionHandler from './Entites/FireDoorsEntity/FireDoorsQuestionHandler.js';
+import BuildingQuestionHandler from './Entites/BuildingEntity/BuildingQuestionHandler.js';
+import LockersQuestionHandler from './Entites/LockersEntity/LockersQuestionHandler.js';
  
 class SentenceParser {
     // Constructor to initialize the sentence
@@ -102,6 +105,30 @@ debugger;
             const furnitureQuestionHandler = new FurnitureQuestionHandler(sentence, TableNames.Tables.FURNITURE);
             const result = furnitureQuestionHandler.parseSentence();
             if (result){
+              return result;
+            }
+          }
+
+          if(this.tableName.includes(TableNames.Tables.FIRE_DOORS)) {
+            const fireDoorsQuestionHandler = new FireDoorsQuestionHandler(sentence, TableNames.Tables.FIRE_DOORS);
+            const result = fireDoorsQuestionHandler.parseSentence();
+            if (result) {
+              return result;
+            }
+          }
+
+          if(this.tableName.includes(TableNames.Tables.BUILDING)) {
+            const fireDoorsQuestionHandler = new BuildingQuestionHandler(sentence, TableNames.Tables.BUILDING);
+            const result = fireDoorsQuestionHandler.parseSentence();
+            if (result) {
+              return result;
+            }
+          }
+
+          if(this.tableName.includes(TableNames.Tables.LOCKERS)) {
+            const lockersQuestionHandler = new LockersQuestionHandler(sentence, TableNames.Tables.LOCKERS);
+            const result = lockersQuestionHandler.parseSentence();
+            if (result) {
               return result;
             }
           }
