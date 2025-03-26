@@ -9,6 +9,7 @@ import Category from './RoomValues/Category.js';
 import RoomRentabilityParser from './RoomColumnParser/RoomRentabilityParser.js';
 import ServiceTypeParser from './RoomColumnParser/ServiceTypeParser.js';
 import Comparison from './RoomValues/Comparison.js';
+import RoomBuildingParser from './RoomColumnParser/RoomBuildingParser.js';
 
 class RoomQuestionHandler {
     constructor(sentence, tableName) {
@@ -93,6 +94,10 @@ class RoomQuestionHandler {
 
         if (columnNames.includes(RoomColumns.Columns.SERVICE_TYPE)) {
             const parser = new ServiceTypeParser(RoomColumns.Columns.SERVICE_TYPE, this.tableName, this.sentence);
+            responseVector.push(...parser.parse());
+        }
+        if (columnNames.includes(RoomColumns.Columns.BUILDING)) {
+            const parser = new RoomBuildingParser(RoomColumns.Columns.BUILDING, this.tableName, this.sentence);
             responseVector.push(...parser.parse());
         }
       

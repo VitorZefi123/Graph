@@ -3,6 +3,9 @@ import EmployeeNameParser from './EmployerColumnParser/EmployeeNameParser.js';
 import EmployeeFunctionParser from './EmployerColumnParser/EmployeeFunctionParser.js';
 import EmployeeCompanyParser from './EmployerColumnParser/EmployeeCompanyParser.js';
 import EmployeeAccountParser from './EmployerColumnParser/EmployeeAccountParser.js';
+import EmployeeLastUpdatedParser from './EmployerColumnParser/EmployeeLastUpdatedParser.js';
+import EmployeeBuildingParser from './EmployerColumnParser/EmployeeBuildingParser.js';
+import EmployeeFloorParser from './EmployerColumnParser/EmployeeFloorParser.js';
 
 class EmployeeQuestionHandler {
     constructor(sentence, tableName) {
@@ -46,6 +49,22 @@ class EmployeeQuestionHandler {
         if (columnNames.includes(EmployeeColumns.Columns.ACCOUNT)) {
             const accountEmployerParser = new EmployeeAccountParser(EmployeeColumns.Columns.ACCOUNT, this.tableName, this.sentence);
             responseVector.push(...accountEmployerParser.parse());
+        }
+        if (columnNames.includes(EmployeeColumns.Columns.LAST_UPDATED)) {
+            const employeeLastUpdatedParser = new EmployeeLastUpdatedParser(EmployeeColumns.Columns.LAST_UPDATED, this.tableName, this.sentence);
+            responseVector.push(...employeeLastUpdatedParser.parse());
+        }
+        if (columnNames.includes(EmployeeColumns.Columns.LAST_UPDATED)) {
+            const employeeLastUpdatedParser = new EmployeeLastUpdatedParser(EmployeeColumns.Columns.LAST_UPDATED, this.tableName, this.sentence);
+            responseVector.push(...employeeLastUpdatedParser.parse());
+        }
+        if (columnNames.includes(EmployeeColumns.Columns.BUILDING)) {
+            const employeeBuildingParser = new EmployeeBuildingParser(EmployeeColumns.Columns.BUILDING, this.tableName, this.sentence);
+            responseVector.push(...employeeBuildingParser.parse());
+        }
+        if (columnNames.includes(EmployeeColumns.Columns.FLOOR)) {
+            const employeeFloorParser = new EmployeeFloorParser(EmployeeColumns.Columns.FLOOR, this.tableName, this.sentence);
+            responseVector.push(...employeeFloorParser.parse());
         }
     
         return responseVector; 

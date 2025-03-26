@@ -5,7 +5,8 @@ class RoomColumns {
         NET_AREA: 'net area',
         CATEGORY:'category',
         RENTABILITY: 'rentability',
-        SERVICE_TYPE: 'service type'
+        SERVICE_TYPE: 'service type',
+        BUILDING: 'building'
     };
 
     static ColumnNames = {
@@ -16,6 +17,7 @@ class RoomColumns {
         RENTABILITY_SHORT: 'rentabil',
         CATEGORY_SHORT: 'category',
         SERVICE_TYPE_SHORT: 'service',
+        BUILDING_SHORT: 'building'
     };
 
     // Mapping from variations to standard column names
@@ -27,6 +29,7 @@ class RoomColumns {
         [RoomColumns.ColumnNames.SIZE]: RoomColumns.Columns.NET_AREA,
         [RoomColumns.ColumnNames.CATEGORY_SHORT]: RoomColumns.Columns.CATEGORY,
         [RoomColumns.ColumnNames.SERVICE_TYPE_SHORT]: RoomColumns.Columns.SERVICE_TYPE,
+        [RoomColumns.ColumnNames.BUILDING_SHORT]: RoomColumns.Columns.BUILDING,
     };
 }
 
