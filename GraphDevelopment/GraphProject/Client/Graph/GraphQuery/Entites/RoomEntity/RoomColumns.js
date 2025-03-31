@@ -18,6 +18,7 @@ class RoomColumns {
         CATEGORY_SHORT: 'category',
         SERVICE_TYPE_SHORT: 'service',
         BUILDING_SHORT: 'building'
+        
     };
 
     // Mapping from variations to standard column names
