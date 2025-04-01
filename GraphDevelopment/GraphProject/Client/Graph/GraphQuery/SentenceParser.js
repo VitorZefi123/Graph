@@ -76,7 +76,7 @@ class SentenceParser {
               return result;
             }
           }
-debugger;
+          
           if(this.tableName.includes(TableNames.Tables.ASSET)) {
             const assetQuestionHandler = new AssetQuestionHandler(sentence, TableNames.Tables.ASSET);
             const result = assetQuestionHandler.parseSentence();

@@ -1,4 +1,4 @@
-class SystemRequirementXML {
+class SystemLocationXML {
     static CONDITION = "Condition";
     static TYPE = "Type";
     static PRIMITIVE = "Primitive";
@@ -10,6 +10,7 @@ class SystemRequirementXML {
     static VALUE = "Value";
     static SYSTEM_REQUIREMENT = "System Requirement";
     static EMPTY_SPACE = " ";
+    static SYSTEM_LOCATION_KEY = "System Location";
 
     constructor(tableName, columnName, hashMap) {
         this.tableName = tableName;
@@ -20,25 +21,25 @@ class SystemRequirementXML {
     buildXML() {
         const xmlDoc = document.implementation.createDocument("", "", null);
 
-        const condition = xmlDoc.createElement(SystemRequirementXML.CONDITION);
-        condition.setAttribute(SystemRequirementXML.TYPE, SystemRequirementXML.PRIMITIVE);
+        const condition = xmlDoc.createElement(SystemLocationXML.CONDITION);
+        condition.setAttribute(SystemLocationXML.TYPE, SystemLocationXML.PRIMITIVE);
 
-        const property = xmlDoc.createElement(SystemRequirementXML.PROPERTY);
+        const property = xmlDoc.createElement(SystemLocationXML.PROPERTY);
 
-        const name = xmlDoc.createElement(SystemRequirementXML.NAME);
+        const name = xmlDoc.createElement(SystemLocationXML.NAME);
         name.textContent = this.columnName;
 
-        const entityType = xmlDoc.createElement(SystemRequirementXML.ENTITY_TYPE);
+        const entityType = xmlDoc.createElement(SystemLocationXML.ENTITY_TYPE);
         entityType.textContent = this.tableName;
 
         property.appendChild(name);
         property.appendChild(entityType);
 
-        const operator = xmlDoc.createElement(SystemRequirementXML.OPERATOR);
-        operator.textContent = SystemRequirementXML.EQUAL;
+        const operator = xmlDoc.createElement(SystemLocationXML.OPERATOR);
+        operator.textContent = SystemLocationXML.EQUAL;
 
-        const value = xmlDoc.createElement(SystemRequirementXML.VALUE);
-        value.textContent = this.hashMap.get(SystemRequirementXML.SYSTEM_REQUIREMENT) || SystemRequirementXML.EMPTY_SPACE;
+        const value = xmlDoc.createElement(SystemLocationXML.VALUE);
+        value.textContent = this.hashMap.get(SystemLocationXML.SYSTEM_LOCATION_KEY) || SystemLocationXML.EMPTY_SPACE;
     
         condition.appendChild(property);
         condition.appendChild(operator);
@@ -51,4 +52,4 @@ class SystemRequirementXML {
     }
 }
 
-export default SystemRequirementXML;
+export default SystemLocationXML;

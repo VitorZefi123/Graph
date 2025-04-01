@@ -1,4 +1,4 @@
-class SystemRequirementXML {
+class EmployeeFunctionXML {
     static CONDITION = "Condition";
     static TYPE = "Type";
     static PRIMITIVE = "Primitive";
@@ -8,8 +8,8 @@ class SystemRequirementXML {
     static OPERATOR = "Operator";
     static EQUAL = "Equal";
     static VALUE = "Value";
-    static SYSTEM_REQUIREMENT = "System Requirement";
     static EMPTY_SPACE = " ";
+    static USER_FUNCTION_KEY = "User Function";
 
     constructor(tableName, columnName, hashMap) {
         this.tableName = tableName;
@@ -20,25 +20,25 @@ class SystemRequirementXML {
     buildXML() {
         const xmlDoc = document.implementation.createDocument("", "", null);
 
-        const condition = xmlDoc.createElement(SystemRequirementXML.CONDITION);
-        condition.setAttribute(SystemRequirementXML.TYPE, SystemRequirementXML.PRIMITIVE);
+        const condition = xmlDoc.createElement(EmployeeFunctionXML.CONDITION);
+        condition.setAttribute(EmployeeFunctionXML.TYPE, EmployeeFunctionXML.PRIMITIVE);
 
-        const property = xmlDoc.createElement(SystemRequirementXML.PROPERTY);
+        const property = xmlDoc.createElement(EmployeeFunctionXML.PROPERTY);
 
-        const name = xmlDoc.createElement(SystemRequirementXML.NAME);
+        const name = xmlDoc.createElement(EmployeeFunctionXML.NAME);
         name.textContent = this.columnName;
 
-        const entityType = xmlDoc.createElement(SystemRequirementXML.ENTITY_TYPE);
+        const entityType = xmlDoc.createElement(EmployeeFunctionXML.ENTITY_TYPE);
         entityType.textContent = this.tableName;
 
         property.appendChild(name);
         property.appendChild(entityType);
 
-        const operator = xmlDoc.createElement(SystemRequirementXML.OPERATOR);
-        operator.textContent = SystemRequirementXML.EQUAL;
+        const operator = xmlDoc.createElement(EmployeeFunctionXML.OPERATOR);
+        operator.textContent = EmployeeFunctionXML.EQUAL;
 
-        const value = xmlDoc.createElement(SystemRequirementXML.VALUE);
-        value.textContent = this.hashMap.get(SystemRequirementXML.SYSTEM_REQUIREMENT) || SystemRequirementXML.EMPTY_SPACE;
+        const value = xmlDoc.createElement(EmployeeFunctionXML.VALUE);
+        value.textContent = this.hashMap.get(EmployeeFunctionXML.USER_FUNCTION_KEY) || EmployeeFunctionXML.EMPTY_SPACE;
     
         condition.appendChild(property);
         condition.appendChild(operator);
@@ -50,5 +50,4 @@ class SystemRequirementXML {
         return xmlString;
     }
 }
-
-export default SystemRequirementXML;
+export default EmployeeFunctionXML;

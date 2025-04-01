@@ -67,7 +67,6 @@ class GraphProperties {
                     caption: link.caption
                 });
     
-                // Add relationships to nodeRelations
                 if (!this.nodeRelations[property.propertysetcode]) {
                     this.nodeRelations[property.propertysetcode] = new Set();
                 }
@@ -78,12 +77,10 @@ class GraphProperties {
                 }
                 this.nodeRelations[link.topropertysetcode].add(property.propertysetcode);
     
-                // Store edges in node object for consistency
                 node.edges.push(link.topropertysetcode);
             });
         });
     
-        // Convert nodeRelations from Set to Array for easier usage
         Object.keys(this.nodeRelations).forEach(key => {
             this.nodeRelations[key] = Array.from(this.nodeRelations[key]);
         });
