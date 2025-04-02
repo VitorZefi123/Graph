@@ -1,7 +1,14 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from pymilvus import connections,utility
+import language_tool_python
+from flask_cors import CORS
+from spellchecker import SpellChecker
+
 
 app = Flask(__name__)
+CORS(app)
+spell = SpellChecker()
+tool = language_tool_python.LanguageTool('en-US')
 
 # Simple test connection to Milvus
 @app.route('/test_connection', methods=['GET'])
@@ -22,11 +29,26 @@ def test_connection():
     except Exception as e:
         # In case of failure, return an error message
         return jsonify({"message": f"Failed to connect to Milvus: {str(e)}"}), 500
+        
 
 # A simple default route
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
+
+@app.route('/correct', methods=['POST'])
+def correct_sentence():
+    data = request.get_json()
+    sentence = data.get("text", "")
+
+    if not sentence:
+        return jsonify({"error": "No text provided"}), 400
+
+    words = sentence.split()
+    corrected_words = [spell.correction(word) or word for word in words]
+    corrected_sentence = " ".join(corrected_words)
+
+    return jsonify({"corrected": corrected_sentence})
 
 if __name__ == '__main__':
     app.run(debug=True)

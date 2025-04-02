@@ -5,7 +5,7 @@
         "name": "Python: FastAPI",
         "type": "debugpy",
         "request": "launch",
-        "program": "${workspaceFolder}/GraphDevelopment/GraphProject/Server/backend_project/PythonServer/app.py",   // Path to your FastAPI app (adjust as necessary)
+        "program": "${workspaceFolder}/GraphDevelopment/GraphProject/Server/backend_project/app.py",   // Path to your FastAPI app (adjust as necessary)
         "args": [
           "uvicorn",
           "app:app",  // This is the format for uvicorn (module:app object)

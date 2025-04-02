@@ -1,4 +1,4 @@
-class SystemLocationXML {
+class SystemTradeXML {
     static CONDITION = "Condition";
     static TYPE = "Type";
     static PRIMITIVE = "Primitive";
@@ -9,7 +9,7 @@ class SystemLocationXML {
     static EQUAL = "Equal";
     static VALUE = "Value";
     static EMPTY_SPACE = " ";
-    static SYSTEM_LOCATION_KEY = "System Location";
+    static SYSTEM_TRADE = "System Trade";
 
     constructor(tableName, columnName, hashMap) {
         this.tableName = tableName;
@@ -20,25 +20,25 @@ class SystemLocationXML {
     buildXML() {
         const xmlDoc = document.implementation.createDocument("", "", null);
 
-        const condition = xmlDoc.createElement(SystemLocationXML.CONDITION);
-        condition.setAttribute(SystemLocationXML.TYPE, SystemLocationXML.PRIMITIVE);
+        const condition = xmlDoc.createElement(SystemTradeXML.CONDITION);
+        condition.setAttribute(SystemTradeXML.TYPE, SystemTradeXML.PRIMITIVE);
 
-        const property = xmlDoc.createElement(SystemLocationXML.PROPERTY);
+        const property = xmlDoc.createElement(SystemTradeXML.PROPERTY);
 
-        const name = xmlDoc.createElement(SystemLocationXML.NAME);
+        const name = xmlDoc.createElement(SystemTradeXML.NAME);
         name.textContent = this.columnName;
 
-        const entityType = xmlDoc.createElement(SystemLocationXML.ENTITY_TYPE);
+        const entityType = xmlDoc.createElement(SystemTradeXML.ENTITY_TYPE);
         entityType.textContent = this.tableName;
 
         property.appendChild(name);
         property.appendChild(entityType);
 
-        const operator = xmlDoc.createElement(SystemLocationXML.OPERATOR);
-        operator.textContent = SystemLocationXML.EQUAL;
+        const operator = xmlDoc.createElement(SystemTradeXML.OPERATOR);
+        operator.textContent = SystemTradeXML.EQUAL;
 
-        const value = xmlDoc.createElement(SystemLocationXML.VALUE);
-        value.textContent = this.hashMap.get(SystemLocationXML.SYSTEM_LOCATION_KEY) || SystemLocationXML.EMPTY_SPACE;
+        const value = xmlDoc.createElement(SystemTradeXML.VALUE);
+        value.textContent = this.hashMap.get(SystemTradeXML.SYSTEM_TRADE) || SystemTradeXML.EMPTY_SPACE;
     
         condition.appendChild(property);
         condition.appendChild(operator);
@@ -51,4 +51,4 @@ class SystemLocationXML {
     }
 }
 
-export default SystemLocationXML;
+export default SystemTradeXML;

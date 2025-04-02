@@ -1,4 +1,4 @@
-class SystemLocationXML {
+class SystemComponentCodeXML {
     static CONDITION = "Condition";
     static TYPE = "Type";
     static PRIMITIVE = "Primitive";
@@ -9,7 +9,7 @@ class SystemLocationXML {
     static EQUAL = "Equal";
     static VALUE = "Value";
     static EMPTY_SPACE = " ";
-    static SYSTEM_LOCATION_KEY = "System Location";
+    static SYSTEM_COMPONENT_CODE = "System Component Code";
 
     constructor(tableName, columnName, hashMap) {
         this.tableName = tableName;
@@ -20,25 +20,25 @@ class SystemLocationXML {
     buildXML() {
         const xmlDoc = document.implementation.createDocument("", "", null);
 
-        const condition = xmlDoc.createElement(SystemLocationXML.CONDITION);
-        condition.setAttribute(SystemLocationXML.TYPE, SystemLocationXML.PRIMITIVE);
+        const condition = xmlDoc.createElement(SystemComponentCodeXML.CONDITION);
+        condition.setAttribute(SystemComponentCodeXML.TYPE, SystemComponentCodeXML.PRIMITIVE);
 
-        const property = xmlDoc.createElement(SystemLocationXML.PROPERTY);
+        const property = xmlDoc.createElement(SystemComponentCodeXML.PROPERTY);
 
-        const name = xmlDoc.createElement(SystemLocationXML.NAME);
+        const name = xmlDoc.createElement(SystemComponentCodeXML.NAME);
         name.textContent = this.columnName;
 
-        const entityType = xmlDoc.createElement(SystemLocationXML.ENTITY_TYPE);
+        const entityType = xmlDoc.createElement(SystemComponentCodeXML.ENTITY_TYPE);
         entityType.textContent = this.tableName;
 
         property.appendChild(name);
         property.appendChild(entityType);
 
-        const operator = xmlDoc.createElement(SystemLocationXML.OPERATOR);
-        operator.textContent = SystemLocationXML.EQUAL;
+        const operator = xmlDoc.createElement(SystemComponentCodeXML.OPERATOR);
+        operator.textContent = SystemComponentCodeXML.EQUAL;
 
-        const value = xmlDoc.createElement(SystemLocationXML.VALUE);
-        value.textContent = this.hashMap.get(SystemLocationXML.SYSTEM_LOCATION_KEY) || SystemLocationXML.EMPTY_SPACE;
+        const value = xmlDoc.createElement(SystemComponentCodeXML.VALUE);
+        value.textContent = this.hashMap.get(SystemComponentCodeXML.SYSTEM_COMPONENT_CODE) || SystemComponentCodeXML.EMPTY_SPACE;
     
         condition.appendChild(property);
         condition.appendChild(operator);
@@ -51,4 +51,4 @@ class SystemLocationXML {
     }
 }
 
-export default SystemLocationXML;
+export default SystemComponentCodeXML;

@@ -40,9 +40,10 @@
             <button class="btn btn-primary mt-2" onclick="parsesInput()">Parse Sentences</button>
             
             <div>
+                <h3>Corrected sentence:</h3>
+                <pre id="output1"></pre>
                 <h3>Extracted JSON Data:</h3>
                 <pre id="output"></pre>
-                
                 <h3>Generated XML:</h3>
                 <pre id="xmlOutput"></pre>
             </div>
@@ -55,8 +56,9 @@
     <script type="module">
         import Tables from './Graph/GraphQuery/Tables.js';
         import BuildRequest from './Graph/GraphQuery/BuildRequest.js';
+        import DbProcessor from './ProcessorLayer/DbProcessor.js';
 
-        window.parsesInput = function () {
+        window.parsesInput = async function () {
         const sentence = document.getElementById('sql-input').value.trim();
 
         if (!sentence) {
@@ -64,8 +66,21 @@
             return;
         }
 
-        const newSentence = new Tables().extractFromQuery(sentence).sqlConditions;
+    try {
+        // Call the processor to correct the sentence
+        const correctedSentence = await DbProcessor.correctSentence(sentence);
 
+        if (correctedSentence) {
+            document.getElementById('output1').innerHTML = `
+                <p><strong>Original Sentence:</strong> ${sentence}</p>
+                <p><strong>Corrected Sentence:</strong> <span class="text-success">${correctedSentence}</span></p>
+            `;
+        } else {
+            document.getElementById('output').innerHTML = 
+                '<span class="text-danger">Error in sentence correction.</span>';
+        }
+
+const newSentence = new Tables().extractFromQuery(correctedSentence).sqlConditions;
 
 // Handle both objects and arrays correctly
 let displayText;
@@ -83,6 +98,11 @@ debugger;
 
  // Display XML output in user view
  document.getElementById("xmlOutput").innerText = test;
+
+} catch (error) {
+        console.error("Error processing input:", error);
+        document.getElementById('output').innerHTML = '<span class="text-danger">Failed to process the input.</span>';
+    }
     };
 
     </script>
