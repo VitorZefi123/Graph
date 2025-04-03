@@ -13,14 +13,23 @@ class LockersFloorParser {
 
     parse() {
         const result = [];
-        let floorValue = null;
+        let floorName = null;
 
-        for (const [floorCalled, floorUsed] of Object.entries(FloorValues.typeToNameMap)) {
+       /* for (const [floorCalled, floorUsed] of Object.entries(FloorValues.typeToNameMap)) {
             if (this.#sentence.toLowerCase().includes(floorCalled.toLowerCase())) {
                 floorValue = floorUsed; 
                 break;  
             }
-        }
+        } */
+
+            const floorNamePattern = /\[(.*?)\]/;
+
+            debugger;
+            const match = floorNamePattern.exec(this.#sentence);
+            if (match) {
+                floorName = match[1].trim();
+            }
+    
 
         if (this.#tableName) {
             result.push(`Table Name ${this.#tableName}: ${this.#tableName}`);
@@ -30,8 +39,8 @@ class LockersFloorParser {
             result.push(`Column Name ${this.#columnName}: ${this.#columnName}`);
         }
 
-        if (floorValue) {
-            result.push(`Floor Values: ${floorValue}`);
+        if (floorName) {
+            result.push(`Floor Values: ${floorName}`);
         }
 
         return result;

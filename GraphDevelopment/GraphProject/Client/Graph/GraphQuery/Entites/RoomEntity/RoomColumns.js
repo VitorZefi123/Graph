@@ -15,6 +15,7 @@ class RoomColumns {
         NET_AREA_SHORT: 'net area',
         SIZE: 'size',
         RENTABILITY_SHORT: 'rentabil',
+        RENTABILITY_SHORT1: 'reliabil', 
         CATEGORY_SHORT: 'category',
         SERVICE_TYPE_SHORT: 'service',
         BUILDING_SHORT: 'building'
@@ -27,6 +28,7 @@ class RoomColumns {
         [RoomColumns.ColumnNames.RESERVED_SHORT]: RoomColumns.Columns.RESERVED,
         [RoomColumns.ColumnNames.NET_AREA_SHORT]: RoomColumns.Columns.NET_AREA,
         [RoomColumns.ColumnNames.RENTABILITY_SHORT]: RoomColumns.Columns.RENTABILITY,
+        [RoomColumns.ColumnNames.RENTABILITY_SHORT1]: RoomColumns.Columns.RENTABILITY,
         [RoomColumns.ColumnNames.SIZE]: RoomColumns.Columns.NET_AREA,
         [RoomColumns.ColumnNames.CATEGORY_SHORT]: RoomColumns.Columns.CATEGORY,
         [RoomColumns.ColumnNames.SERVICE_TYPE_SHORT]: RoomColumns.Columns.SERVICE_TYPE,

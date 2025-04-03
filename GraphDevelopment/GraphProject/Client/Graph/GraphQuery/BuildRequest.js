@@ -5,8 +5,15 @@ import SystemLocationXML from './Entites/SystemEntity/SystemXMLBuilder/SystemLoc
 import SystemComponentCodeXML from './Entites/SystemEntity/SystemXMLBuilder/SystemComponentCodeXML.js';
 import SystemMaintainedXML from './Entites/SystemEntity/SystemXMLBuilder/SystemMaintainedXML.js';
 import EmployeeFunctionXML from './Entites/EmployerEntity/EmpoyeeXMLBuilder/EmployeeFunctionXML.js';
+import RoomRentabilityXML from './Entites/RoomEntity/RoomXMLBuilder/RoomRentabilityXML.js'; 
+import LockersBuildingXML from './Entites/LockersEntity/LockerXMLBuilder/LockersBuildingXML.js';
+import LockersFloorXML from './Entites/LockersEntity/LockerXMLBuilder/LockersFloorXML.js';
+import ServiceTypeXML from './Entites/RoomEntity/RoomXMLBuilder/ServiceTypeXML.js';
+import RoomBuildingXML from './Entites/RoomEntity/RoomXMLBuilder/RoomBuildingXML.js';
 import TableNames from './TableNames.js';
 import SystemColumns from './Entites/SystemEntity/SystemColumns.js';
+import LockersColumns from './Entites/LockersEntity/LockersColumns.js';
+import RoomColumns from './Entites/RoomEntity/RoomColumns.js';
 import EmployeColumns from './Entites/EmployerEntity/EmployeColumns.js';
 
 class BuildRequest {
@@ -75,7 +82,46 @@ class BuildRequest {
                 return result;
             }
         }
-   
+
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.ROOM && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === RoomColumns.Columns.RENTABILITY )  {
+            const roomRentabilityXML = new RoomRentabilityXML(TableNames.Tables.ROOM, RoomColumns.Columns.RENTABILITY, hashMap);
+            const result = roomRentabilityXML.buildXML();
+            if (result) {
+                return result;
+            }
+        }
+
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.ROOM && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === RoomColumns.Columns.SERVICE_TYPE )  {
+            const serviceTypeXML = new ServiceTypeXML(TableNames.Tables.ROOM, RoomColumns.Columns.SERVICE_TYPE, hashMap);
+            const result = serviceTypeXML.buildXML();
+            if (result) {
+                return result;
+            }
+        }
+
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.ROOM && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === RoomColumns.Columns.BUILDING )  {
+            const roomBuildingXML = new RoomBuildingXML(TableNames.Tables.ROOM, RoomColumns.Columns.BUILDING, hashMap);
+            const result = roomBuildingXML.buildXML();
+            if (result) {
+                return result;
+            }
+        }
+
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.LOCKERS && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === LockersColumns.Columns.BUILDING )  {
+            const lockersBuildingXML = new LockersBuildingXML(TableNames.Tables.LOCKERS, LockersColumns.Columns.BUILDING , hashMap);
+            const result = lockersBuildingXML.buildXML();
+            if (result) {
+                return result;
+            }
+        }
+
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.LOCKERS && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === LockersColumns.Columns.FLOOR )  {
+            const lockersFloorParser = new LockersFloorXML(TableNames.Tables.LOCKERS, LockersColumns.Columns.FLOOR , hashMap);
+            const result = lockersFloorParser.buildXML();
+            if (result) {
+                return result;
+            }
+        }
 
     }
 

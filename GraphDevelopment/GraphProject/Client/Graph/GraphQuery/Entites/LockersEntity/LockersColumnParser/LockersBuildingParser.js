@@ -13,14 +13,23 @@ class LockersBuildingParser {
 
     parse() {
         const result = [];
-        let buildingValue = null;
+        let buildingName = null;
 
-        for (const [buildingCalled, buildingUsed] of Object.entries(BuildingValues.typeToNameMap)) {
+      /*  for (const [buildingCalled, buildingUsed] of Object.entries(BuildingValues.typeToNameMap)) {
             if (this.#sentence.toLowerCase().includes(buildingCalled.toLowerCase())) {
                 buildingValue = buildingUsed; 
                 break;  
             }
-        }
+        }*/
+
+            const buildingNamePattern = /\[(.*?)\]/;
+
+            debugger;
+            const match = buildingNamePattern.exec(this.#sentence);
+            if (match) {
+                buildingName = match[1].trim();
+            }
+
 
         if (this.#tableName) {
             result.push(`Table Name ${this.#tableName}: ${this.#tableName}`);
@@ -30,8 +39,8 @@ class LockersBuildingParser {
             result.push(`Column Name ${this.#columnName}: ${this.#columnName}`);
         }
 
-        if (buildingValue) {
-            result.push(`Building Values: ${buildingValue}`);
+        if (buildingName) {
+            result.push(`Building Values: ${buildingName}`);
         }
 
         return result;

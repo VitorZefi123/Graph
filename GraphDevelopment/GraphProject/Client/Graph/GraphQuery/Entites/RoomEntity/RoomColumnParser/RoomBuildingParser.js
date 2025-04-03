@@ -15,11 +15,19 @@ class RoomBuildingParser {
         const result = [];
         let buildingName = null;
 
-        for (const [buildingCalled, buildingUsed] of Object.entries(BuildingName.columnToNameMap)) {
+       /* for (const [buildingCalled, buildingUsed] of Object.entries(BuildingName.columnToNameMap)) {
             if (this.#sentence.toLowerCase().includes(buildingCalled.toLowerCase())) {
                 buildingName = buildingUsed; 
                 break;  
             }
+        } */
+
+        const buildingNamePattern = /\[(.*?)\]/;
+
+        debugger;
+        const match = buildingNamePattern.exec(this.#sentence);
+        if (match) {
+            buildingName = match[1].trim();
         }
 
         if (this.#tableName) {
@@ -31,7 +39,7 @@ class RoomBuildingParser {
         }
 
         if (buildingName) {
-            result.push(`Building Name: ${buildingName}`);
+            result.push(`Building Name: [${buildingName}] `);
         }
 
         return result;
