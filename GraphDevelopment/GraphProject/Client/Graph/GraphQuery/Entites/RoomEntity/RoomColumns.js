@@ -6,7 +6,9 @@ class RoomColumns {
         CATEGORY:'category',
         RENTABILITY: 'profitability',
         SERVICE_TYPE: 'service type',
-        BUILDING: 'building'
+        BUILDING: 'building',
+        WORKSTATION: 'workstations'
+
     };
 
     static ColumnNames = {
@@ -14,6 +16,7 @@ class RoomColumns {
         RESERVED_SHORT: 'reserved',
         NET_AREA_SHORT: 'net area',
         SIZE: 'size',
+        WORKSTATION_SHORT: 'workstation',
         PROFITABILITY: 'profitability',
         PROFITABILITY_SHORT: 'profit',
         RENTABILITY_SHORT: 'rentabil',
@@ -43,16 +46,18 @@ class RoomColumns {
         [RoomColumns.ColumnNames.CATEGORY_SHORT]: RoomColumns.Columns.CATEGORY,
         [RoomColumns.ColumnNames.SERVICE_TYPE_SHORT]: RoomColumns.Columns.SERVICE_TYPE,
         [RoomColumns.ColumnNames.BUILDING_SHORT]: RoomColumns.Columns.BUILDING,
+        [RoomColumns.ColumnNames.WORKSTATION_SHORT]: RoomColumns.Columns.WORKSTATION,
     };
 
 
     static ColumnId ={
         RENTABILITY_Id: 'StructureObject.TimeLineInt374',
+        WORKSTATION_Id: 'StructureObject.TimeLineInt181',
     };
 
     static columnToIdMap = {
         [RoomColumns.Columns.RENTABILITY]: RoomColumns.ColumnId.RENTABILITY_Id,
-
+        [RoomColumns.Columns.WORKSTATION]: RoomColumns.ColumnId.WORKSTATION_Id,
     };
 
     static getIdByColumnName(columnName) {

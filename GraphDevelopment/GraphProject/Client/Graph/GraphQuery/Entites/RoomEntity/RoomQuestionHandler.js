@@ -4,6 +4,7 @@ import RoomReservationParser from './RoomColumnParser/RoomReservationParser.js';
 import RoomDateParser from './RoomColumnParser/RoomDateParser.js';
 import RoomSizeParser from './RoomColumnParser/RoomSizeParser.js';
 import RoomCategoryParser from './RoomColumnParser/RoomCategoryParser.js';
+import RoomWorkstationParser from './RoomColumnParser/RoomWorkstationParser.js';
 import AreaUnit from './RoomValues/AreaUnit.js';
 import Category from './RoomValues/Category.js';
 import RoomRentabilityParser from './RoomColumnParser/RoomRentabilityParser.js';
@@ -26,10 +27,10 @@ class RoomQuestionHandler {
         let comparisonOperator = "";  
         let unitUsed = ""; 
         let columnName = null;
-        const dateRegex = /\b(?:\d{4}-\d{2}-\d{2}|\d{2}[\/.-]\d{2}[\/.-]\d{4})\b/;
-        const numberRegex = /[-+]?[0-9]*\.?[0-9]+/;  
+        const dateRegex = /\b(?:\d{4}-\d{2}-\d{2}|\d{2}[\/.-]\d{2}[\/.-]\d{4})\b/;     
         const categoryMatch = this.findCategory(sentence);
         const dateMatch = sentence.match(dateRegex);
+        const numberRegex = /[-+]?[0-9]*\.?[0-9]+/;  
         const numberMatch = sentence.match(numberRegex);
 
         for (const [term, operator] of Object.entries(Comparison.termToOperatorMap)) {
@@ -98,6 +99,10 @@ class RoomQuestionHandler {
         }
         if (columnNames.includes(RoomColumns.Columns.BUILDING)) {
             const parser = new RoomBuildingParser(RoomColumns.Columns.BUILDING, this.tableName, this.sentence);
+            responseVector.push(...parser.parse());
+        }
+        if (columnNames.includes(RoomColumns.Columns.WORKSTATION)) {
+            const parser = new RoomWorkstationParser(RoomColumns.Columns.WORKSTATION, this.tableName, this.sentence, comparisonOperator);
             responseVector.push(...parser.parse());
         }
       

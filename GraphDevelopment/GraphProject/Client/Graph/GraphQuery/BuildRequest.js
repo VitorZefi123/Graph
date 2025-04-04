@@ -5,7 +5,8 @@ import SystemLocationXML from './Entites/SystemEntity/SystemXMLBuilder/SystemLoc
 import SystemComponentCodeXML from './Entites/SystemEntity/SystemXMLBuilder/SystemComponentCodeXML.js';
 import SystemMaintainedXML from './Entites/SystemEntity/SystemXMLBuilder/SystemMaintainedXML.js';
 import EmployeeFunctionXML from './Entites/EmployerEntity/EmpoyeeXMLBuilder/EmployeeFunctionXML.js';
-import RoomRentabilityXML from './Entites/RoomEntity/RoomXMLBuilder/RoomRentabilityXML.js'; 
+import RoomRentabilityXML from './Entites/RoomEntity/RoomXMLBuilder/RoomRentabilityXML.js';
+import RoomWorkstationXML from './Entites/RoomEntity/RoomXMLBuilder/RoomWorkstationXML.js'; 
 import LockersBuildingXML from './Entites/LockersEntity/LockerXMLBuilder/LockersBuildingXML.js';
 import LockersFloorXML from './Entites/LockersEntity/LockerXMLBuilder/LockersFloorXML.js';
 import FurnitureNameXML from './Entites/FurnitureEntity/FurnitureXMLBuilder/FurnitureNameXML.js';
@@ -108,6 +109,14 @@ class BuildRequest {
                 return result;
             }
         }
+        
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.ROOM && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === RoomColumns.Columns.WORKSTATION )  {
+            const roomWorkstationXML = new RoomWorkstationXML(TableNames.Tables.ROOM, RoomColumns.Columns.WORKSTATION, hashMap);
+            const result = roomWorkstationXML.buildXML();
+            if (result) {
+                return result;
+            }
+        }
 
         if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.LOCKERS && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === LockersColumns.Columns.BUILDING )  {
             const lockersBuildingXML = new LockersBuildingXML(TableNames.Tables.LOCKERS, LockersColumns.Columns.BUILDING , hashMap);
@@ -132,6 +141,7 @@ class BuildRequest {
                 return result;
             }
         }
+        
     }
 
 
