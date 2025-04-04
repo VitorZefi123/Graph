@@ -4,7 +4,7 @@ class RoomColumns {
         RESERVED: 'reserved',
         NET_AREA: 'net area',
         CATEGORY:'category',
-        RENTABILITY: 'rentability',
+        RENTABILITY: 'profitability',
         SERVICE_TYPE: 'service type',
         BUILDING: 'building'
     };
@@ -14,13 +14,20 @@ class RoomColumns {
         RESERVED_SHORT: 'reserved',
         NET_AREA_SHORT: 'net area',
         SIZE: 'size',
+        PROFITABILITY: 'profitability',
+        PROFITABILITY_SHORT: 'profit',
         RENTABILITY_SHORT: 'rentabil',
         RENTABILITY_SHORT1: 'reliabil', 
+        RENTABILITY_SHORT2: 'rental', 
         CATEGORY_SHORT: 'category',
         SERVICE_TYPE_SHORT: 'service',
         BUILDING_SHORT: 'building'
         
     };
+
+
+ 
+
 
     // Mapping from variations to standard column names
     static columnToNameMap = {
@@ -28,12 +35,29 @@ class RoomColumns {
         [RoomColumns.ColumnNames.RESERVED_SHORT]: RoomColumns.Columns.RESERVED,
         [RoomColumns.ColumnNames.NET_AREA_SHORT]: RoomColumns.Columns.NET_AREA,
         [RoomColumns.ColumnNames.RENTABILITY_SHORT]: RoomColumns.Columns.RENTABILITY,
+        [RoomColumns.ColumnNames.PROFITABILITY]: RoomColumns.Columns.RENTABILITY,
+        [RoomColumns.ColumnNames.PROFITABILITY_SHORT]: RoomColumns.Columns.RENTABILITY,
         [RoomColumns.ColumnNames.RENTABILITY_SHORT1]: RoomColumns.Columns.RENTABILITY,
+        [RoomColumns.ColumnNames.RENTABILITY_SHORT2]: RoomColumns.Columns.RENTABILITY,
         [RoomColumns.ColumnNames.SIZE]: RoomColumns.Columns.NET_AREA,
         [RoomColumns.ColumnNames.CATEGORY_SHORT]: RoomColumns.Columns.CATEGORY,
         [RoomColumns.ColumnNames.SERVICE_TYPE_SHORT]: RoomColumns.Columns.SERVICE_TYPE,
         [RoomColumns.ColumnNames.BUILDING_SHORT]: RoomColumns.Columns.BUILDING,
     };
+
+
+    static ColumnId ={
+        RENTABILITY_Id: 'StructureObject.TimeLineInt374',
+    };
+
+    static columnToIdMap = {
+        [RoomColumns.Columns.RENTABILITY]: RoomColumns.ColumnId.RENTABILITY_Id,
+
+    };
+
+    static getIdByColumnName(columnName) {
+        return this.columnToIdMap[columnName] || null;
+      }
 }
 
 export default RoomColumns;

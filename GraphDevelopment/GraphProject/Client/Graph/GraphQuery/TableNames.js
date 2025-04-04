@@ -61,6 +61,20 @@ class TableNames {
         [TableNames.TableShortNames.LOCKERS_SHORT]: TableNames.Tables.LOCKERS,
     };
 
+    static TableId = {
+        ROOM_ID: 'StructureObject.General.Type1:660008',   
+        FURNITURE_ID: 'StructureObject.General.Type1:660011', 
+    };
+
+    static tableToIdMap = {
+        [TableNames.Tables.ROOM]: TableNames.TableId.ROOM_ID,
+        [TableNames.Tables.FURNITURE]: TableNames.TableId.FURNITURE_ID,
+    };
+
+    static getIdByTableName(tableName) {
+        return this.tableToIdMap[tableName] || null;
+      }
+
     static getTableNames() {
         return Object.values(TableNames.Tables);
     }

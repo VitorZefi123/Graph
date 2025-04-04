@@ -8,12 +8,14 @@ import EmployeeFunctionXML from './Entites/EmployerEntity/EmpoyeeXMLBuilder/Empl
 import RoomRentabilityXML from './Entites/RoomEntity/RoomXMLBuilder/RoomRentabilityXML.js'; 
 import LockersBuildingXML from './Entites/LockersEntity/LockerXMLBuilder/LockersBuildingXML.js';
 import LockersFloorXML from './Entites/LockersEntity/LockerXMLBuilder/LockersFloorXML.js';
+import FurnitureNameXML from './Entites/FurnitureEntity/FurnitureXMLBuilder/FurnitureNameXML.js';
 import ServiceTypeXML from './Entites/RoomEntity/RoomXMLBuilder/ServiceTypeXML.js';
 import RoomBuildingXML from './Entites/RoomEntity/RoomXMLBuilder/RoomBuildingXML.js';
 import TableNames from './TableNames.js';
 import SystemColumns from './Entites/SystemEntity/SystemColumns.js';
 import LockersColumns from './Entites/LockersEntity/LockersColumns.js';
 import RoomColumns from './Entites/RoomEntity/RoomColumns.js';
+import FurnitureColumns from './Entites/FurnitureEntity/FurnitureColumns.js';
 import EmployeColumns from './Entites/EmployerEntity/EmployeColumns.js';
 
 class BuildRequest {
@@ -123,6 +125,13 @@ class BuildRequest {
             }
         }
 
+        if (this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.TABLE_NAME) === TableNames.Tables.FURNITURE && this.getValueByPartialKey(hashMap, BuildRequest.CONSTANTS.COLUMN_NAME) === FurnitureColumns.Columns.NAME )  {
+            const furnitureNameXML = new FurnitureNameXML(TableNames.Tables.FURNITURE, FurnitureColumns.Columns.NAME , hashMap);
+            const result = furnitureNameXML.buildXML();
+            if (result) {
+                return result;
+            }
+        }
     }
 
 

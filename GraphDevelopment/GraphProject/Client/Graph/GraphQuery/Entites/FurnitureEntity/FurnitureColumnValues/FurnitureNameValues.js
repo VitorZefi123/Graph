@@ -5,6 +5,7 @@ class FurnitureNameValues {
         CUPBOARD: "cupboard",
         WORKTOP: "worktop",
         BED: "bed",
+        CABINET: "cabinet",
         ARMCHAIR: "armchair",
         CHAIR: "chair",
     };
@@ -12,6 +13,7 @@ class FurnitureNameValues {
     static TypeNames = {
         SWIVEL_CHAIR_SHORT: "swivel",
         TABLE_SHORT: "table",
+        CABINET_SHORT: "cabinet",
         CUPBOARD_SHORT: "cupboard",
         WORKTOP_SHORT: "worktop",
         BED_SHORT: "bed",
@@ -25,6 +27,7 @@ class FurnitureNameValues {
         [FurnitureNameValues.TypeNames.CUPBOARD_SHORT]: FurnitureNameValues.Types.CUPBOARD,
         [FurnitureNameValues.TypeNames.WORKTOP_SHORT]: FurnitureNameValues.Types.WORKTOP,
         [FurnitureNameValues.TypeNames.BED_SHORT]: FurnitureNameValues.Types.BED,
+        [FurnitureNameValues.TypeNames.CABINET_SHORT]: FurnitureNameValues.Types.CABINET,
         [FurnitureNameValues.TypeNames.ARMCHAIR_SHORT]: FurnitureNameValues.Types.ARMCHAIR,
         [FurnitureNameValues.TypeNames.CHAIR_SHORT]: FurnitureNameValues.Types.CHAIR,
     };

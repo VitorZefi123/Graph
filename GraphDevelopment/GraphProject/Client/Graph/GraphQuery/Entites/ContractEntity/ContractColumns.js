@@ -12,6 +12,7 @@ class ContractColumns {
     static ColumnNames = {
         START_DATE_FULL: 'start date',
         START_DATE_SHORT: 'start dt',
+        START_DATE_ON: 'start on',
         START_DATE_TYPOS: 'strt date',
 
         CONTRACT_TYPE_FULL: 'contract type',
@@ -43,6 +44,7 @@ class ContractColumns {
         [ContractColumns.ColumnNames.START_DATE_FULL]: ContractColumns.Columns.START_DATE,
         [ContractColumns.ColumnNames.START_DATE_SHORT]: ContractColumns.Columns.START_DATE,
         [ContractColumns.ColumnNames.START_DATE_TYPOS]: ContractColumns.Columns.START_DATE,
+        [ContractColumns.ColumnNames.START_DATE_ON]: ContractColumns.Columns.START_DATE,
 
         [ContractColumns.ColumnNames.CONTRACT_TYPE_FULL]: ContractColumns.Columns.CONTRACT_TYPE,
         [ContractColumns.ColumnNames.CONTRACT_TYPE_SHORT]: ContractColumns.Columns.CONTRACT_TYPE,

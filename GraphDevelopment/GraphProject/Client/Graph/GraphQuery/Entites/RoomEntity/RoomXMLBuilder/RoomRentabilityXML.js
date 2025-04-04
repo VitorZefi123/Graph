@@ -1,3 +1,8 @@
+import RoomColumns from '../RoomColumns.js';
+import TableNames from '../../../TableNames.js';
+import Rentability from '../RoomValues/Rentability.js';
+
+
 class RoomRentabilityXML {
     static CONDITION = "Condition";
     static TYPE = "Type";
@@ -6,7 +11,7 @@ class RoomRentabilityXML {
     static NAME = "Name";
     static ENTITY_TYPE = "EntityType";
     static OPERATOR = "Operator";
-    static EQUAL = "Equal";
+    static EQUAL = "In";
     static VALUE = "Value";
     static EMPTY_SPACE = " ";
     static RENTABILITY = "Rentability";
@@ -26,10 +31,10 @@ class RoomRentabilityXML {
         const property = xmlDoc.createElement(RoomRentabilityXML.PROPERTY);
 
         const name = xmlDoc.createElement(RoomRentabilityXML.NAME);
-        name.textContent = this.columnName;
+        name.textContent = RoomColumns.getIdByColumnName(this.columnName);
 
         const entityType = xmlDoc.createElement(RoomRentabilityXML.ENTITY_TYPE);
-        entityType.textContent = this.tableName;
+        entityType.textContent = TableNames.getIdByTableName(this.tableName);
 
         property.appendChild(name);
         property.appendChild(entityType);
@@ -38,7 +43,7 @@ class RoomRentabilityXML {
         operator.textContent = RoomRentabilityXML.EQUAL;
 
         const value = xmlDoc.createElement(RoomRentabilityXML.VALUE);
-        value.textContent = this.hashMap.get(RoomRentabilityXML.RENTABILITY) || RoomRentabilityXML.EMPTY_SPACE;
+        value.textContent = Rentability.getIdByRentabilityName(this.hashMap.get(RoomRentabilityXML.RENTABILITY) || RoomRentabilityXML.EMPTY_SPACE);
     
         condition.appendChild(property);
         condition.appendChild(operator);
